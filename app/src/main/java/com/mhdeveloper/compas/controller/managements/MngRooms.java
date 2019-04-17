@@ -1,10 +1,7 @@
 package com.mhdeveloper.compas.controller.managements;
 
 import androidx.collection.ArrayMap;
-import com.mhdeveloper.compas.model.Notification;
-import com.mhdeveloper.compas.model.Permission;
-import com.mhdeveloper.compas.model.Room;
-import com.mhdeveloper.compas.model.User;
+import com.mhdeveloper.compas.model.*;
 
 import java.util.ArrayList;
 

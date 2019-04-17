@@ -13,6 +13,7 @@ import com.mhdeveloper.compas.controller.notifications.INt;
 import com.mhdeveloper.compas.controller.notifications.NtChargeTickets;
 import com.mhdeveloper.compas.controller.notifications.NtRechargeAdapter;
 import com.mhdeveloper.compas.model.Room;
+import com.mhdeveloper.compas.model.Ticket;
 import com.mhdeveloper.compas.model.User;
 
 import java.util.ArrayList;
@@ -58,6 +59,10 @@ public class FirestoreController{
 
 
 
+    }
+    /* Añadiremos un evento que si es la producido por la creacion de una room que nos la carge mediante un Notification*/
+    public static void saveRoom(final Room room){
+        db.collection(DatabaseStrings.COLLECTION_ROOMS).document(room.getUid()).set(room);
     }
     public static void chargeTicketsByRoom(final String tagRoom){
         db.collection(DatabaseStrings.COLLECTION_TICKETS).document(tagRoom).collection(DatabaseStrings.COLLECTION_TICKETS).get()
