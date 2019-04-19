@@ -9,10 +9,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageButton
+import com.google.firebase.firestore.FirebaseFirestore
 
 import com.mhdeveloper.compas.R
+import com.mhdeveloper.compas.controller.dao.FirestoreController
+import com.mhdeveloper.compas.controller.dao.UtilitiesClass
 import com.mhdeveloper.compas.controller.managements.ImageDownloader
+import com.mhdeveloper.compas.model.Room
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,12 +39,11 @@ class CreateRoomFragment : Fragment(), View.OnClickListener {
             R.id.imageChargeRoom -> {
                 chargePhoto()
 
-
-
             }
             R.id.button -> {
-
-
+            // Creacion de la room ->
+                var room = Room("${nameRoom!!.text}${UtilitiesClass.generateTag()}",nameRoom!!.text.toString(),"${nameRoom!!.text}_avatar.png")
+                FirestoreController.createRoom(room)
             }
         }
     }
@@ -51,6 +55,9 @@ class CreateRoomFragment : Fragment(), View.OnClickListener {
     //Elements Interface
     private var imageSelected: ImageButton? = null
     private var buttonCreate: Button? = null
+    private var nameRoom : EditText? = null
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -69,6 +76,7 @@ class CreateRoomFragment : Fragment(), View.OnClickListener {
         this.imageSelected!!.setOnClickListener(this)
         this.buttonCreate = view.findViewById(R.id.button)
         this.buttonCreate!!.setOnClickListener(this)
+        this.nameRoom = view.findViewById(R.id.nameRoom)
         return view;
     }
 

@@ -11,6 +11,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.mhdeveloper.compas.controller.managements.MngRooms;
 import com.mhdeveloper.compas.controller.notifications.INt;
 import com.mhdeveloper.compas.controller.notifications.NtChargeTickets;
+import com.mhdeveloper.compas.controller.notifications.NtCreationRoom;
 import com.mhdeveloper.compas.controller.notifications.NtRechargeAdapter;
 import com.mhdeveloper.compas.model.Room;
 import com.mhdeveloper.compas.model.Ticket;
@@ -87,6 +88,21 @@ public class FirestoreController{
             }
         });
 
+    }
+    public static void createRoom(final Room room){
+        boolean founded = false;
+        final NtCreationRoom notif = new NtCreationRoom(    room);
+        db.collection(DatabaseStrings.COLLECTION_ROOMS).whereEqualTo("uid",room.getUid()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()){
+                    notif.action();
+                }else{
+                    notif.getRoom().setUid(room.getUid()+UtilitiesClass.generateTag());
+                    createRoom(notif.getRoom());
+                }
+            }
+        });
     }
 
 
