@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "956844633921",
+    "firebase_url": "https://compas-73a6c.firebaseio.com",
+    "project_id": "compas-73a6c",
+    "storage_bucket": "compas-73a6c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:956844633921:android:11627b916d47e2c7",
+        "android_client_info": {
+          "package_name": "com.mhdeveloper.compas"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "956844633921-shhf5aa9vj4cl5hn3oa6kcsu2m62o85m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mhdeveloper.compas",
+            "certificate_hash": "e0722443664ac0a86c21ebc85193ba3a4b14519b"
+          }
+        },
+        {
+          "client_id": "956844633921-tegdos28blqjkboqklpift39pgjjrnhd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkqr9NpU9pTosLPtpZaqwM-kifqZu1nzc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "956844633921-tegdos28blqjkboqklpift39pgjjrnhd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
