@@ -1,6 +1,8 @@
 package com.mhdeveloper.compas
 
+import android.content.Intent
 import android.media.Image
+import android.net.Uri
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
@@ -16,11 +18,19 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.mhdeveloper.compas.controller.managements.ImageDownloader
+import com.mhdeveloper.compas.controller.managements.MngRooms
 import com.mhdeveloper.compas.view.AdapterRecyclerArea
+import com.mhdeveloper.compas.view.CreateRoomFragment
+import com.mhdeveloper.compas.view.NotRoomFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, View.OnClickListener ,NotRoomFragment.OnFragmentInteractionListener,CreateRoomFragment.OnFragmentInteractionListener{
+    // Not used
+    override fun onFragmentInteraction(uri: Uri) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
 
     var recycler:RecyclerView?= null
@@ -48,15 +58,23 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         email.text="misaelharinero@gmail.com"
         val exit:ImageButton = findViewById(R.id.logOutButton)
         exit.setOnClickListener(this)
+        val buttonAddRoom :ImageButton = findViewById(R.id.addRoom)
+        buttonAddRoom.setOnClickListener(this)
         // Buttons For Interface to change betwenn  fragmednts
         val buttonAdd : ImageButton = findViewById(R.id.buttonAdd)
         val buttonViewTicketsNotAttended : ImageButton = findViewById(R.id.TicketNotAttended)
         val buttonTicketAttended: ImageButton = findViewById(R.id.TicketAttended)
         val buttonShowUser:ImageButton = findViewById(R.id.ViewUser)
+
         buttonAdd.setOnClickListener(this)
         buttonViewTicketsNotAttended.setOnClickListener(this)
         buttonTicketAttended.setOnClickListener(this)
         buttonShowUser.setOnClickListener(this)
+        //In case not Room for that user we charge fragment to create one
+        if (MngRooms.getRoomSelected() == null){
+            var fragment = NotRoomFragment()
+            supportFragmentManager.beginTransaction().replace(R.id.container,fragment).commit()
+        }
 
 
     }
@@ -114,6 +132,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.ViewUser ->{
 
             }
+            R.id.addRoom -> {
+                var fragment = CreateRoomFragment()
+                supportFragmentManager.beginTransaction().replace(R.id.container,fragment).commit()
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == ImageDownloader.CODE_PICK_IMG){
+            //Do action
         }
     }
 }

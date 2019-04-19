@@ -35,7 +35,7 @@
                         android:background="@color/colorAccent"
                         android:nestedScrollingEnabled="false"/>
                 <ImageButton
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content" app:srcCompat="@mipmap/ic_launcher_round"
                         android:id="@+id/addRoom"/>
 

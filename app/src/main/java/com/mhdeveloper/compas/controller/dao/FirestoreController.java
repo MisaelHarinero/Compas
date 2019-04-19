@@ -30,6 +30,7 @@ public class FirestoreController{
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot){
                    MngRooms.setUser(documentSnapshot.toObject(User.class));
+                   chargeRooms(MngRooms.getUser().getTag());
                    event.action();
             }    
 

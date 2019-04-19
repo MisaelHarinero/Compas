@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              tools:context=".view.NotRoomFragment"
+              android:orientation="vertical">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/fragment_notroom_title" android:textStyle="bold" android:textAlignment="center"
+            android:textSize="24sp" android:layout_marginTop="50sp"/>
+    <TextView
+            android:text="@string/fragment_notroom_subtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:id="@+id/textView" android:textAlignment="center"
+            android:textSize="24sp"/>
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" android:gravity="center_horizontal|center_vertical">
+        <ImageButton
+                android:src="@android:drawable/ic_input_add"
+                android:layout_width="@dimen/button_height_width"
+                android:layout_height="@dimen/button_height_width" android:id="@+id/buttonCreateRoom"
+                android:background="@drawable/rounded_border"/>
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context=".view.CreateRoomFragment"
+            android:orientation="vertical">
+
+
+    <TextView
+            android:text="@string/fragment_create_room_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:id="@+id/titleCreationRoom" android:textStyle="bold"
+            android:textAlignment="center" android:textSize="30sp"/>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:gravity="center_horizontal|center_vertical">
+        <ImageButton
+                android:layout_width="@dimen/height_width_photo"
+                android:layout_height="@dimen/height_width_photo" android:id="@+id/imageChargeRoom"
+                android:background="@drawable/rounded_border" android:src="@mipmap/ic_launcher"/>
+    </LinearLayout>
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" android:layout_margin="@dimen/height_width_margin">
+        <TextView
+                android:text="@string/fragment_create_room_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/textView2" android:textStyle="bold"/>
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/nameRoom"/>
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" android:gravity="bottom">
+            <Button
+                    android:text="@string/fragment_create_room_create"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/button"
+                    android:layout_margin="@dimen/height_width_margin"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

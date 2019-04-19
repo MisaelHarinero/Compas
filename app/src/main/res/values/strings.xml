@@ -6,4 +6,12 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="fragment_create_room_title">Create your Room</string>
+    <string name="fragment_create_room_name">Name of the Room</string>
+    <string name="fragment_create_room_create">Create Room</string>
+    <string name="fragment_notroom_title">You haven´t got a Room,</string>
+    <string name="fragment_notroom_subtitle">please create one of them:</string>
 </resources>

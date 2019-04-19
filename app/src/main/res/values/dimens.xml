@@ -6,4 +6,7 @@
     <dimen name="nav_header_height">176dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="imageDimensions">60dp</dimen>
+    <dimen name="height_width_photo">80sp</dimen>
+    <dimen name="height_width_margin">60sp</dimen>
+    <dimen name="button_height_width">150sp</dimen>
 </resources>
