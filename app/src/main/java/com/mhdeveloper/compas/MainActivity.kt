@@ -18,13 +18,19 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.Timestamp
+import com.mhdeveloper.compas.controller.dao.FirestoreController
 import com.mhdeveloper.compas.controller.managements.ImageDownloader
 import com.mhdeveloper.compas.controller.managements.MngRooms
+import com.mhdeveloper.compas.model.User
 import com.mhdeveloper.compas.view.AdapterRecyclerArea
 import com.mhdeveloper.compas.view.CreateRoomFragment
 import com.mhdeveloper.compas.view.NotRoomFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import java.sql.Date
+import java.time.LocalDate
+import java.util.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, View.OnClickListener ,NotRoomFragment.OnFragmentInteractionListener,CreateRoomFragment.OnFragmentInteractionListener{
     // Not used
@@ -75,8 +81,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             var fragment = NotRoomFragment()
             supportFragmentManager.beginTransaction().replace(R.id.container,fragment).commit()
         }
-
-
+        MngRooms.setUser(User("asdasdasd","asdasdasd","asdasdasd","asdadsasd","ooo@gaga.es", null,false,null))
+        FirestoreController.instanceFirestore()
     }
 
     override fun onBackPressed() {

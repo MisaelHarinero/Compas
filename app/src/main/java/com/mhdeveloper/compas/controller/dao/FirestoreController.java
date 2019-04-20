@@ -90,8 +90,7 @@ public class FirestoreController{
 
     }
     public static void createRoom(final Room room){
-        boolean founded = false;
-        final NtCreationRoom notif = new NtCreationRoom(    room);
+        final NtCreationRoom notif = new NtCreationRoom(room);
         db.collection(DatabaseStrings.COLLECTION_ROOMS).whereEqualTo("uid",room.getUid()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
