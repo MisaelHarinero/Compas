@@ -19,12 +19,18 @@
     <string name="fragment_notification_accept">Accept</string>
     <string name="fragment_notification_decline">Decline</string>
     <string name="fragment_creation_title">Create a Ticket</string>
-    <string name="fragment_creation_title_ticket">Title: </string>
-    <string name="fragment_creation_title_ticket_contains">Ticket title </string>
-    <string name="fragment_creation_description_ticket">Description: </string>
+    <string name="fragment_creation_title_ticket">Title:</string>
+    <string name="fragment_creation_title_ticket_contains">Ticket title</string>
+    <string name="fragment_creation_description_ticket">Description:</string>
     <string name="fragment_creation_description_ticket_description">Ticket description</string>
-    <string name="fragment_creation_importance_ticket">Importance: </string>
+    <string name="fragment_creation_importance_ticket">Importance:</string>
     <string name="fragment_creation_image_ticket">ADD IMAGE</string>
     <string name="fragment_creation_button_create_ticket">CREATE TICKET</string>
     <string name="not_permissions">You havent got permissions for that</string>
+    <string name="hint_email">user@compas.com</string>
+    <string name="hint_password">*****************</string>
+    <string name="sign_in_button">Log In</string>
+    <string name="register_in_button">Create One</string>
+    <string name="register_in_text">Don`t have an account ?</string>
+    <string name="forgot_in_button">Forgot your password ?</string>
 </resources>

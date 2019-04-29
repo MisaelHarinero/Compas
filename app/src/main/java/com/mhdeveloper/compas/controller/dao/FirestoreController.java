@@ -2,14 +2,12 @@ package com.mhdeveloper.compas.controller.dao;
 
 import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.*;
 import com.mhdeveloper.compas.controller.managements.MngRooms;
-import com.mhdeveloper.compas.controller.notifications.INt;
-import com.mhdeveloper.compas.controller.notifications.NtChargeTickets;
-import com.mhdeveloper.compas.controller.notifications.NtCreationRoom;
-import com.mhdeveloper.compas.controller.notifications.NtRechargeAdapter;
+import com.mhdeveloper.compas.controller.notifications.*;
 import com.mhdeveloper.compas.model.Room;
 import com.mhdeveloper.compas.model.Ticket;
 import com.mhdeveloper.compas.model.User;
@@ -33,6 +31,11 @@ public class FirestoreController{
                    event.action();
             }    
 
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+               new NtErrorLoggin("ERROR GETTING USER");
+            }
         });
     }
     public static void chargeRooms(String userTag){
