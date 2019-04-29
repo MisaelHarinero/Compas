@@ -23,7 +23,7 @@
         <androidx.core.widget.NestedScrollView android:layout_width="match_parent"
                                                android:layout_height="match_parent">
             <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
-            android:orientation="vertical">
+                          android:orientation="vertical" android:gravity="center_horizontal">
 
                 <include layout="@layout/nav_header_main"/>
 
@@ -37,7 +37,7 @@
                 <ImageButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" app:srcCompat="@mipmap/ic_launcher_round"
-                        android:id="@+id/addRoom"/>
+                        android:id="@+id/addRoom" android:contentDescription="TODO"/>
 
 
             </LinearLayout>

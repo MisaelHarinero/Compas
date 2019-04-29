@@ -9,4 +9,7 @@
     <dimen name="height_width_photo">80sp</dimen>
     <dimen name="height_width_margin">60sp</dimen>
     <dimen name="button_height_width">150sp</dimen>
+    <dimen name="title">25sp</dimen>
+    <dimen name="subtitle">18sp</dimen>
+    <dimen name="image_height">200dp</dimen>
 </resources>

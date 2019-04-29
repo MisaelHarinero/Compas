@@ -1,10 +1,7 @@
 package com.mhdeveloper.compas
 
-import android.content.Intent
-import android.media.Image
 import android.net.Uri
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
 import androidx.core.view.GravityCompat
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -12,27 +9,24 @@ import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.Timestamp
+import com.google.android.material.snackbar.Snackbar
 import com.mhdeveloper.compas.controller.dao.FirestoreController
-import com.mhdeveloper.compas.controller.managements.ImageDownloader
 import com.mhdeveloper.compas.controller.managements.MngRooms
 import com.mhdeveloper.compas.model.User
-import com.mhdeveloper.compas.view.AdapterRecyclerArea
+import com.mhdeveloper.compas.view.adapters.AdapterRecyclerArea
 import com.mhdeveloper.compas.view.CreateRoomFragment
+import com.mhdeveloper.compas.view.CreationTicket
 import com.mhdeveloper.compas.view.NotRoomFragment
+import com.mhdeveloper.compas.view.NotificationsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
-import java.sql.Date
-import java.time.LocalDate
-import java.util.*
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, View.OnClickListener ,NotRoomFragment.OnFragmentInteractionListener,CreateRoomFragment.OnFragmentInteractionListener{
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, View.OnClickListener ,NotRoomFragment.OnFragmentInteractionListener,CreateRoomFragment.OnFragmentInteractionListener,NotificationsFragment.OnFragmentInteractionListener,CreationTicket.OnFragmentInteractionListener{
     // Not used
     override fun onFragmentInteraction(uri: Uri) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -53,7 +47,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.syncState()
         // Create the Room list from
         recycler = findViewById(R.id.recycler)
-        var adapter:AdapterRecyclerArea = AdapterRecyclerArea(this)
+        var adapter: AdapterRecyclerArea =
+            AdapterRecyclerArea(this,this)
         recycler!!.layoutManager = LinearLayoutManager(this)
         recycler!!.adapter = adapter
         nav_view.setNavigationItemSelectedListener(this)
@@ -65,7 +60,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val exit:ImageButton = findViewById(R.id.logOutButton)
         exit.setOnClickListener(this)
         val buttonAddRoom :ImageButton = findViewById(R.id.addRoom)
+        val notificationMenu:ImageButton  = findViewById(R.id.notificationMenu)
         buttonAddRoom.setOnClickListener(this)
+        notificationMenu.setOnClickListener(this)
         // Buttons For Interface to change betwenn  fragmednts
         val buttonAdd : ImageButton = findViewById(R.id.buttonAdd)
         val buttonViewTicketsNotAttended : ImageButton = findViewById(R.id.TicketNotAttended)
@@ -83,6 +80,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
         MngRooms.setUser(User("asdasdasd","asdasdasd","asdasdasd","asdadsasd","ooo@gaga.es", null,false,null))
         FirestoreController.instanceFirestore()
+        MngRooms.chargeRooms()
     }
 
     override fun onBackPressed() {
@@ -108,7 +106,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             else -> return super.onOptionsItemSelected(item)
         }
     }
+    fun chargeRoom(){
+        if (MngRooms.getPermissions().isWriteTk){
+            var fragment = CreationTicket()
+            supportFragmentManager.beginTransaction().replace(R.id.container,fragment).commit()
+        }else{
+            Snackbar.make(recycler!!.rootView,R.string.not_permissions,Snackbar.LENGTH_LONG)
+        }
 
+    }
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         when (item.itemId) {
@@ -127,6 +133,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 Toast.makeText(this,"Hi",Toast.LENGTH_LONG).show()
             }
             R.id.buttonAdd ->{
+                if (MngRooms.getPermissions().isWriteTk){
+                    var fragment = CreationTicket()
+                    supportFragmentManager.beginTransaction().replace(R.id.container,fragment).commit()
+                }else{
+                    Snackbar.make(v,R.string.not_permissions,Snackbar.LENGTH_LONG)
+                }
 
             }
             R.id.TicketNotAttended -> {
@@ -142,12 +154,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 var fragment = CreateRoomFragment()
                 supportFragmentManager.beginTransaction().replace(R.id.container,fragment).commit()
             }
+            R.id.notificationMenu ->{
+                var fragment = NotificationsFragment()
+                supportFragmentManager.beginTransaction().replace(R.id.container,fragment).commit()
+            }
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == ImageDownloader.CODE_PICK_IMG){
-            //Do action
-        }
-    }
+
+
 }

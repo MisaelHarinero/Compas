@@ -17,8 +17,10 @@ public class User {
     private Timestamp dateBorn;
     private boolean showAlias;
     private String imageRoute;
-    // Faltan constructores y getter and setter
 
+    public User(){
+
+    }
 
     public User(String tag, String alias, String name, String surname, String email, Timestamp dateBorn, boolean showAlias, String imageRoute) {
         this.tag = tag;

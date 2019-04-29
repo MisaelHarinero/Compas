@@ -4,10 +4,7 @@ import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.*;
 import com.mhdeveloper.compas.controller.managements.MngRooms;
 import com.mhdeveloper.compas.controller.notifications.INt;
 import com.mhdeveloper.compas.controller.notifications.NtChargeTickets;
@@ -17,6 +14,7 @@ import com.mhdeveloper.compas.model.Room;
 import com.mhdeveloper.compas.model.Ticket;
 import com.mhdeveloper.compas.model.User;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 
 public class FirestoreController{
@@ -41,13 +39,13 @@ public class FirestoreController{
         final NtRechargeAdapter notification  = new NtRechargeAdapter();
         final NtChargeTickets ntChargeTickets = new NtChargeTickets();
         //Consulta de aquellas rooms que tengan en su array members el tag introducido como parametro
-        db.collection(DatabaseStrings.COLLECTION_ROOMS).whereArrayContains("members",userTag).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection(DatabaseStrings.COLLECTION_ROOMS).whereArrayContains("members",userTag).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                if (queryDocumentSnapshots != null) {
                     ArrayList<Room> rooms = MngRooms.getRoomCharged();
                     rooms.clear();
-                    for (QueryDocumentSnapshot document :  task.getResult()) {
+                    for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
                         rooms.add(document.toObject(Room.class));
                     }
                     notification.action();
@@ -66,28 +64,30 @@ public class FirestoreController{
     public static void saveRoom(final Room room){
         db.collection(DatabaseStrings.COLLECTION_ROOMS).document(room.getUid()).set(room);
     }
-    public static void chargeTicketsByRoom(final String tagRoom){
-        db.collection(DatabaseStrings.COLLECTION_TICKETS).document(tagRoom).collection(DatabaseStrings.COLLECTION_TICKETS).get()
-        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+    public static void chargeTicketsByRoom(final String roomTag){
+        db.collection(DatabaseStrings.COLLECTION_TICKETS).whereEqualTo("roomTag",roomTag)
+        .addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                if (queryDocumentSnapshots!=null) {
                     ArrayList<Ticket>tik = null;
-                    if (MngRooms.getMapTickets().containsKey(tagRoom)/*Realizar la comprobacion de si existe la clave*/ ) {
-                        tik = MngRooms.getMapTickets().get(tagRoom);
+                    if (MngRooms.getMapTickets().containsKey(roomTag)/*Realizar la comprobacion de si existe la clave*/ ) {
+                        tik = MngRooms.getMapTickets().get(roomTag);
                     }else{
                         tik = new ArrayList<>();
-                        MngRooms.getMapTickets().put(tagRoom,tik);
+                        MngRooms.getMapTickets().put(roomTag,tik);
 
                     }
-                    for (QueryDocumentSnapshot document :  task.getResult()) {
+                    for (DocumentSnapshot document :  queryDocumentSnapshots.getDocuments()) {
                         tik.add(document.toObject(Ticket.class));
                     }
 
                 }
             }
         });
-
+    }
+    public static void saveTicket(Ticket ticket){
+        db.collection(DatabaseStrings.COLLECTION_TICKETS).document(ticket.getTag()).set(ticket);
     }
     public static void createRoom(final Room room){
         final NtCreationRoom notif = new NtCreationRoom(room);

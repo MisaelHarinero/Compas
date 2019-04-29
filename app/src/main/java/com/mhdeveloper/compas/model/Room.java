@@ -4,6 +4,7 @@ import androidx.collection.ArrayMap;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * @author Misael Harinero
@@ -20,7 +21,7 @@ public class Room {
      * key : user.tag
      * value: permission.name
      */
-    private ArrayMap<String,String> permissesUser;
+    private HashMap<String,String> permissesUser;
     /**
      * Arraylist de miembros : 
      * value : user.tag
@@ -28,23 +29,26 @@ public class Room {
     private ArrayList<String> members;
     private Timestamp createDate;
 
-    public Room(String uid, String name, String urlImage, ArrayList<Permission> permissions, ArrayMap<String, String> permissesUser) {
+    public Room(String uid, String name, String urlImage, ArrayList<Permission> permissions, HashMap<String, String> permissesUser) {
         this.uid = uid;
         this.name = name;
         this.urlImage = urlImage;
         this.permissions = permissions;
         this.permissesUser = permissesUser;
     }
+    public Room(){
 
+    }
     /**
      *Constructor que sera el que usaremos para crear la Room por primera vez 
      */
+
     public Room(String uid,String name,String userAdminTag){
         this.uid = uid;
         this.name = name;
         this.permissions = new ArrayList<>();
         this.permissions.add(DefaultPermissions.admin);
-        this.permissesUser = new ArrayMap<>();
+        this.permissesUser = new HashMap<>();
         this.permissesUser.put(userAdminTag,DefaultPermissions.admin.getName());
         this.members = new ArrayList<>();
         this.members.add(userAdminTag);
@@ -82,11 +86,11 @@ public class Room {
         this.permissions = permissions;
     }
 
-    public ArrayMap<String, String> getPermissesUser() {
+    public HashMap<String, String> getPermissesUser() {
         return permissesUser;
     }
 
-    public void setPermissesUser(ArrayMap<String, String> permissesUser) {
+    public void setPermissesUser(HashMap<String, String> permissesUser) {
         this.permissesUser = permissesUser;
     }
 

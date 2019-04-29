@@ -17,6 +17,9 @@ package com.mhdeveloper.compas.model;
         this.modifyRoom = modifyRoom;
     }
 
+    public Permission() {
+    }
+
     public String getName() {
         return name;
     }

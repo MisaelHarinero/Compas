@@ -39,6 +39,10 @@
                 android:id="@+id/mailUserID" android:layout_weight="10"/>
         <ImageButton
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content" app:srcCompat="@android:drawable/ic_popup_reminder"
+                android:id="@+id/notificationMenu" android:layout_weight="10" android:background="@color/clear"/>
+        <ImageButton
+                android:layout_width="wrap_content"
                 app:srcCompat="@android:drawable/btn_dialog"
                 android:id="@+id/logOutButton" android:layout_weight="1" android:background="@color/clear"
                 android:layout_height="wrap_content"/>

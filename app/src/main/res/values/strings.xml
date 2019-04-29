@@ -14,4 +14,17 @@
     <string name="fragment_create_room_create">Create Room</string>
     <string name="fragment_notroom_title">You haven´t got a Room,</string>
     <string name="fragment_notroom_subtitle">please create one of them:</string>
+    <string name="fragment_notification_element">has invited you to</string>
+    <string name="fragment_notification_title">NOTIFICATIONS</string>
+    <string name="fragment_notification_accept">Accept</string>
+    <string name="fragment_notification_decline">Decline</string>
+    <string name="fragment_creation_title">Create a Ticket</string>
+    <string name="fragment_creation_title_ticket">Title: </string>
+    <string name="fragment_creation_title_ticket_contains">Ticket title </string>
+    <string name="fragment_creation_description_ticket">Description: </string>
+    <string name="fragment_creation_description_ticket_description">Ticket description</string>
+    <string name="fragment_creation_importance_ticket">Importance: </string>
+    <string name="fragment_creation_image_ticket">ADD IMAGE</string>
+    <string name="fragment_creation_button_create_ticket">CREATE TICKET</string>
+    <string name="not_permissions">You havent got permissions for that</string>
 </resources>

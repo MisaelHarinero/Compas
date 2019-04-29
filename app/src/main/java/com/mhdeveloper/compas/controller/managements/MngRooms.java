@@ -1,6 +1,7 @@
 package com.mhdeveloper.compas.controller.managements;
 
 import androidx.collection.ArrayMap;
+import com.mhdeveloper.compas.controller.dao.FirestoreController;
 import com.mhdeveloper.compas.model.*;
 
 import java.util.ArrayList;
@@ -79,5 +80,9 @@ public class MngRooms {
 
     public static void setMapTickets(ArrayMap<String, ArrayList<Ticket>> mapTickets) {
         MngRooms.mapTickets = mapTickets;
+    }
+    public static void chargeRooms(){
+        FirestoreController.instanceFirestore();
+        FirestoreController.chargeRooms(user.getTag());
     }
 }

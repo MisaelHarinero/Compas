@@ -1,25 +1,17 @@
 package com.mhdeveloper.compas.view
 
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageButton
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 import com.mhdeveloper.compas.R
-import com.mhdeveloper.compas.controller.dao.CloudController
-import com.mhdeveloper.compas.controller.dao.DatabaseStrings
-import com.mhdeveloper.compas.controller.dao.FirestoreController
-import com.mhdeveloper.compas.controller.dao.UtilitiesClass
-import com.mhdeveloper.compas.controller.managements.MngRooms
-import com.mhdeveloper.compas.model.Room
+import com.mhdeveloper.compas.view.adapters.AdapterRecyclerNotifications
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -29,45 +21,21 @@ private const val ARG_PARAM2 = "param2"
 /**
  * A simple [Fragment] subclass.
  * Activities that contain this fragment must implement the
- * [CreateRoomFragment.OnFragmentInteractionListener] interface
+ * [NotificationsFragment.OnFragmentInteractionListener] interface
  * to handle interaction events.
- * Use the [CreateRoomFragment.newInstance] factory method to
+ * Use the [NotificationsFragment.newInstance] factory method to
  * create an instance of this fragment.
  *
  */
-class CreateRoomFragment : Fragment(), View.OnClickListener {
-    override fun onClick(v: View?) {
-        when(v!!.id){
-            R.id.imageChargeRoom -> {
-                chargePhoto()
-
-            }
-            R.id.button -> {
-            // Creacion de la room ->
-                if (uri != null){
-
-                }
-                var room = Room("${nameRoom!!.text}${UtilitiesClass.generateTag()}",nameRoom!!.text.toString(),MngRooms.getUser().tag)
-                if (uri != null){
-                    room.urlImage = "${nameRoom!!.text}_avatar.jpg"
-                    CloudController.savePhoto(uri,"${DatabaseStrings.COLLECTION_PHOTOS_ROOMS}${room.urlImage}")
-                }
-                FirestoreController.createRoom(room)
-            }
-        }
-    }
-
+class NotificationsFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
-    //Elements Interface
-    private var imageSelected: ImageButton? = null
-    private var buttonCreate: Button? = null
-    private var nameRoom : EditText? = null
-    //Photo
-    var uri:Uri? = null
-    val CODE_PICK_IMG = 1234
+    /**
+     * Interface Elements
+     */
+    private var recycler:RecyclerView?= null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -83,25 +51,19 @@ class CreateRoomFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        var view = inflater.inflate(R.layout.fragment_create_room, container, false)
-        this.imageSelected = view.findViewById(R.id.imageChargeRoom)
-        this.imageSelected!!.setOnClickListener(this)
-        this.buttonCreate = view.findViewById(R.id.button)
-        this.buttonCreate!!.setOnClickListener(this)
-        this.nameRoom = view.findViewById(R.id.nameRoom)
-        return view;
+        var view = inflater.inflate(R.layout.fragment_notifications, container, false)
+        recycler = view.findViewById(R.id.recycler)
+        var adapter:AdapterRecyclerNotifications = AdapterRecyclerNotifications(view.context)
+        recycler!!.layoutManager = LinearLayoutManager(context)
+        recycler!!.adapter = adapter
+        return view
     }
 
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
     }
-    fun chargePhoto (){
-        val getIntent:Intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-        getIntent.setType("image/*")
-        getIntent.addCategory(Intent.CATEGORY_OPENABLE)
-        startActivityForResult(getIntent,CODE_PICK_IMG)
-    }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is OnFragmentInteractionListener) {
@@ -139,24 +101,16 @@ class CreateRoomFragment : Fragment(), View.OnClickListener {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment CreateRoomFragment.
+         * @return A new instance of fragment NotificationsFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            CreateRoomFragment().apply {
+            NotificationsFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
                 }
             }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == CODE_PICK_IMG && resultCode == Activity.RESULT_OK){
-            uri = data!!.data
-            imageSelected!!.setImageURI(uri)
-        }
-
     }
 }

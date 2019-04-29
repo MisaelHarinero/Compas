@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+              android:orientation="vertical"
+             tools:context=".view.CreationTicket">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/hello_blank_fragment" android:textSize="@dimen/title"
+            android:textAlignment="center"
+            android:textStyle="bold"/>
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" android:layout_margin="@dimen/fab_margin">
+        <TextView
+                android:text="@string/fragment_creation_title_ticket"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/textView5" android:textSize="@dimen/subtitle"
+                android:textStyle="bold"/>
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/title" android:hint="@string/fragment_creation_title_ticket_contains"/>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <TextView
+                    android:text="@string/fragment_creation_importance_ticket"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/textView8" android:textStyle="bold"
+                    android:layout_marginRight="@dimen/nav_header_vertical_spacing" android:textSize="@dimen/subtitle"/>
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/numberImportance" android:textStyle="bold"
+                    android:textSize="@dimen/subtitle" android:text="3"/>
+        </LinearLayout>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <Button
+                    android:text="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/im1" android:layout_weight="1"
+                    android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"/>
+            <Button
+                    android:text="2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/im2" android:layout_weight="1"
+                    android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"/>
+            <Button
+                    android:text="3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/im3" android:layout_weight="1"
+                    android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"/>
+            <Button
+                    android:text="4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/im4" android:layout_weight="1"
+                    android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"/>
+            <Button
+                    android:text="5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/im5" android:layout_weight="1"
+                    android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"/>
+        </LinearLayout>
+        <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/button_height_width">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                          android:orientation="vertical">
+                <ImageView
+                        android:src="@color/clear"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" android:id="@+id/image"/>
+            </LinearLayout>
+        </ScrollView>
+        <Button
+                android:text="@string/fragment_creation_image_ticket"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/addImage"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"/>
+        <TextView
+                android:text="@string/fragment_creation_description_ticket"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/textView10" android:textSize="@dimen/subtitle"
+                android:textStyle="bold"/>
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" app:labelVisibilityMode="auto"
+        >
+            <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/nav_header_height"
+                    android:inputType="textMultiLine"
+                    android:gravity="start|top"
+                    android:ems="10"
+                    android:id="@+id/description"/>
+            <Button
+                    android:text="@string/fragment_creation_button_create_ticket"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/createTicket"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:background="@color/colorBaseCompas"/>
+        </com.google.android.material.bottomnavigation.BottomNavigationView>
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
