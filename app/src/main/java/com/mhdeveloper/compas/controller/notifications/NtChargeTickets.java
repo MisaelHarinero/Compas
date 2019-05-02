@@ -17,22 +17,6 @@ public class NtChargeTickets implements INt{
                 }
             }
         }
-        boolean founded ;
-        int position ;
-        for (String key : MngRooms.getMapTickets().keySet()) {
-            founded = false;
-            position = -1;
-            for (int i = 0; i <MngRooms.getRoomCharged().size() ; i++) {
-                if (key.equals(MngRooms.getRoomCharged().get(i).getUid())) {
-                    founded = true;
-                    position = i;
-                }
-            }
-            if (!founded) {
-
-                MngRooms.getRoomCharged().remove(position);
-            }
-        }
 
     }
 

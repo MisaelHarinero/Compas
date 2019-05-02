@@ -92,6 +92,19 @@ public class FirestoreController{
     public static void saveTicket(Ticket ticket){
         db.collection(DatabaseStrings.COLLECTION_TICKETS).document(ticket.getTag()).set(ticket);
     }
+    public static void saveUser(User user,String uid){
+        db.collection(DatabaseStrings.COLLECTION_USERS).document(uid).set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                new NtRegister().action();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                new NtErrorLoggin("ERROR_DATABASE_SAVE");
+            }
+        });
+    }
     public static void createRoom(final Room room){
         final NtCreationRoom notif = new NtCreationRoom(room);
         db.collection(DatabaseStrings.COLLECTION_ROOMS).whereEqualTo("uid",room.getUid()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {

@@ -5,7 +5,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".LogInActivity" android:id="@+id/container"
+        tools:context=".LogInActivity"
         android:orientation="vertical" android:layout_margin="@dimen/height_margin"
 >
 
@@ -63,10 +63,9 @@
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:theme="@android:style/TextAppearance.Holo.Widget.TextView"
+                android:layout_height="wrap_content"
                 android:gravity="bottom|center_horizontal" android:background="@color/clear">
-            <Button
-                    android:text="@string/forgot_in_button"
+            <Button android:text="@string/forgot_in_button"
                     android:layout_width="wrap_content"
                     android:drawableBottom="@color/clear"
                     android:layout_height="wrap_content" android:id="@+id/forgotPasswd"
@@ -77,7 +76,7 @@
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" android:theme="@android:style/TextAppearance.Holo.Widget.TextView"
+                android:layout_height="match_parent"
                 android:gravity="bottom|center_horizontal">
             <TextView
                     android:text="@string/register_in_text"
@@ -86,7 +85,8 @@
             <Button
                     android:text="@string/register_in_button"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/createAccount" android:background="@color/clear"
+                    android:layout_height="wrap_content" android:id="@+id/createAccount"
+                    android:background="@color/clear"
                     android:drawableBottom="@color/clear"
                     android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
         </LinearLayout>

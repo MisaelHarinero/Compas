@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import com.mhdeveloper.compas.R
 import com.mhdeveloper.compas.controller.dao.AuthController
 import com.mhdeveloper.compas.controller.notifications.NtErrorLoggin
@@ -60,14 +61,15 @@ class LogInFragment : Fragment(), View.OnClickListener {
                 R.id.logInButton ->{
                     if ((!email!!.text.toString().equals(""))&&(!passwd!!.text.toString().equals(""))){
                         var auth = AuthController()
-                        auth.signInWithMailPasswd(email!!.text.toString(),passwd!!.email.toString())
+                        auth.signInWithMailPasswd(email!!.text.toString(),passwd!!.text.toString())
                     }
                 }
                 R.id.forgotPasswd ->{
 
                 }
                 R.id.createAccount->{
-
+                    var fragment = FragmentRegister()
+                    fragmentManager!!.beginTransaction().replace(R.id.container,fragment).commit()
                 }
         }
     }
@@ -86,7 +88,7 @@ class LogInFragment : Fragment(), View.OnClickListener {
         this.buttonLogIn!!.setOnClickListener(this)
         this.buttonForgot!!.setOnClickListener(this)
         this.buttonCreateAccount!!.setOnClickListener(this)
-        NtErrorLoggin.setFragment(this)
+
         return view
     }
 

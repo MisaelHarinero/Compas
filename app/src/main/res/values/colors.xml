@@ -6,4 +6,6 @@
     <color name="clear">#00FFFFFF</color>
     <color name="resaltedColor">#111111</color>
     <color name="colorBaseCompas">#D6CDE5</color>
+    <color name="colorCorrect">#AD8BC34A</color>
+    <color name="colorIncorrect">#ADC34A4A</color>
 </resources>

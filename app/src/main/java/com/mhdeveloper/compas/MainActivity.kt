@@ -1,5 +1,6 @@
 package com.mhdeveloper.compas
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import com.google.android.material.navigation.NavigationView
@@ -15,6 +16,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
+import com.mhdeveloper.compas.controller.dao.AuthController
 import com.mhdeveloper.compas.controller.dao.FirestoreController
 import com.mhdeveloper.compas.controller.managements.MngRooms
 import com.mhdeveloper.compas.model.User
@@ -55,8 +57,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Elements for Interface Menu
         val name : TextView = findViewById(R.id.nameUserID)
         val email:TextView = findViewById(R.id.mailUserID)
-        name.text="Misael"
-        email.text="misaelharinero@gmail.com"
+        name.text="${MngRooms.getUser().name} ${MngRooms.getUser().surname}"
+        email.text=MngRooms.getUser().email
         val exit:ImageButton = findViewById(R.id.logOutButton)
         exit.setOnClickListener(this)
         val buttonAddRoom :ImageButton = findViewById(R.id.addRoom)
@@ -78,7 +80,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             var fragment = NotRoomFragment()
             supportFragmentManager.beginTransaction().replace(R.id.container,fragment).commit()
         }
-        MngRooms.setUser(User("asdasdasd","asdasdasd","asdasdasd","asdadsasd","ooo@gaga.es", null,false,null))
         FirestoreController.instanceFirestore()
         MngRooms.chargeRooms()
     }
@@ -130,7 +131,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onClick(v: View?) {
         when(v!!.id){
             R.id.logOutButton -> {
-                Toast.makeText(this,"Hi",Toast.LENGTH_LONG).show()
+                var intent = Intent(this,LogInActivity::class.java)
+                AuthController().logOut()
+                startActivity(intent)
+                finish()
             }
             R.id.buttonAdd ->{
                 if (MngRooms.getPermissions().isWriteTk){
