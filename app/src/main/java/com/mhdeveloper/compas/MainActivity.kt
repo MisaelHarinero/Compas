@@ -44,6 +44,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         )
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
+        //Instance Elements Data
+        FirestoreController.instanceFirestore()
+        MngRooms.chargeRooms()
         // Create the Room list from
         recycler = findViewById(R.id.recycler)
         var adapter: AdapterRecyclerArea =
@@ -76,9 +79,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if (MngRooms.getRoomSelected() == null){
             var fragment = NotRoomFragment()
             supportFragmentManager.beginTransaction().replace(R.id.container,fragment).commit()
+        }else{
+            //CARGA DE LAYOUT DEPENDIENDO SI PUEDE LEER O ESCRIBIR
         }
-        FirestoreController.instanceFirestore()
-        MngRooms.chargeRooms()
+
     }
 
     override fun onBackPressed() {

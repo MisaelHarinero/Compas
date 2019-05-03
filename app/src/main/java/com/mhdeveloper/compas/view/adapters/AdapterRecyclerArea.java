@@ -47,12 +47,8 @@ public class AdapterRecyclerArea  extends RecyclerView.Adapter<AdapterRecyclerAr
             @Override
             public void onClick(View v) {
                MngRooms.setRoomSelected(rooms.get(position));
-                for (Permission per: MngRooms.getRoomSelected().getPermissions()) {
-                    if (per.getName().equals(MngRooms.getRoomSelected().getPermissesUser().get(MngRooms.getUser().getTag()))){
-                        MngRooms.setPermissions(per);
-                        activity.chargeRoom();
-                    }
-                }
+               MngRooms.chargePermissions();
+               activity.chargeRoom();
             }
         });
         holder.name.setText(rooms.get(position).getName());

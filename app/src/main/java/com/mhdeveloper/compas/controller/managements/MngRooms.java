@@ -75,6 +75,14 @@ public class MngRooms {
         MngRooms.haveRooms = haveRooms;
     }
 
+    public static void chargePermissions(){
+        for (Permission per: MngRooms.getRoomSelected().getPermissions()) {
+            if (per.getName().equals(MngRooms.getRoomSelected().getPermissesUser().get(MngRooms.getUser().getTag()))){
+                MngRooms.setPermissions(per);
+            }
+        }
+    }
+
     public static ArrayMap<String, ArrayList<Ticket>> getMapTickets() {
         return mapTickets;
     }
@@ -91,6 +99,7 @@ public class MngRooms {
             for (Room room:getRoomCharged()) {
                 if (room.getUid().equals(getRoomSelected().getUid())){
                     setRoomSelected(room);
+                    chargePermissions();
                     new NtRechargeAdapterUser();
                 }
             }
@@ -100,6 +109,7 @@ public class MngRooms {
         if (getRoomSelected() == null){
             if (MngRooms.getRoomCharged().size()>0){
                 setRoomSelected(MngRooms.getRoomCharged().get(0));
+                chargePermissions();
             }
         }
     }
