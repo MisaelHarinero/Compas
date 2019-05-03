@@ -35,19 +35,21 @@
     <string name="forgot_in_button">Forgot your password ?</string>
     <!--  Fragment Log IN-->
     <string name="register">LOG IN</string>
-    <string name="name">NAME: </string>
-    <string name="surname">SURNAME: </string>
+    <string name="name">NAME:</string>
+    <string name="surname">SURNAME:</string>
     <string name="birthdate">BIRTHDATE</string>
-    <string name="email">EMAIL: </string>
-    <string name="password">PASSWORD: </string>
-    <string name="repeatpass">REPEAT PASSWORD: </string>
+    <string name="email">EMAIL:</string>
+    <string name="password">PASSWORD:</string>
+    <string name="repeatpass">REPEAT PASSWORD:</string>
     <string name="accept">Aceptar la politica de Privacidade de la Empresa y que alamcenemos sus datos</string>
     <string name="logOut">LogOut</string>
     <string name="editUser">User Data</string>
-    <string name="tag">TAG_USER: </string>
-    <string name="karma">KARMA: </string>
-    <string name="aceptar">ACPETAR: </string>
+    <string name="tag">TAG_USER:</string>
+    <string name="karma">KARMA:</string>
+    <string name="aceptar">ACPETAR:</string>
     <string name="myticket">Mis Tickets</string>
     <string name="ticketNoAtendidos">Tickets No Atendidos</string>
     <string name="fragment_creation_user_button">Continue</string>
+    <!-- GESTIONAR ROOM FRAGMENT-->
+    <string name="fragment_controll_room_permissions">PERMISSIONS</string>
 </resources>

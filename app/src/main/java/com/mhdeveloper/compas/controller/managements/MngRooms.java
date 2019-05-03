@@ -2,6 +2,7 @@ package com.mhdeveloper.compas.controller.managements;
 
 import androidx.collection.ArrayMap;
 import com.mhdeveloper.compas.controller.dao.FirestoreController;
+import com.mhdeveloper.compas.controller.notifications.NtRechargeAdapterUser;
 import com.mhdeveloper.compas.model.*;
 
 import java.util.ArrayList;
@@ -84,5 +85,22 @@ public class MngRooms {
     public static void chargeRooms(){
         FirestoreController.instanceFirestore();
         FirestoreController.chargeRooms(user.getTag());
+    }
+    public static void rechargeRoomSelected(){
+        if (getRoomSelected() != null){
+            for (Room room:getRoomCharged()) {
+                if (room.getUid().equals(getRoomSelected().getUid())){
+                    setRoomSelected(room);
+                    new NtRechargeAdapterUser();
+                }
+            }
+        }
+    }
+    public static void selectFirstInit(){
+        if (getRoomSelected() == null){
+            if (MngRooms.getRoomCharged().size()>0){
+                setRoomSelected(MngRooms.getRoomCharged().get(0));
+            }
+        }
     }
 }

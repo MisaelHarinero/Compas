@@ -53,6 +53,8 @@ public class FirestoreController{
                     }
                     notification.action();
                     ntChargeTickets.action();
+                    MngRooms.rechargeRoomSelected();
+                    MngRooms.selectFirstInit();
                 }else{
 
                     //Error Mssg Class Implementation
@@ -110,7 +112,7 @@ public class FirestoreController{
         db.collection(DatabaseStrings.COLLECTION_ROOMS).whereEqualTo("uid",room.getUid()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()){
+                if (!task.isSuccessful()){
                     notif.action();
                 }else{
                     notif.getRoom().setUid(room.getUid()+UtilitiesClass.generateTag());

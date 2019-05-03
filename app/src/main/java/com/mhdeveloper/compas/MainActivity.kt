@@ -20,15 +20,12 @@ import com.mhdeveloper.compas.controller.dao.AuthController
 import com.mhdeveloper.compas.controller.dao.FirestoreController
 import com.mhdeveloper.compas.controller.managements.MngRooms
 import com.mhdeveloper.compas.model.User
+import com.mhdeveloper.compas.view.*
 import com.mhdeveloper.compas.view.adapters.AdapterRecyclerArea
-import com.mhdeveloper.compas.view.CreateRoomFragment
-import com.mhdeveloper.compas.view.CreationTicket
-import com.mhdeveloper.compas.view.NotRoomFragment
-import com.mhdeveloper.compas.view.NotificationsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, View.OnClickListener ,NotRoomFragment.OnFragmentInteractionListener,CreateRoomFragment.OnFragmentInteractionListener,NotificationsFragment.OnFragmentInteractionListener,CreationTicket.OnFragmentInteractionListener{
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, View.OnClickListener ,NotRoomFragment.OnFragmentInteractionListener,CreateRoomFragment.OnFragmentInteractionListener,NotificationsFragment.OnFragmentInteractionListener,CreationTicket.OnFragmentInteractionListener,FragmentControllRoom.OnFragmentInteractionListener{
     // Not used
     override fun onFragmentInteraction(uri: Uri) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -152,6 +149,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             }
             R.id.ViewUser ->{
+                var fragment = FragmentControllRoom()
+                supportFragmentManager.beginTransaction().replace(R.id.container,fragment).commit()
 
             }
             R.id.addRoom -> {

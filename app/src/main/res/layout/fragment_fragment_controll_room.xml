@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              tools:context=".view.FragmentControllRoom"
+              android:orientation="vertical" android:padding="@dimen/height_margin">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/fragment_create_room_name" android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" android:textStyle="bold"
+            android:id="@+id/nameRoom"/>
+    <TextView
+            android:text="@string/fragment_notroom_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:id="@+id/tagRoom" android:textAlignment="center"/>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:gravity="center">
+        <ImageButton
+                android:src="@android:drawable/ic_dialog_dialer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/buttonEditRoom"
+                android:background="@color/clear" android:layout_margin="@dimen/fab_margin"/>
+        <ImageButton
+                android:src="@android:drawable/ic_menu_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/buttonUsers"
+                android:layout_margin="@dimen/fab_margin" android:background="@color/clear"/>
+    </LinearLayout>
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:orientation="vertical" android:id="@+id/stack"/>
+    </ScrollView>
+
+</LinearLayout>
