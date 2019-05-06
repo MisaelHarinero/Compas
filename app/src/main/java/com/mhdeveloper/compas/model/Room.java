@@ -48,6 +48,8 @@ public class Room {
         this.name = name;
         this.permissions = new ArrayList<>();
         this.permissions.add(DefaultPermissions.admin);
+        this.permissions.add(DefaultPermissions.normalUser);
+        this.permissions.add(DefaultPermissions.responsable);
         this.permissesUser = new HashMap<>();
         this.permissesUser.put(userAdminTag,DefaultPermissions.admin.getName());
         this.members = new ArrayList<>();

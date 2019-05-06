@@ -78,6 +78,8 @@ class FragmentControllRoom : Fragment(), View.OnClickListener {
 
             }
             R.id.buttonUsers ->{
+                var fragment = FragmentUsers()
+                activity!!.supportFragmentManager.beginTransaction().replace(R.id.stack,fragment).commit()
 
             }
         }

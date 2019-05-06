@@ -5,23 +5,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.mhdeveloper.compas.R;
+import com.mhdeveloper.compas.controller.dao.FirestoreController;
+import com.mhdeveloper.compas.controller.managements.MngRooms;
+import com.mhdeveloper.compas.model.Notification;
 
 import java.util.ArrayList;
 
 public class AdapterRecyclerNotifications extends RecyclerView.Adapter<AdapterRecyclerNotifications.MyView> {
-    private ArrayList<String> cadenas = new ArrayList<>();
+    private ArrayList<Notification> notifications = new ArrayList<>();
     private Context context;
     public AdapterRecyclerNotifications(Context context){
-        cadenas.add("Uno");
-        cadenas.add("Dos");
-        cadenas.add("Tres");
-        cadenas.add("Cuatro");
+        notifications = MngRooms.getNotifications();
         this.context = context;
 
     }
@@ -34,19 +33,25 @@ public class AdapterRecyclerNotifications extends RecyclerView.Adapter<AdapterRe
 
     @Override
     public void onBindViewHolder(@NonNull AdapterRecyclerNotifications.MyView holder, final int position) {
-        holder.userTag.setText(cadenas.get(position)+"#0000");
-        holder.roomName.setText(cadenas.get(position).toUpperCase());
+        holder.userTag.setText(notifications.get(position).getTagUser());
+        holder.roomName.setText(notifications.get(position).getRoomUid().toUpperCase());
         holder.buttonAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, cadenas.get(position), Toast.LENGTH_SHORT).show();
+                FirestoreController.eventNotification(notifications.get(position),true);
+            }
+        });
+        holder.buttonDecline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirestoreController.eventNotification(notifications.get(position),false);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return cadenas.size();
+        return notifications.size();
     }
 
     public class MyView extends  RecyclerView.ViewHolder{

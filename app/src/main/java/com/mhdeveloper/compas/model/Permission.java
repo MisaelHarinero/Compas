@@ -1,4 +1,7 @@
 package com.mhdeveloper.compas.model;
+
+import androidx.annotation.NonNull;
+
 /**
  * @author Misael Harinero
  * Clase que es modelo para guardar los datos de un permiso
@@ -58,5 +61,11 @@ package com.mhdeveloper.compas.model;
 
     public void setModifyRoom(boolean modifyRoom) {
         this.modifyRoom = modifyRoom;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return this.name;
     }
 }

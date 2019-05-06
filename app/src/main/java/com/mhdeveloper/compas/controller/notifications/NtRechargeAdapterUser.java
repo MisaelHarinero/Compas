@@ -1,10 +1,10 @@
 package com.mhdeveloper.compas.controller.notifications;
 
 import com.mhdeveloper.compas.view.FragmentControllRoom;
-import com.mhdeveloper.compas.view.adapters.AdapterRecyclerArea;
+import com.mhdeveloper.compas.view.adapters.AdapterRecyclerUser;
 
 public class NtRechargeAdapterUser implements INt {
-    private static AdapterRecyclerArea adapter;
+    private static AdapterRecyclerUser adapter;
     private static FragmentControllRoom fragmentControllRoom;
 
     public NtRechargeAdapterUser() {
@@ -21,6 +21,19 @@ public class NtRechargeAdapterUser implements INt {
         }
     }
 
+    public static AdapterRecyclerUser getAdapter() {
+        return adapter;
+    }
 
+    public static void setAdapter(AdapterRecyclerUser adapter) {
+        NtRechargeAdapterUser.adapter = adapter;
+    }
 
+    public static FragmentControllRoom getFragmentControllRoom() {
+        return fragmentControllRoom;
+    }
+
+    public static void setFragmentControllRoom(FragmentControllRoom fragmentControllRoom) {
+        NtRechargeAdapterUser.fragmentControllRoom = fragmentControllRoom;
+    }
 }

@@ -12,20 +12,20 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ImageButton
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.mhdeveloper.compas.controller.dao.AuthController
 import com.mhdeveloper.compas.controller.dao.FirestoreController
 import com.mhdeveloper.compas.controller.managements.MngRooms
-import com.mhdeveloper.compas.model.User
+import com.mhdeveloper.compas.controller.notifications.NtOneSelected
 import com.mhdeveloper.compas.view.*
 import com.mhdeveloper.compas.view.adapters.AdapterRecyclerArea
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, View.OnClickListener ,NotRoomFragment.OnFragmentInteractionListener,CreateRoomFragment.OnFragmentInteractionListener,NotificationsFragment.OnFragmentInteractionListener,CreationTicket.OnFragmentInteractionListener,FragmentControllRoom.OnFragmentInteractionListener{
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, View.OnClickListener ,NotRoomFragment.OnFragmentInteractionListener,CreateRoomFragment.OnFragmentInteractionListener,NotificationsFragment.OnFragmentInteractionListener,CreationTicket.OnFragmentInteractionListener,FragmentControllRoom.OnFragmentInteractionListener,
+FragmentUsers.OnFragmentInteractionListener{
     // Not used
     override fun onFragmentInteraction(uri: Uri) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -33,6 +33,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 
     var recycler:RecyclerView?= null
+    var chargedFirst:Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +48,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         //Instance Elements Data
         FirestoreController.instanceFirestore()
         MngRooms.chargeRooms()
+        NtOneSelected.setActivity(this)
         // Create the Room list from
         recycler = findViewById(R.id.recycler)
         var adapter: AdapterRecyclerArea =
@@ -76,12 +78,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         buttonTicketAttended.setOnClickListener(this)
         buttonShowUser.setOnClickListener(this)
         //In case not Room for that user we charge fragment to create one
-        if (MngRooms.getRoomSelected() == null){
-            var fragment = NotRoomFragment()
-            supportFragmentManager.beginTransaction().replace(R.id.container,fragment).commit()
-        }else{
-            //CARGA DE LAYOUT DEPENDIENDO SI PUEDE LEER O ESCRIBIR
-        }
+
 
     }
 
@@ -166,6 +163,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 supportFragmentManager.beginTransaction().replace(R.id.container,fragment).commit()
             }
         }
+    }
+    fun firstTimeCharge(){
+        if (MngRooms.getRoomSelected() == null && !chargedFirst){
+            var fragment = NotRoomFragment()
+            supportFragmentManager.beginTransaction().replace(R.id.container,fragment).commit()
+        }else{
+            chargeRoom()
+            chargedFirst = true
+        }
+
+
     }
 
 

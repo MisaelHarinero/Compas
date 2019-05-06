@@ -93,6 +93,7 @@ public class MngRooms {
     public static void chargeRooms(){
         FirestoreController.instanceFirestore();
         FirestoreController.chargeRooms(user.getTag());
+        FirestoreController.chargeNotifications(user.getTag());
     }
     public static void rechargeRoomSelected(){
         if (getRoomSelected() != null){

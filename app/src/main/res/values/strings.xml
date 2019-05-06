@@ -52,4 +52,8 @@
     <string name="fragment_creation_user_button">Continue</string>
     <!-- GESTIONAR ROOM FRAGMENT-->
     <string name="fragment_controll_room_permissions">PERMISSIONS</string>
+    <!-- USER FRAGMENT -->
+    <string name="fragment_user_add_new_user">Add New User: </string>
+    <string name="fragment_user_add_new_user_tag">User Tag: </string>
+    <string name="fragment_user_add_new_user_tag_example">User#0000 </string>
 </resources>

@@ -44,5 +44,6 @@ dependencies {
         transitive = true
     }
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.+'
 }
 apply plugin: 'com.google.gms.google-services'

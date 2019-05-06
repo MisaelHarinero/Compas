@@ -8,4 +8,5 @@
     <color name="colorBaseCompas">#D6CDE5</color>
     <color name="colorCorrect">#AD8BC34A</color>
     <color name="colorIncorrect">#ADC34A4A</color>
+    <color name="grayBack">#716A7C</color>
 </resources>
