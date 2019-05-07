@@ -9,10 +9,10 @@
 5. Control Tickets
 6. Create Notification and control It
 7. Control the Users and change their rolls and delete him
+8. Create Android Notifications for new Tickets on Database
 
- SOLUTION `Error with the recharge of the room, go always to the first fragment`
-Whit a IF that see if that check we charge Initial time
+ 
+Last -- Alpha 0.0.0.0.4
 
-Developing --> Control Ticket and Mssg 
-
-Last -- Alpha 0.0.0.0.3
+Developing -->
+Interface for see Tickets and Messages

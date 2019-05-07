@@ -6,6 +6,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.*;
+import com.mhdeveloper.compas.controller.managements.Counter;
 import com.mhdeveloper.compas.controller.managements.MngRooms;
 import com.mhdeveloper.compas.controller.notifications.*;
 import com.mhdeveloper.compas.model.Notification;
@@ -45,7 +46,7 @@ public class FirestoreController {
         final NtRechargeAdapter notification = new NtRechargeAdapter();
         final NtChargeTickets ntChargeTickets = new NtChargeTickets();
         //Consulta de aquellas rooms que tengan en su array members el tag introducido como parametro
-        db.collection(DatabaseStrings.COLLECTION_ROOMS).whereArrayContains("members", userTag).addSnapshotListener(new EventListener<QuerySnapshot>() {
+        MngRooms.getRegistrations().add(db.collection(DatabaseStrings.COLLECTION_ROOMS).whereArrayContains("members", userTag).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                 if (queryDocumentSnapshots != null) {
@@ -64,7 +65,7 @@ public class FirestoreController {
                     //Error Mssg Class Implementation
                 }
             }
-        });
+        }));
 
 
     }
@@ -147,7 +148,7 @@ public class FirestoreController {
     }
 
     public static void chargeNotifications(String tag) {
-        db.collection(DatabaseStrings.COLLECTION_NOTIFICATIONS).whereEqualTo("tagUser", tag).addSnapshotListener(new EventListener<QuerySnapshot>() {
+       MngRooms.getRegistrations().add( db.collection(DatabaseStrings.COLLECTION_NOTIFICATIONS).whereEqualTo("tagUser", tag).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                 if (queryDocumentSnapshots != null) {
@@ -158,7 +159,7 @@ public class FirestoreController {
                     }
                 }
             }
-        });
+        }));
     }
     public static void eventNotification(final Notification notification, boolean accion){
         if (accion){
@@ -233,6 +234,72 @@ public class FirestoreController {
             });
         }
 
+
+
+    }
+    public  static  void getSnapshotForTickets(String userTag){
+        MngRooms.getRegistrations().add(db.collection(DatabaseStrings.COLLECTION_ROOMS).whereArrayContains("members", userTag).whereEqualTo("permissesUser."+userTag,"reader").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                if (queryDocumentSnapshots != null){
+                    if (!queryDocumentSnapshots.isEmpty()){
+                        for (DocumentChange documentReference:
+                            queryDocumentSnapshots.getDocumentChanges() ) {
+                            Room room = documentReference.getDocument().toObject(Room.class);
+                            final Counter ct = new Counter();
+                            db.collection(DatabaseStrings.COLLECTION_TICKETS).whereEqualTo("tagUserAttended",null).whereEqualTo("roomTag", room.getUid()).addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                @Override
+                                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+
+                                    if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()){
+                                        if (ct.getCount()>0) {
+                                            for (DocumentChange change :
+                                                    queryDocumentSnapshots.getDocumentChanges()) {
+                                                new NtNotificationNewTickets(change.getDocument().toObject(Ticket.class));
+                                            }
+                                        }
+                                        ct.plusCount();
+
+
+                                    }
+                                }
+                            });
+                        }
+                    }
+                }
+            }
+        }));
+        MngRooms.getRegistrations().add(db.collection(DatabaseStrings.COLLECTION_ROOMS).whereArrayContains("members", userTag).whereEqualTo("permissesUser."+userTag,"admin").addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                        if (queryDocumentSnapshots != null){
+                            if (!queryDocumentSnapshots.isEmpty()){
+                                for (DocumentChange documentReference:
+                                        queryDocumentSnapshots.getDocumentChanges() ) {
+                                    Room room = documentReference.getDocument().toObject(Room.class);
+                                    final Counter ct = new Counter();
+                                    db.collection(DatabaseStrings.COLLECTION_TICKETS).whereEqualTo("tagUserAttended",null).whereEqualTo("roomTag", room.getUid()).addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+
+                                            if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()){
+                                                if (ct.getCount()>0) {
+                                                    for (DocumentChange change :
+                                                            queryDocumentSnapshots.getDocumentChanges()) {
+                                                        new NtNotificationNewTickets(change.getDocument().toObject(Ticket.class));
+                                                    }
+                                                }
+                                                ct.plusCount();
+
+
+                                            }
+                                        }
+                                    });
+                                }
+                            }
+                        }
+                    }
+        }));
 
     }
 

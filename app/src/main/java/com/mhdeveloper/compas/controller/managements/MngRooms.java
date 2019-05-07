@@ -1,6 +1,7 @@
 package com.mhdeveloper.compas.controller.managements;
 
 import androidx.collection.ArrayMap;
+import com.google.firebase.firestore.ListenerRegistration;
 import com.mhdeveloper.compas.controller.dao.FirestoreController;
 import com.mhdeveloper.compas.controller.notifications.NtRechargeAdapterUser;
 import com.mhdeveloper.compas.model.*;
@@ -25,6 +26,7 @@ public class MngRooms {
             haveRooms = false;
         }        
     }
+    private static ArrayList<ListenerRegistration>registrations = new ArrayList<>();
     public static void setUser(User usr){
         user = usr;
     }
@@ -101,6 +103,8 @@ public class MngRooms {
         user = null;
         permissions = null;
         notifications.clear();
+        closeAllEvents();
+        registrations.clear();
     }
     public static void rechargeRoomSelected(){
         if (getRoomSelected() != null && roomCharged.size()>0){
@@ -120,5 +124,19 @@ public class MngRooms {
                 chargePermissions();
             }
         }
+    }
+    public static void closeAllEvents(){
+        for (ListenerRegistration listener:
+             registrations) {
+            listener.remove();
+        }
+    }
+
+    public static ArrayList<ListenerRegistration> getRegistrations() {
+        return registrations;
+    }
+
+    public static void setRegistrations(ArrayList<ListenerRegistration> registrations) {
+        MngRooms.registrations = registrations;
     }
 }

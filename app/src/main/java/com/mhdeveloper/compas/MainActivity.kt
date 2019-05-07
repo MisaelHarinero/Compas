@@ -1,7 +1,11 @@
 package com.mhdeveloper.compas
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import com.google.android.material.navigation.NavigationView
 import androidx.core.view.GravityCompat
@@ -12,17 +16,22 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.mhdeveloper.compas.controller.dao.AuthController
 import com.mhdeveloper.compas.controller.dao.FirestoreController
 import com.mhdeveloper.compas.controller.managements.MngRooms
+import com.mhdeveloper.compas.controller.notifications.NtNotificationNewTickets
 import com.mhdeveloper.compas.controller.notifications.NtOneSelected
+import com.mhdeveloper.compas.model.Ticket
 import com.mhdeveloper.compas.view.*
 import com.mhdeveloper.compas.view.adapters.AdapterRecyclerArea
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import java.text.SimpleDateFormat
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, View.OnClickListener ,NotRoomFragment.OnFragmentInteractionListener,CreateRoomFragment.OnFragmentInteractionListener,NotificationsFragment.OnFragmentInteractionListener,CreationTicket.OnFragmentInteractionListener,FragmentControllRoom.OnFragmentInteractionListener,
 FragmentUsers.OnFragmentInteractionListener, FragmentViewUser.OnFragmentInteractionListener,FragmentViewTickets.OnFragmentInteractionListener{
@@ -34,6 +43,7 @@ FragmentUsers.OnFragmentInteractionListener, FragmentViewUser.OnFragmentInteract
 
     var recycler:RecyclerView?= null
     var chargedFirst:Boolean = false
+    private var CHANNEL_ID:String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,9 +56,12 @@ FragmentUsers.OnFragmentInteractionListener, FragmentViewUser.OnFragmentInteract
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
         //Instance Elements Data
+        createChanellNotification()
         FirestoreController.instanceFirestore()
+        FirestoreController.getSnapshotForTickets(MngRooms.getUser().tag)
         MngRooms.chargeRooms()
         NtOneSelected.setActivity(this)
+        NtNotificationNewTickets.setActivity(this)
         // Create the Room list from
         recycler = findViewById(R.id.recycler)
         var adapter: AdapterRecyclerArea =
@@ -181,6 +194,37 @@ FragmentUsers.OnFragmentInteractionListener, FragmentViewUser.OnFragmentInteract
 
 
     }
+    fun notificationNewTicket(tk:Ticket){
+        var formatter = SimpleDateFormat("dd/MM/yyyy HH:mm")
+        var notification = NotificationCompat.Builder(this,CHANNEL_ID!!)
+            .setContentTitle("${tk.title} - ${if(tk.date != null){formatter.format(tk.date.toDate())}else{}}")
+            .setSubText(tk.description)
+            .setAutoCancel(true)
+            .setSmallIcon(R.mipmap.ic_launcher)
+            .setPriority(tk.importance)
+        with(NotificationManagerCompat.from(this)) {
+            // notificationId is a unique int for each notification that you must define
+            notify((Math.floor(Math.random()*19999).toInt()), notification.build())
+        }
+    }
+    fun createChanellNotification(){
+        CHANNEL_ID = getString(R.string.channel_id)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                val name = getString(R.string.channel_notification_tickets)
+                val descriptionText = getString(R.string.channel_description_notification_tickets)
+                val importance = NotificationManager.IMPORTANCE_DEFAULT
+                val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
+                    description = descriptionText
+                }
+                // Register the channel with the system
+                val notificationManager: NotificationManager =
+                    getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                notificationManager.createNotificationChannel(channel)
+            }
+
+    }
+
+
 
 
 

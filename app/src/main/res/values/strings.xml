@@ -64,5 +64,7 @@
     <string name="fragment_tickets_button_all">All Tickets</string>
     <string name="fragment_tickets_button_my">My Tickets</string>
     <string name="fragment_tickets_button_atendidos">Tickets Attended By Me</string>
-
+    <string name="channel_notification_tickets">notification_chanel_tickets</string>
+    <string name="channel_description_notification_tickets">notification_chanel_tickets</string>
+    <string name="channel_id">ID_CHANNEL_TICKETS_1234</string>
 </resources>
