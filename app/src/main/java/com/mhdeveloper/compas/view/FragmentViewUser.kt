@@ -86,9 +86,12 @@ class FragmentViewUser : Fragment(), View.OnClickListener, AdapterView.OnItemSel
                 builder.setMessage(R.string.alert_dialog_delete_user_mssg)
                 builder.setPositiveButton("Accept",DialogInterface.OnClickListener { dialog, which ->
                     deleteUser()
+                    chargeUpFragment()
+
                 })
                 builder.setNegativeButton("Decline", DialogInterface.OnClickListener { dialog, which ->
                    Toast.makeText(v.context,"Action Cancelled",Toast.LENGTH_LONG)
+                    chargeUpFragment()
                 })
                 builder.create().show()
 
@@ -100,6 +103,10 @@ class FragmentViewUser : Fragment(), View.OnClickListener, AdapterView.OnItemSel
                 }
             }
         }
+    }
+    fun chargeUpFragment(){
+        var fragment = FragmentUsers()
+        activity!!.supportFragmentManager.beginTransaction().replace(R.id.stack,fragment).commit()
     }
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {

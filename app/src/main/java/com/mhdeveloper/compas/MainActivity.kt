@@ -166,13 +166,15 @@ FragmentUsers.OnFragmentInteractionListener, FragmentViewUser.OnFragmentInteract
         }
     }
     fun firstTimeCharge(){
-        if (MngRooms.getRoomSelected() == null && !chargedFirst){
-            var fragment = NotRoomFragment()
-            supportFragmentManager.beginTransaction().replace(R.id.container,fragment).commit()
-        }else{
-            chargeRoom()
-            chargedFirst = true
-        }
+       if (!chargedFirst){
+           if (MngRooms.getRoomSelected() == null){
+               var fragment = NotRoomFragment()
+               supportFragmentManager.beginTransaction().replace(R.id.container,fragment).commit()
+           }else{
+               chargeRoom()
+               chargedFirst = true
+           }
+       }
 
 
     }

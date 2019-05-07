@@ -10,8 +10,9 @@
 6. Create Notification and control It
 7. Control the Users and change their rolls and delete him
 
-`Error with the recharge of the room, go always to the first fragment`
-Solution -->
-**MngWindows**
--- String name -- 
-finals with all options and not recharge all only call and recharge the data  
+ SOLUTION `Error with the recharge of the room, go always to the first fragment`
+Whit a IF that see if that check we charge Initial time
+
+Developing --> Control Ticket and Mssg 
+
+Last -- Alpha 0.0.0.0.3
