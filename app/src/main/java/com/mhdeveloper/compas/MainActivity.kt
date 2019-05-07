@@ -25,7 +25,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, View.OnClickListener ,NotRoomFragment.OnFragmentInteractionListener,CreateRoomFragment.OnFragmentInteractionListener,NotificationsFragment.OnFragmentInteractionListener,CreationTicket.OnFragmentInteractionListener,FragmentControllRoom.OnFragmentInteractionListener,
-FragmentUsers.OnFragmentInteractionListener{
+FragmentUsers.OnFragmentInteractionListener, FragmentViewUser.OnFragmentInteractionListener{
     // Not used
     override fun onFragmentInteraction(uri: Uri) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -133,6 +133,7 @@ FragmentUsers.OnFragmentInteractionListener{
                 AuthController().logOut()
                 startActivity(intent)
                 finish()
+                MngRooms.clear()
             }
             R.id.buttonAdd ->{
                 if (MngRooms.getPermissions().isWriteTk){

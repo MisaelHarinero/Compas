@@ -8,6 +8,7 @@ public class DatabaseStrings{
     public final static String COLLECTION_PHOTOS = "PHOTOS/";
     public final static String COLLECTION_PHOTOS_ROOMS = "ROOMS/";
     public final static String COLLECTION_PHOTOS_TICKETS = "TICKETS/";
+    public final static String COLLECTION_MESSAGES= "MESSAGES";
 
 
 }

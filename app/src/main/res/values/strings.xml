@@ -53,7 +53,12 @@
     <!-- GESTIONAR ROOM FRAGMENT-->
     <string name="fragment_controll_room_permissions">PERMISSIONS</string>
     <!-- USER FRAGMENT -->
-    <string name="fragment_user_add_new_user">Add New User: </string>
-    <string name="fragment_user_add_new_user_tag">User Tag: </string>
-    <string name="fragment_user_add_new_user_tag_example">User#0000 </string>
+    <string name="fragment_user_add_new_user">Add New User:</string>
+    <string name="fragment_user_add_new_user_tag">User Tag:</string>
+    <string name="fragment_user_add_new_user_tag_example">User#0000</string>
+    <string name="fragment_user_admin_title">USER ADMIN EDIT</string>
+    <!-- DELETE USER -->
+    <string name="alert_dialog_delete_user_title">DELETE USER</string>
+    <string name="alert_dialog_delete_user_mssg">Are you sure ?</string>
+
 </resources>

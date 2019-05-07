@@ -16,7 +16,6 @@ public class Ticket  implements Comparator<Ticket> {
     private String tagUserEmmiter;
     private String tagUserAttended;
     private Timestamp date;
-    private ArrayList<Object>mssg;
 
     public Ticket() {
     }
@@ -30,7 +29,6 @@ public class Ticket  implements Comparator<Ticket> {
         this.description = description;
         this.tagUserEmmiter = tagUserEmmiter;
         this.date = date;
-        this.mssg = new ArrayList<>();
     }
 
     public String getTag() {
@@ -105,13 +103,6 @@ public class Ticket  implements Comparator<Ticket> {
         this.date = date;
     }
 
-    public ArrayList<Object> getMssg() {
-        return mssg;
-    }
-
-    public void setMssg(ArrayList<Object> mssg) {
-        this.mssg = mssg;
-    }
 
     @Override
     public int compare(Ticket o1, Ticket o2) {

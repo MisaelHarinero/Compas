@@ -9,10 +9,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.mhdeveloper.compas.R;
 import com.mhdeveloper.compas.controller.managements.MngRooms;
+import com.mhdeveloper.compas.view.FragmentUsers;
 
 public class AdapterRecyclerUser extends RecyclerView.Adapter<AdapterRecyclerUser.MyView>{
-    public AdapterRecyclerUser(){
-
+    private FragmentUsers fragmentUsers;
+    public AdapterRecyclerUser(FragmentUsers fragmentUsers){
+    this.fragmentUsers = fragmentUsers;
     }
 
     @NonNull
@@ -33,7 +35,7 @@ public class AdapterRecyclerUser extends RecyclerView.Adapter<AdapterRecyclerUse
             public void onClick(View v) {
                 if (MngRooms.getPermissions().isAdminUser()){
                     if (!MngRooms.getUser().getTag().equals(MngRooms.getRoomSelected().getMembers().get(position))){
-
+                        fragmentUsers.startFragmentChange(MngRooms.getRoomSelected().getMembers().get(position));
                     }
                 }
             }

@@ -10,17 +10,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import android.widget.AdapterView.OnItemSelectedListener
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 
 import com.mhdeveloper.compas.R
 import com.mhdeveloper.compas.controller.dao.FirestoreController
 import com.mhdeveloper.compas.controller.managements.MngRooms
-import com.mhdeveloper.compas.controller.notifications.NtRechargeAdapterUser
 import com.mhdeveloper.compas.model.Permission
-import com.mhdeveloper.compas.view.adapters.AdapterRecyclerUser
-import kotlinx.android.synthetic.main.fragment_creation_ticket.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -30,13 +24,13 @@ private const val ARG_PARAM2 = "param2"
 /**
  * A simple [Fragment] subclass.
  * Activities that contain this fragment must implement the
- * [FragmentUsers.OnFragmentInteractionListener] interface
+ * [FragmentViewUser.OnFragmentInteractionListener] interface
  * to handle interaction events.
- * Use the [FragmentUsers.newInstance] factory method to
+ * Use the [FragmentViewUser.newInstance] factory method to
  * create an instance of this fragment.
  *
  */
-class FragmentUsers : Fragment(), View.OnClickListener, OnItemSelectedListener {
+class FragmentViewUser : Fragment(), View.OnClickListener, AdapterView.OnItemSelectedListener {
 
 
 
@@ -44,16 +38,16 @@ class FragmentUsers : Fragment(), View.OnClickListener, OnItemSelectedListener {
     private var param1: String? = null
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
+    //Elements to do the action
+    private var tagUser:String?= null
+    //Interface Elements
+    private var rubish:ImageButton? = null
+    private var save:ImageButton? = null
+    private var textTag:TextView? = null
+    private var rolls:Spinner? = null
+    private var permissionSelected:String? = null
 
-    /**
-     * Interface Elements
-     * */
-    private var recycler:RecyclerView? = null
-    private var buttonAdd:ImageButton? = null
-    /**
-     * Elements for funcionality
-     * */
-    private var permissionSelected:String?= null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,31 +62,44 @@ class FragmentUsers : Fragment(), View.OnClickListener, OnItemSelectedListener {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        var view = inflater.inflate(R.layout.fragment_fragment__users, container, false)
-        //Add elements
-        recycler = view.findViewById(R.id.users_recycler)
-        recycler!!.layoutManager = LinearLayoutManager(view.context)
-        buttonAdd = view.findViewById(R.id.buttonAdd)
-        buttonAdd!!.setOnClickListener(this)
-        //Generate Adapter
-        var adapter = AdapterRecyclerUser(this)
-        recycler!!.adapter = adapter
-        //Añadimos el adapter al notificador del evento
-        NtRechargeAdapterUser.setAdapter(adapter)
+        var view = inflater.inflate(R.layout.fragment_fragment_view_user, container, false)
+        this.rubish = view.findViewById(R.id.delete)
+        this.save = view.findViewById(R.id.saveChanges)
+        this.textTag = view.findViewById(R.id.tag)
+        this.rolls = view.findViewById(R.id.permissesSpin)
+        rubish!!.setOnClickListener(this)
+        save!!.setOnClickListener(this)
+        this.textTag!!.text = tagUser
+        var arrayAdapter = ArrayAdapter<Permission>(view.context,android.R.layout.simple_spinner_item,MngRooms.getRoomSelected().permissions)
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        rolls!!.adapter = arrayAdapter
+        rolls!!.onItemSelectedListener = this
+
         return view
     }
 
     override fun onClick(v: View?) {
         when(v!!.id){
-            R.id.buttonAdd ->{
-                if (MngRooms.getPermissions().isAdminUser){
-                    inviteNewUser()
+            R.id.delete ->{
+                var builder = AlertDialog.Builder(v!!.context)
+                builder.setTitle(R.string.alert_dialog_delete_user_title)
+                builder.setMessage(R.string.alert_dialog_delete_user_mssg)
+                builder.setPositiveButton("Accept",DialogInterface.OnClickListener { dialog, which ->
+                    deleteUser()
+                })
+                builder.setNegativeButton("Decline", DialogInterface.OnClickListener { dialog, which ->
+                   Toast.makeText(v.context,"Action Cancelled",Toast.LENGTH_LONG)
+                })
+                builder.create().show()
+
+            }
+            R.id.saveChanges ->{
+                if (permissionSelected != null){
+                    MngRooms.getRoomSelected().permissesUser[tagUser] = permissionSelected
+                    FirestoreController.saveRoom(MngRooms.getRoomSelected())
                 }
             }
-
         }
-
-
     }
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
@@ -136,57 +143,33 @@ class FragmentUsers : Fragment(), View.OnClickListener, OnItemSelectedListener {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment FragmentUsers.
+         * @return A new instance of fragment FragmentViewUser.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            FragmentUsers().apply {
+            FragmentViewUser().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
                 }
             }
     }
-    fun inviteNewUser(){
-        var builder = AlertDialog.Builder(activity)
-        var inflater = activity!!.layoutInflater
-        var view = inflater.inflate(R.layout.dialog_new_user,null)
-        builder.setView(view)
-        var spinner:Spinner= view.findViewById(R.id.spinner)
-        var buttonAccpet = view.findViewById<ImageButton>(R.id.send)
-        var tag = view.findViewById<EditText>(R.id.tag)
-        var arrayAdapter = ArrayAdapter<Permission>(view.context,android.R.layout.simple_spinner_item,MngRooms.getRoomSelected().permissions)
-        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinner.adapter = arrayAdapter
-        spinner.onItemSelectedListener = this
-        var dialog = builder.create()
-        buttonAccpet.setOnClickListener(View.OnClickListener {
-            if (permissionSelected != null && !tag.text.toString().equals("")){
-                    if (!MngRooms.getRoomSelected().permissesUser.containsKey(tag.text.toString())){
-                        FirestoreController.createNotification(tag.text.toString(),permissionSelected,MngRooms.getRoomSelected().uid)
-                    }else{
-
-                    }
-            }
-            dialog.cancel()
-        })
-        dialog.show()
-
-
-
-
+    fun setUser(tag:String){
+        this.tagUser = tag
     }
     override fun onNothingSelected(parent: AdapterView<*>?) {
         permissionSelected = null
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-            permissionSelected = MngRooms.getRoomSelected().permissions[position].name
+        permissionSelected = MngRooms.getRoomSelected().permissions[position].name
     }
-    fun startFragmentChange(tag:String){
-        var fragment = FragmentViewUser()
-        fragment.setUser(tag)
-        activity!!.supportFragmentManager.beginTransaction().replace(R.id.stack,fragment).commit()
+    fun deleteUser(){
+        MngRooms.getRoomSelected().members.remove(tagUser)
+        MngRooms.getRoomSelected().permissesUser.remove(tagUser)
+        FirestoreController.cleanForUser(tagUser,MngRooms.getRoomSelected().uid)
+        FirestoreController.saveRoom(MngRooms.getRoomSelected())
     }
+
 }

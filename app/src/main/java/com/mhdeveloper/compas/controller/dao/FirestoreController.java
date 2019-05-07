@@ -188,6 +188,53 @@ public class FirestoreController {
             }
         });
     }
+    /**
+     * Method thath is listener for one new Message in the Database where the emmiter is the user & the emitter is the receptor
+     * */
+    public static void getSnapshotForMessages(){
+        db.collection(DatabaseStrings.COLLECTION_TICKETS).document().collection(DatabaseStrings.COLLECTION_MESSAGES).whereEqualTo("tagEmmiter",MngRooms.getUser().getTag());
+        db.collection(DatabaseStrings.COLLECTION_TICKETS).document().collection(DatabaseStrings.COLLECTION_MESSAGES).whereEqualTo("tagReceptor",MngRooms.getUser().getTag());
+
+    }
+    /**
+     * Method that clean any trazes for the user in the room
+     * */
+    public static void cleanForUser(String tag,String roomUid){
+    final String options [] = {"tagUserAttended","tagUserEmmiter"};
+    Query reference = null;
+        for (final String option: options) {
+            reference =  db.collection(DatabaseStrings.COLLECTION_TICKETS).whereEqualTo(option,tag).whereEqualTo("roomTag",roomUid);
+            reference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    for (DocumentSnapshot documentSnapshot: task.getResult()) {
+                        if (documentSnapshot != null){
+                            final String id = documentSnapshot.getId();
+                            db.collection(DatabaseStrings.COLLECTION_TICKETS).document(id).collection(DatabaseStrings.COLLECTION_MESSAGES).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    for (DocumentSnapshot document:task.getResult()) {
+                                        if (document != null){
+                                            db.collection(DatabaseStrings.COLLECTION_TICKETS).document(id).collection(DatabaseStrings.COLLECTION_MESSAGES).document(document.getId()).delete();
+                                        }
+                                    }
+                                }
+                            });
+                            Ticket tk = documentSnapshot.toObject(Ticket.class);
+                            if (option.equals(options[0])){
+                                tk.setTagUserAttended(null);
+                            }else{
+                                db.collection(DatabaseStrings.COLLECTION_TICKETS).document(tk.getTag()).delete();
+                            }
+                            saveTicket(tk);
+                        }
+                    }
+                }
+            });
+        }
+
+
+    }
 
 
 }

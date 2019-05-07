@@ -95,8 +95,15 @@ public class MngRooms {
         FirestoreController.chargeRooms(user.getTag());
         FirestoreController.chargeNotifications(user.getTag());
     }
+    public static void clear(){
+        roomCharged.clear();
+        roomSelected = null;
+        user = null;
+        permissions = null;
+        notifications.clear();
+    }
     public static void rechargeRoomSelected(){
-        if (getRoomSelected() != null){
+        if (getRoomSelected() != null && roomCharged.size()>0){
             for (Room room:getRoomCharged()) {
                 if (room.getUid().equals(getRoomSelected().getUid())){
                     setRoomSelected(room);
@@ -108,7 +115,7 @@ public class MngRooms {
     }
     public static void selectFirstInit(){
         if (getRoomSelected() == null){
-            if (MngRooms.getRoomCharged().size()>0){
+            if (MngRooms.getRoomCharged().size()>0 && MngRooms.getRoomCharged().get(0) != null){
                 setRoomSelected(MngRooms.getRoomCharged().get(0));
                 chargePermissions();
             }
