@@ -60,5 +60,9 @@
     <!-- DELETE USER -->
     <string name="alert_dialog_delete_user_title">DELETE USER</string>
     <string name="alert_dialog_delete_user_mssg">Are you sure ?</string>
+    <!-- TICKETS FRAGMENT -->
+    <string name="fragment_tickets_button_all">All Tickets</string>
+    <string name="fragment_tickets_button_my">My Tickets</string>
+    <string name="fragment_tickets_button_atendidos">Tickets Attended By Me</string>
 
 </resources>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context=".view.FragmentViewTickets"
+              android:orientation="vertical">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/hello_blank_fragment" android:textAlignment="center" android:textStyle="bold"
+            android:textSize="18sp"/>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:gravity="center_horizontal">
+        <Button
+                android:text="@string/fragment_tickets_button_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/viewAll" android:background="@color/clear"
+                android:padding="@dimen/nav_header_vertical_spacing"/>
+        <Button
+                android:text="@string/fragment_tickets_button_my"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/myTickets" android:background="@color/clear"
+                android:padding="@dimen/nav_header_vertical_spacing"/>
+        <Button
+                android:text="@string/fragment_tickets_button_atendidos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/AttendByMe" android:background="@color/clear"
+                android:padding="@dimen/nav_header_vertical_spacing"/>
+    </LinearLayout>
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+    </LinearLayout>
+
+</LinearLayout>

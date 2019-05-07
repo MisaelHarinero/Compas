@@ -25,7 +25,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, View.OnClickListener ,NotRoomFragment.OnFragmentInteractionListener,CreateRoomFragment.OnFragmentInteractionListener,NotificationsFragment.OnFragmentInteractionListener,CreationTicket.OnFragmentInteractionListener,FragmentControllRoom.OnFragmentInteractionListener,
-FragmentUsers.OnFragmentInteractionListener, FragmentViewUser.OnFragmentInteractionListener{
+FragmentUsers.OnFragmentInteractionListener, FragmentViewUser.OnFragmentInteractionListener,FragmentViewTickets.OnFragmentInteractionListener{
     // Not used
     override fun onFragmentInteraction(uri: Uri) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -110,7 +110,8 @@ FragmentUsers.OnFragmentInteractionListener, FragmentViewUser.OnFragmentInteract
             var fragment = CreationTicket()
             supportFragmentManager.beginTransaction().replace(R.id.container,fragment).commit()
         }else{
-            Snackbar.make(recycler!!.rootView,R.string.not_permissions,Snackbar.LENGTH_LONG)
+            var fragment = FragmentViewTickets()
+            supportFragmentManager.beginTransaction().replace(R.id.container,fragment).commit()
         }
 
     }
@@ -145,6 +146,8 @@ FragmentUsers.OnFragmentInteractionListener, FragmentViewUser.OnFragmentInteract
 
             }
             R.id.TicketNotAttended -> {
+                var fragment = FragmentViewTickets()
+                supportFragmentManager.beginTransaction().replace(R.id.container,fragment).commit()
 
             }
             R.id.TicketAttended -> {
