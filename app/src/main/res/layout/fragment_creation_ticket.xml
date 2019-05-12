@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:ems="10"
-                android:id="@+id/title" android:hint="@string/fragment_creation_title_ticket_contains"/>
+                android:id="@+id/titleTicket" android:hint="@string/fragment_creation_title_ticket_contains"/>
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -72,39 +72,48 @@
                     android:layout_height="wrap_content" android:id="@+id/im5" android:layout_weight="1"
                     android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"/>
         </LinearLayout>
-        <ScrollView
+        <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/button_height_width">
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                          android:orientation="vertical">
+                android:layout_height="wrap_content">
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
                 <ImageView
                         android:src="@color/clear"
+                        android:layout_width="@dimen/button_height_width"
+                        android:layout_height="@dimen/button_height_width" android:id="@+id/image"
+                        android:scaleType="fitXY"/>
+                <Button
+                        android:text="@string/fragment_creation_image_ticket"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" android:id="@+id/image"/>
+                        android:layout_height="wrap_content" android:id="@+id/addImage"
+                        android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"/>
             </LinearLayout>
-        </ScrollView>
-        <Button
-                android:text="@string/fragment_creation_image_ticket"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/addImage"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"/>
-        <TextView
-                android:text="@string/fragment_creation_description_ticket"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/textView10" android:textSize="@dimen/subtitle"
-                android:textStyle="bold"/>
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                <TextView
+                        android:text="@string/fragment_creation_description_ticket"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:id="@+id/textView10"
+                        android:textSize="@dimen/subtitle"
+                        android:textStyle="bold"/>
+                <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/nav_header_height"
+                        android:inputType="textMultiLine"
+                        android:gravity="start|top"
+                        android:ems="10"
+                        android:id="@+id/description"/>
+            </LinearLayout>
+        </LinearLayout>
         <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" app:labelVisibilityMode="auto"
         >
-            <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/nav_header_height"
-                    android:inputType="textMultiLine"
-                    android:gravity="start|top"
-                    android:ems="10"
-                    android:id="@+id/description"/>
             <Button
                     android:text="@string/fragment_creation_button_create_ticket"
                     android:layout_width="match_parent"

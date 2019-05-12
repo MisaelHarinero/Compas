@@ -21,12 +21,23 @@
             android:contentDescription="@string/nav_header_desc"
             android:id="@+id/imageId"/>
 
-    <TextView
+    <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/nav_header_vertical_spacing"
-            android:text="@string/nav_header_title"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1" android:id="@+id/nameUserID"/>
+            android:layout_height="match_parent">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/nav_header_vertical_spacing"
+                android:text="@string/nav_header_title"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1" android:id="@+id/nameUserID"
+                android:layout_marginRight="@dimen/height_margin"/>
+        <TextView
+                android:text="@string/fragment_user_add_new_user_tag_example"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" android:id="@+id/tagUser"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1" android:gravity="bottom"/>
+    </LinearLayout>
 
     <LinearLayout
             android:orientation="horizontal"

@@ -136,7 +136,7 @@ class CreationTicket : Fragment(), View.OnClickListener {
         imp3!!.setOnClickListener(this)
         imp4!!.setOnClickListener(this)
         imp5!!.setOnClickListener(this)
-        this.title = view.findViewById(R.id.title)
+        this.title = view.findViewById(R.id.titleTicket)
         this.description = view.findViewById(R.id.description)
         this.imageSelected = view.findViewById(R.id.image)
         this.impText = view.findViewById(R.id.numberImportance)

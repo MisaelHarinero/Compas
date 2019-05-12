@@ -67,4 +67,6 @@
     <string name="channel_notification_tickets">notification_chanel_tickets</string>
     <string name="channel_description_notification_tickets">notification_chanel_tickets</string>
     <string name="channel_id">ID_CHANNEL_TICKETS_1234</string>
+    <!--Ticket View-->
+    <string name="fragment_ticket_selection_aceptar">Accept</string>
 </resources>

@@ -237,6 +237,10 @@ public class FirestoreController {
 
 
     }
+    /**
+     * Listen to the database to notify the user for new Tickets on the database ,
+     * get All rooms and do another event that get The documents  changes
+     * */
     public  static  void getSnapshotForTickets(String userTag){
         MngRooms.getRegistrations().add(db.collection(DatabaseStrings.COLLECTION_ROOMS).whereArrayContains("members", userTag).whereEqualTo("permissesUser."+userTag,"reader").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -255,7 +259,10 @@ public class FirestoreController {
                                         if (ct.getCount()>0) {
                                             for (DocumentChange change :
                                                     queryDocumentSnapshots.getDocumentChanges()) {
-                                                new NtNotificationNewTickets(change.getDocument().toObject(Ticket.class));
+                                                Ticket tk = change.getDocument().toObject(Ticket.class);
+                                                if (tk.getTagUserAttended() == null ) {
+                                                    new NtNotificationNewTickets(tk);
+                                                }
                                             }
                                         }
                                         ct.plusCount();
@@ -286,7 +293,10 @@ public class FirestoreController {
                                                 if (ct.getCount()>0) {
                                                     for (DocumentChange change :
                                                             queryDocumentSnapshots.getDocumentChanges()) {
-                                                        new NtNotificationNewTickets(change.getDocument().toObject(Ticket.class));
+                                                        Ticket tk = change.getDocument().toObject(Ticket.class);
+                                                        if (tk.getTagUserAttended() == null ) {
+                                                            new NtNotificationNewTickets(tk);
+                                                        }
                                                     }
                                                 }
                                                 ct.plusCount();
@@ -301,6 +311,13 @@ public class FirestoreController {
                     }
         }));
 
+    }
+    /**
+     * That Method return a QUERY that listen to the Database to get the tickets that the attribute named tagUserAttended are null and the roomTag is the room
+     * selected by the user
+     * */
+    public static Query getTicketsNotAttended(String roomUid){
+        return  db.collection(DatabaseStrings.COLLECTION_TICKETS).whereEqualTo("tagUserAttended",null).whereEqualTo("roomTag",roomUid).orderBy("importance", Query.Direction.DESCENDING).orderBy("date", Query.Direction.DESCENDING);
     }
 
 

@@ -31,10 +31,11 @@ import com.mhdeveloper.compas.view.*
 import com.mhdeveloper.compas.view.adapters.AdapterRecyclerArea
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import org.w3c.dom.Text
 import java.text.SimpleDateFormat
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, View.OnClickListener ,NotRoomFragment.OnFragmentInteractionListener,CreateRoomFragment.OnFragmentInteractionListener,NotificationsFragment.OnFragmentInteractionListener,CreationTicket.OnFragmentInteractionListener,FragmentControllRoom.OnFragmentInteractionListener,
-FragmentUsers.OnFragmentInteractionListener, FragmentViewUser.OnFragmentInteractionListener,FragmentViewTickets.OnFragmentInteractionListener{
+FragmentUsers.OnFragmentInteractionListener, FragmentViewUser.OnFragmentInteractionListener,FragmentViewTickets.OnFragmentInteractionListener,ViewAllTickets.OnFragmentInteractionListener{
     // Not used
     override fun onFragmentInteraction(uri: Uri) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -72,8 +73,10 @@ FragmentUsers.OnFragmentInteractionListener, FragmentViewUser.OnFragmentInteract
         // Elements for Interface Menu
         val name : TextView = findViewById(R.id.nameUserID)
         val email:TextView = findViewById(R.id.mailUserID)
+        val tag :TextView = findViewById(R.id.tagUser)
         name.text="${MngRooms.getUser().name} ${MngRooms.getUser().surname}"
         email.text=MngRooms.getUser().email
+        tag.text = MngRooms.getUser().tag
         val exit:ImageButton = findViewById(R.id.logOutButton)
         exit.setOnClickListener(this)
         val buttonAddRoom :ImageButton = findViewById(R.id.addRoom)

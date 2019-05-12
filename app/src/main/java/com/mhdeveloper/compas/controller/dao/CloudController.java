@@ -3,6 +3,7 @@ package com.mhdeveloper.compas.controller.dao;
 import android.content.Context;
 import android.net.Uri;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FileDownloadTask;
@@ -49,5 +50,23 @@ public class CloudController{
         instanceFirebase();
         StorageReference reference = storage.getReference();
         reference.child(DatabaseStrings.COLLECTION_PHOTOS+url).putFile(photo);
+    }
+    public static void chargePhoto(final ImageView imageView, String url, Context context){
+        instanceFirebase();
+        StorageReference reference = storage.getReference();
+        try {
+            final File tempFile = File.createTempFile("images","jpg");
+            reference.child(DatabaseStrings.COLLECTION_PHOTOS+url).getFile(tempFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                    if (tempFile.exists()){
+                        imageView.setImageURI(Uri.fromFile(tempFile));
+                    }
+                }
+            });
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

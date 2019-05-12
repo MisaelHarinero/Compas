@@ -7,11 +7,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.firestore.EventListener
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ListenerRegistration
+import com.google.firebase.firestore.QuerySnapshot
 
 import com.mhdeveloper.compas.R
+import com.mhdeveloper.compas.controller.dao.FirestoreController
 import com.mhdeveloper.compas.controller.managements.MngRooms
-import kotlinx.android.synthetic.main.fragment_create_room.*
+import com.mhdeveloper.compas.model.Ticket
+import com.mhdeveloper.compas.view.adapters.AdapterRecyclerTicketAll
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,26 +28,23 @@ private const val ARG_PARAM2 = "param2"
 /**
  * A simple [Fragment] subclass.
  * Activities that contain this fragment must implement the
- * [FragmentViewTickets.OnFragmentInteractionListener] interface
+ * [ViewAllTickets.OnFragmentInteractionListener] interface
  * to handle interaction events.
- * Use the [FragmentViewTickets.newInstance] factory method to
+ * Use the [ViewAllTickets.newInstance] factory method to
  * create an instance of this fragment.
  *
  */
-class FragmentViewTickets : Fragment(), View.OnClickListener {
-
-
+class ViewAllTickets : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
+    //Data Elements
+    private var tickets:ArrayList<Ticket> = ArrayList()
+    private var eventData:ListenerRegistration?  = null
 
-
-    //Interface Elements
-    private var buttonAll: Button? = null
-    private var buttonMy: Button? = null
-    private var buttonAttended: Button? = null
-
+    //Interface ELements
+    private var recycler:RecyclerView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,40 +59,24 @@ class FragmentViewTickets : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        var view =  inflater.inflate(R.layout.fragment_fragment_view_tickets, container, false)
-        buttonAll  = view.findViewById(R.id.viewAll)
-        buttonMy = view.findViewById(R.id.myTickets)
-        buttonAttended = view.findViewById(R.id.AttendByMe)
-        if (MngRooms.getPermissions().isWriteTk){
-            buttonMy!!.setOnClickListener(this)
-            if (!MngRooms.getPermissions().isReadTk){
-                buttonAll!!.visibility = Button.GONE
-                buttonAttended!!.visibility = Button.GONE
-            }else{
-                buttonAll!!.setOnClickListener(this)
-                buttonAttended!!.setOnClickListener(this)
+        var view =  inflater.inflate(R.layout.fragment_view_all_tickets, container, false)
+        recycler= view.findViewById(R.id.recycler)
+        var adapter = AdapterRecyclerTicketAll(this.tickets,view.context)
+        eventData = FirestoreController.getTicketsNotAttended(MngRooms.getRoomSelected().uid).addSnapshotListener(EventListener { t:QuerySnapshot?, firebaseFirestoreException ->
+            if (t != null){
+                tickets.clear()
+                for (doc in t.documents){
+                    var ticket = doc.toObject(Ticket::class.java)
+                    if (ticket != null && ticket.tagUserEmmiter != MngRooms.getUser().tag){
+                        this.tickets.add(ticket)
+                    }
+                }
+                adapter.notifyDataSetChanged()
             }
-        }else if(MngRooms.getPermissions().isReadTk){
-            buttonAll!!.setOnClickListener(this)
-            buttonAttended!!.setOnClickListener(this)
-            buttonMy!!.visibility = Button.GONE
-            chargeAllTicket()
-        }
-
+        })
+        recycler!!.layoutManager = LinearLayoutManager(view.context)
+        recycler!!.adapter = adapter
         return view
-    }
-    override fun onClick(v: View?) {
-        when(v!!.id){
-            R.id.viewAll ->{
-                chargeAllTicket()
-            }
-            R.id.myTickets ->{
-
-            }
-            R.id.AttendByMe ->{
-
-            }
-        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -109,6 +97,7 @@ class FragmentViewTickets : Fragment(), View.OnClickListener {
         super.onDetach()
         listener = null
     }
+
 
     /**
      * This interface must be implemented by activities that contain this
@@ -133,20 +122,23 @@ class FragmentViewTickets : Fragment(), View.OnClickListener {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment FragmentViewTickets.
+         * @return A new instance of fragment ViewAllTickets.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            FragmentViewTickets().apply {
+            ViewAllTickets().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
                 }
             }
     }
-    fun chargeAllTicket(){
-        var fragment = ViewAllTickets()
-        fragmentManager!!.beginTransaction().replace(R.id.container,fragment).commit()
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        if (eventData != null){
+            eventData!!.remove()
+        }
     }
 }
