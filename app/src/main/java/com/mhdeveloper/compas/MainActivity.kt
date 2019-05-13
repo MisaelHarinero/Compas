@@ -35,7 +35,7 @@ import org.w3c.dom.Text
 import java.text.SimpleDateFormat
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, View.OnClickListener ,NotRoomFragment.OnFragmentInteractionListener,CreateRoomFragment.OnFragmentInteractionListener,NotificationsFragment.OnFragmentInteractionListener,CreationTicket.OnFragmentInteractionListener,FragmentControllRoom.OnFragmentInteractionListener,
-FragmentUsers.OnFragmentInteractionListener, FragmentViewUser.OnFragmentInteractionListener,FragmentViewTickets.OnFragmentInteractionListener,ViewAllTickets.OnFragmentInteractionListener{
+FragmentUsers.OnFragmentInteractionListener, FragmentViewUser.OnFragmentInteractionListener,FragmentViewTickets.OnFragmentInteractionListener,ViewAllTickets.OnFragmentInteractionListener,FragmentMyTikects.OnFragmentInteractionListener{
     // Not used
     override fun onFragmentInteraction(uri: Uri) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -225,6 +225,13 @@ FragmentUsers.OnFragmentInteractionListener, FragmentViewUser.OnFragmentInteract
                 notificationManager.createNotificationChannel(channel)
             }
 
+    }
+    fun chargeMssgActivity(ticketTag:String){
+        if (ticketTag !=null){
+                var intent = Intent(this,MessageActivity::class.java)
+                intent.putExtra("ticketTag",ticketTag)
+                startActivity(intent)
+        }
     }
 
 
