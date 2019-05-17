@@ -17,6 +17,7 @@ import com.mhdeveloper.compas.MainActivity
 import com.mhdeveloper.compas.R
 import com.mhdeveloper.compas.controller.dao.FirestoreController
 import com.mhdeveloper.compas.controller.managements.MngRooms
+import com.mhdeveloper.compas.controller.notifications.NtRechargeAdapterData
 import com.mhdeveloper.compas.model.Ticket
 import com.mhdeveloper.compas.view.adapters.AdapterMyTickets
 import com.mhdeveloper.compas.view.adapters.AdapterRecyclerTicketAll
@@ -78,6 +79,8 @@ class FragmentMyTikects : Fragment() {
         })
         recycler!!.layoutManager = LinearLayoutManager(view.context)
         recycler!!.adapter = adapter
+        NtRechargeAdapterData.setAdapter(adapter)
+        NtRechargeAdapterData.setData(tickets as java.util.ArrayList<Any>)
         return view
     }
 
@@ -134,5 +137,10 @@ class FragmentMyTikects : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        NtRechargeAdapterData.clearAttributes()
     }
 }

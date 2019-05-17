@@ -321,14 +321,59 @@ public class FirestoreController {
     public static Query getTicketsNotAttended(String roomUid) {
         return db.collection(DatabaseStrings.COLLECTION_TICKETS).whereEqualTo("tagUserAttended", null).whereEqualTo("roomTag", roomUid).orderBy("importance", Query.Direction.DESCENDING).orderBy("date", Query.Direction.DESCENDING);
     }
+
+    /**
+     * Method that return the query that get the tickets of the user
+     * @param roomUid
+     * @param tagUserEmmiter
+     * @return
+     */
     public static Query getMyTickets(String roomUid,String tagUserEmmiter) {
-        return db.collection(DatabaseStrings.COLLECTION_TICKETS).whereEqualTo("roomTag",roomUid).whereEqualTo("tagUserEmmiter",tagUserEmmiter);
+        return db.collection(DatabaseStrings.COLLECTION_TICKETS).whereEqualTo("roomTag",roomUid).whereEqualTo("tagUserEmmiter",tagUserEmmiter).orderBy("importance",Query.Direction.DESCENDING);
     }
+
+    /**
+     * Method that get the Tickets Attended By the User
+     * @param roomUid
+     * @param tagUserAttended
+     * @return
+     */
+    public static Query getTicketsAttendedByMe(String roomUid,String tagUserAttended) {
+        return db.collection(DatabaseStrings.COLLECTION_TICKETS).whereEqualTo("roomTag",roomUid).whereEqualTo("tagUserAttended",tagUserAttended).orderBy("importance",Query.Direction.DESCENDING);
+    }
+
+    /**
+     * Method that get the Messages of a ticket
+     * @param tagTicket
+     * @return
+     */
     public static Query getMessagesByTicketTag(String tagTicket){
        return db.collection(DatabaseStrings.COLLECTION_TICKETS).document(tagTicket).collection(DatabaseStrings.COLLECTION_MESSAGES).orderBy("date");
     }
+
+    /**
+     * Method that save a Message in the collection of his ticket
+     * @param message
+     */
     public static void saveMessagesByTicketTag(Message message){
         db.collection(DatabaseStrings.COLLECTION_TICKETS).document(message.getTagTicket()).collection(DatabaseStrings.COLLECTION_MESSAGES).document().set(message);
+    }
+
+    /**
+     * Method for delete a Ticket
+     * @param ticketTag
+     */
+    public static void deleteATicket(String ticketTag){
+        db.collection(DatabaseStrings.COLLECTION_TICKETS).document(ticketTag).collection(DatabaseStrings.COLLECTION_MESSAGES).document().delete();
+        db.collection(DatabaseStrings.COLLECTION_TICKETS).document(ticketTag).delete();
+    }
+
+    /**
+     * Save data of user when exist on database
+     * @param user
+     */
+    public static void saveUser(User user){
+        db.collection(DatabaseStrings.COLLECTION_USERS).document(new AuthController().getUser().getUid()).set(user);
     }
 
 

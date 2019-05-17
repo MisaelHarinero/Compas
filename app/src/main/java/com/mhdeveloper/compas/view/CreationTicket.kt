@@ -57,7 +57,7 @@ class CreationTicket : Fragment(), View.OnClickListener {
     private var impText:TextView? = null
     private var imageSelected:ImageView? = null
     private var uri:Uri? = null
-    val CODE_PICK_IMG = 1232
+    val CODE_PICK_IMG = 1212
 
 
 

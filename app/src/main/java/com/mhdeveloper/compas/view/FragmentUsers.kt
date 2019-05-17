@@ -189,4 +189,5 @@ class FragmentUsers : Fragment(), View.OnClickListener, OnItemSelectedListener {
         fragment.setUser(tag)
         activity!!.supportFragmentManager.beginTransaction().replace(R.id.stack,fragment).commit()
     }
+
 }

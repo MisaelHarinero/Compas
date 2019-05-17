@@ -1,5 +1,6 @@
 package com.mhdeveloper.compas.controller.notifications;
 
+import android.net.Uri;
 import androidx.fragment.app.Fragment;
 import com.mhdeveloper.compas.R;
 import com.mhdeveloper.compas.controller.dao.AuthController;
@@ -9,10 +10,10 @@ import com.mhdeveloper.compas.view.FragmentWait;
 
 public class NtRegister implements INt {
     private static Fragment  fragment;
-    public static  void register(String mail,String passwd, User user){
+    public static  void register(String mail,String passwd, User user, Uri uri){
         FragmentWait fragmentWait = new FragmentWait();
         fragment.getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container,fragmentWait).commit();
-        new AuthController().registerUser(mail,passwd,user);
+        new AuthController().registerUser(mail,passwd,user, uri);
 
     }
     @Override

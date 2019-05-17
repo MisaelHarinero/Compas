@@ -1,6 +1,8 @@
 package com.mhdeveloper.compas.view
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.KeyEvent
@@ -8,13 +10,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.*
 
-import android.widget.TextView
-import android.widget.CheckBox
-import android.widget.EditText
-import android.widget.Button
 import com.google.firebase.Timestamp
 import com.mhdeveloper.compas.R
+import com.mhdeveloper.compas.controller.dao.CloudController
+import com.mhdeveloper.compas.controller.dao.DatabaseStrings
 import com.mhdeveloper.compas.controller.dao.UtilitiesClass
 import com.mhdeveloper.compas.controller.notifications.NtRegister
 import com.mhdeveloper.compas.model.User
@@ -58,6 +59,11 @@ class FragmentRegister : Fragment(), View.OnKeyListener, View.OnClickListener {
     private var checkPolitics: CheckBox? = null
     private var buttonRegister: Button? = null
     private var error: TextView? = null
+    // Image Selection
+    private var imageSelected: ImageButton? = null
+    private var uri:Uri? = null
+    val CODE_PICK_IMG = 1232
+
 
 
 
@@ -90,6 +96,9 @@ class FragmentRegister : Fragment(), View.OnKeyListener, View.OnClickListener {
                 register()
 
             }
+            R.id.selectPhoto ->{
+                chargePhoto()
+            }
         }
     }
     override fun onCreateView(
@@ -107,6 +116,8 @@ class FragmentRegister : Fragment(), View.OnKeyListener, View.OnClickListener {
         this.checkPolitics = view.findViewById(R.id.checkBox)
         this.buttonRegister = view.findViewById(R.id.buttonContinue)
         this.error = view.findViewById(R.id.errorMssg)
+        this.imageSelected = view.findViewById(R.id.selectPhoto)
+        this.imageSelected!!.setOnClickListener(this)
         this.rePassword!!.setOnKeyListener(this)
         this.buttonRegister!!.setOnClickListener(this)
 
@@ -199,8 +210,11 @@ class FragmentRegister : Fragment(), View.OnKeyListener, View.OnClickListener {
             try {
 
                 val user = User("${email.split("@")[0]}${UtilitiesClass.generateTag()}","", name, surname, email, Timestamp(Date.valueOf(date)),false,null)
+                if (uri != null){
+                    user.imageRoute = "${user.tag}/avatar.png"
+                }
                 NtRegister.setFragment(this)
-                NtRegister.register(email,pass,user)
+                NtRegister.register(email,pass,user,uri)
             } catch (e: IllegalArgumentException) {
                 mmsg += "Formato de la fecha debe ser yyyy-MM-dd"
 
@@ -210,7 +224,12 @@ class FragmentRegister : Fragment(), View.OnKeyListener, View.OnClickListener {
 
         this.error!!.setText(mmsg)
     }
-
+    fun chargePhoto (){
+        val getIntent: Intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+        getIntent.setType("image/*")
+        getIntent.addCategory(Intent.CATEGORY_OPENABLE)
+        startActivityForResult(getIntent,CODE_PICK_IMG)
+    }
     companion object {
         /**
          * Use this factory method to create a new instance of
@@ -229,5 +248,11 @@ class FragmentRegister : Fragment(), View.OnKeyListener, View.OnClickListener {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == CODE_PICK_IMG && resultCode == Activity.RESULT_OK){
+            uri = data!!.data
+            imageSelected!!.setImageURI(uri)
+        }
     }
 }

@@ -14,8 +14,8 @@
         android:gravity="bottom">
 
     <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/height_width_photo"
+            android:layout_height="@dimen/height_width_photo"
             android:paddingTop="@dimen/nav_header_vertical_spacing"
             app:srcCompat="@mipmap/ic_launcher_round"
             android:contentDescription="@string/nav_header_desc"
@@ -32,11 +32,6 @@
                 android:text="@string/nav_header_title"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1" android:id="@+id/nameUserID"
                 android:layout_marginRight="@dimen/height_margin"/>
-        <TextView
-                android:text="@string/fragment_user_add_new_user_tag_example"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent" android:id="@+id/tagUser"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1" android:gravity="bottom"/>
     </LinearLayout>
 
     <LinearLayout
@@ -49,14 +44,20 @@
                 android:text="@string/nav_header_subtitle"
                 android:id="@+id/mailUserID" android:layout_weight="10"/>
         <ImageButton
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/height_margin"
                 android:layout_height="wrap_content" app:srcCompat="@android:drawable/ic_popup_reminder"
-                android:id="@+id/notificationMenu" android:layout_weight="10" android:background="@color/clear"/>
+                android:id="@+id/notificationMenu" android:background="@color/clear"
+                android:layout_marginRight="@dimen/fab_margin"/>
         <ImageButton
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/activity_horizontal_margin"
                 app:srcCompat="@android:drawable/btn_dialog"
-                android:id="@+id/logOutButton" android:layout_weight="1" android:background="@color/clear"
+                android:id="@+id/logOutButton" android:background="@color/clear"
                 android:layout_height="wrap_content"/>
     </LinearLayout>
+    <TextView
+            android:text="@string/fragment_user_add_new_user_tag_example"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" android:id="@+id/tagUser"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" android:gravity="bottom"/>
 
 </LinearLayout>

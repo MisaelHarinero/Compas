@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.mhdeveloper.compas.R;
 import com.mhdeveloper.compas.controller.managements.MngRooms;
+import com.mhdeveloper.compas.model.Permission;
 import com.mhdeveloper.compas.view.FragmentUsers;
 
 public class AdapterRecyclerUser extends RecyclerView.Adapter<AdapterRecyclerUser.MyView>{
@@ -30,6 +31,7 @@ public class AdapterRecyclerUser extends RecyclerView.Adapter<AdapterRecyclerUse
     public void onBindViewHolder(@NonNull MyView holder, final int position) {
         holder.name.setText(MngRooms.getRoomSelected().getMembers().get(position));
         holder.permiss.setText(MngRooms.getRoomSelected().getPermissesUser().get(MngRooms.getRoomSelected().getMembers().get(position)));
+        chargePhotoPermisses(holder.photoPermisses,holder.permiss.getText().toString());
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -40,8 +42,26 @@ public class AdapterRecyclerUser extends RecyclerView.Adapter<AdapterRecyclerUse
                 }
             }
         });
+
     }
 
+    public void chargePhotoPermisses(ImageView imageView, String namePermission){
+        Permission per = getPermission(namePermission);
+        if (per != null){
+            if (per.isAdminUser()){
+                imageView.setImageResource(R.drawable.admin);
+            }
+        }
+
+    }
+    public Permission getPermission(String namePermision){
+        for (Permission per: MngRooms.getRoomSelected().getPermissions()) {
+            if (per.getName().equals(namePermision)){
+                return per;
+            }
+        }
+        return null;
+    }
 
     @Override
     public int getItemCount() {

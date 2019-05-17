@@ -1,5 +1,6 @@
 package com.mhdeveloper.compas.controller.dao;
 
+import android.net.Uri;
 import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -61,13 +62,16 @@ public class AuthController {
         }
     }
 
-    public void registerUser(String mail, String passwd, final User user){
+    public void registerUser(String mail, String passwd, final User user, final Uri uri){
         this.instance.createUserWithEmailAndPassword(mail,passwd).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
                 chargeUser();
                 if (isUserSignIn()){
                     FirestoreController.saveUser(user,getUser().getUid());
+                    if (uri != null && user.getImageRoute() != null){
+                        CloudController.savePhoto(uri,DatabaseStrings.COLLECTION_PHOTOS_USERS+user.getImageRoute());
+                    }
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {

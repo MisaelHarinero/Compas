@@ -31,10 +31,6 @@ android:orientation="vertical">
                 android:id="@+id/TicketNotAttended" android:layout_weight="1" android:background="@color/clear"/>
         <ImageButton
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" app:srcCompat="@android:drawable/ic_dialog_email"
-                android:id="@+id/TicketAttended" android:layout_weight="1" android:background="@color/clear"/>
-        <ImageButton
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content" app:srcCompat="@drawable/ic_menu_manage"
                 android:id="@+id/ViewUser" android:layout_weight="1" android:background="@color/clear"/>
     </LinearLayout>

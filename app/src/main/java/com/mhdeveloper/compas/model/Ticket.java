@@ -10,6 +10,7 @@ public class Ticket  implements Comparator<Ticket> {
     private String tag;
     private String roomTag;
     private int importance;
+    private boolean finished;
     private String uriPhoto;
     private String title;
     private String description;
@@ -24,6 +25,7 @@ public class Ticket  implements Comparator<Ticket> {
         this.tag = tag;
         this.roomTag = roomTag;
         this.importance = importance;
+        this.finished = false;
         this.uriPhoto = null;
         this.title = title;
         this.description = description;
@@ -103,6 +105,13 @@ public class Ticket  implements Comparator<Ticket> {
         this.date = date;
     }
 
+    public boolean isFinished() {
+        return finished;
+    }
+
+    public void setFinished(boolean finished) {
+        this.finished = finished;
+    }
 
     @Override
     public int compare(Ticket o1, Ticket o2) {

@@ -69,4 +69,9 @@
     <string name="channel_id">ID_CHANNEL_TICKETS_1234</string>
     <!--Ticket View-->
     <string name="fragment_ticket_selection_aceptar">Accept</string>
+    <!-- Menu String -->
+    <string name="string_view_ticket_data">View Data</string>
+    <string name="string_delete_ticket_data">Delete</string>
+    <string name="string_finished_ticket_data">Finished</string>
+    <string name="change_photo_menu">Change Avatar</string>
 </resources>

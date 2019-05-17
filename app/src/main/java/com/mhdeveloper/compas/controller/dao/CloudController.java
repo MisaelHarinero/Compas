@@ -69,4 +69,7 @@ public class CloudController{
             e.printStackTrace();
         }
     }
+    public static void deleteMediaTicket(String ticketTag){
+        storage.getReference(DatabaseStrings.COLLECTION_PHOTOS+DatabaseStrings.COLLECTION_PHOTOS_TICKETS+ticketTag).delete();
+    }
 }
