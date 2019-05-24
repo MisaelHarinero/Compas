@@ -43,7 +43,7 @@ public class AdapterRecyclerArea  extends RecyclerView.Adapter<AdapterRecyclerAr
         if (rooms.get(position).getUrlImage()!= null){
             CloudController.chargePhoto(holder.button, DatabaseStrings.COLLECTION_PHOTOS_ROOMS+rooms.get(position).getUrlImage(),context);
         }
-        holder.button.setOnClickListener(new View.OnClickListener() {
+        holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                MngRooms.setRoomSelected(rooms.get(position));
@@ -62,11 +62,13 @@ public class AdapterRecyclerArea  extends RecyclerView.Adapter<AdapterRecyclerAr
     public class MyView extends  RecyclerView.ViewHolder{
         ImageButton button;
         TextView name;
+        View view;
 
         public MyView(@NonNull View itemView) {
             super(itemView);
             button = itemView.findViewById(R.id.buttonRoom);
             name = itemView.findViewById(R.id.nameRoom);
+            view = itemView;
 
         }
     }

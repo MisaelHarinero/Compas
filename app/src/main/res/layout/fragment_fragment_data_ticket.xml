@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                     xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+                                                     android:layout_width="match_parent"
+                                                     android:layout_height="match_parent"
+                                                     android:orientation="vertical"
+                                                     tools:context=".view.CreationTicket">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/fragment_data_ticket_title" android:textSize="@dimen/title"
+            android:textAlignment="center"
+            android:textStyle="bold" android:fontFamily="@font/oxygen"/>
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" android:layout_margin="@dimen/fab_margin">
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <TextView
+                    android:text="@string/fragment_creation_title_ticket"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/textView5" android:textSize="@dimen/subtitle"
+                    android:textStyle="bold" android:layout_marginRight="@dimen/fab_margin"
+                    android:fontFamily="@font/oxygen"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/title" android:fontFamily="@font/oxygen"/>
+        </LinearLayout>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <TextView
+                    android:text="@string/fragment_creation_importance_ticket"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/textView8" android:textStyle="bold"
+                    android:layout_marginRight="@dimen/nav_header_vertical_spacing" android:textSize="@dimen/subtitle"
+                    android:fontFamily="@font/oxygen"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/importance" android:layout_weight="1"
+                    tools:text="3" android:fontFamily="@font/oxygen"/>
+        </LinearLayout>
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <TextView
+                    android:text="@string/fragment_creation_description_ticket"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/textView10"
+                    android:textSize="@dimen/subtitle"
+                    android:textStyle="bold" android:fontFamily="@font/oxygen"/>
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/description"
+                    android:fontFamily="@font/oxygen"/>
+        </LinearLayout>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <TextView
+                    android:text="@string/fragment_data_user_emmiter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/textView15" android:textStyle="bold"
+                    android:layout_marginRight="@dimen/fab_margin" android:fontFamily="@font/oxygen"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/emmiter" android:fontFamily="@font/oxygen"/>
+        </LinearLayout>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <TextView
+                    android:text="@string/fragment_data_user_Atteded"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/textView17" android:textStyle="bold"
+                    android:layout_marginRight="@dimen/fab_margin" android:fontFamily="@font/oxygen"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/responsable"
+                    android:fontFamily="@font/oxygen"/>
+        </LinearLayout>
+        <ImageView
+                android:src="@color/clear"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" android:id="@+id/image"
+                android:scaleType="fitCenter" android:layout_margin="@dimen/activity_vertical_margin"/>
+    </LinearLayout>
+
+</LinearLayout>

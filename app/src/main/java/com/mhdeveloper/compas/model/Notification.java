@@ -1,8 +1,22 @@
 package com.mhdeveloper.compas.model;
 
+
+/**
+ * Clase Notificacion para invitar al usuario a otra sala
+ * @author Misael Harinero
+ */
 public class Notification {
+    /**
+     * Tag del usuario que se quiere invitar
+     * */
     private String tagUser;
+    /**
+     * Tag de la Sala a la que se le quiere añadir
+     * */
     private String roomUid;
+    /**
+     * Permisos que tendra el usuario  si acepta la Invitacion
+     * */
     private String permissions;
 
     public Notification() {

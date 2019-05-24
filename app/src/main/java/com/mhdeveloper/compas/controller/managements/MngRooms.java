@@ -8,24 +8,39 @@ import com.mhdeveloper.compas.model.*;
 
 import java.util.ArrayList;
 
+/**
+ *
+ * Clase que nos permite gestionar los datos del Usuario
+ */
 public class MngRooms {
+    /**
+     * Lista de Rooms a las que pertenece el Usuario
+     * */
     private static ArrayList<Room> roomCharged = new ArrayList<>();
+    /**
+     * Datos de la Room Seleccionada
+     * */
     private static Room roomSelected = null;
+    /**
+     * Datos del Usuario que ha iniciado Sesion
+     * */
     private static User user;
+    /**
+     * Lista con las notificaciones del Usuario
+     * */
     private static ArrayList<Notification> notifications = new ArrayList<>();
+    /**
+     * Permisos en la sala seleccionada
+     * */
     private static Permission permissions = null;
     private static boolean haveRooms;
     private static ArrayMap<String,ArrayList<Ticket>> mapTickets = new ArrayMap<>();
     private static void setRoom(int position) {
         roomSelected = roomCharged.get(position);
     }
-    private static void setRoomFirstTime(){
-        if (roomCharged.size()>0) {
-            roomSelected = roomCharged.get(0);
-        }else{
-            haveRooms = false;
-        }        
-    }
+    /**
+     * Lista de eventos abiertos en firebase
+     * */
     private static ArrayList<ListenerRegistration>registrations = new ArrayList<>();
     public static void setUser(User usr){
         user = usr;
@@ -105,16 +120,23 @@ public class MngRooms {
         notifications.clear();
         closeAllEvents();
         registrations.clear();
+        FirestoreController.clearListener();
     }
     public static void rechargeRoomSelected(){
+        boolean founded = false;
         if (getRoomSelected() != null && roomCharged.size()>0){
             for (Room room:getRoomCharged()) {
                 if (room.getUid().equals(getRoomSelected().getUid())){
                     setRoomSelected(room);
                     chargePermissions();
                     new NtRechargeAdapterUser();
+                    founded = true;
                 }
             }
+        }
+        if (!founded){
+            setRoomSelected(null);
+            permissions = null;
         }
     }
     public static void selectFirstInit(){
@@ -130,6 +152,7 @@ public class MngRooms {
              registrations) {
             listener.remove();
         }
+        registrations.clear();
     }
 
     public static ArrayList<ListenerRegistration> getRegistrations() {
@@ -138,5 +161,14 @@ public class MngRooms {
 
     public static void setRegistrations(ArrayList<ListenerRegistration> registrations) {
         MngRooms.registrations = registrations;
+    }
+    public static Permission getPermisesForUserInRoom(Room room){
+        for (Permission permission: room.getPermissions()
+             ) {
+                if (permission.getName().equals(room.getPermissesUser().get(MngRooms.getUser().getTag()))){
+                    return permission;
+                }
+        }
+        return null;
     }
 }

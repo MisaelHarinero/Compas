@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -54,10 +55,9 @@ class CreationTicket : Fragment(), View.OnClickListener {
     private var importanceSelected = 3
     private var title:EditText? = null
     private var description:EditText? = null
-    private var impText:TextView? = null
     private var imageSelected:ImageView? = null
     private var uri:Uri? = null
-    val CODE_PICK_IMG = 1212
+    private val CODE_PICK_IMG = 2000
 
 
 
@@ -97,7 +97,7 @@ class CreationTicket : Fragment(), View.OnClickListener {
                     var formatterPhoto = SimpleDateFormat("dd_MM_yyyy")
                     var ticket = Ticket("${MngRooms.getRoomSelected().uid}${MngRooms.getUser().tag}${formatter.format(date.toDate())}",MngRooms.getRoomSelected().uid,importanceSelected,title!!.text.toString(),description!!.text.toString(),MngRooms.getUser().tag,date)
                     if (uri != null){
-                        ticket.uriPhoto = "${MngRooms.getRoomSelected().uid}${MngRooms.getUser().tag}/${formatterPhoto.format(ticket.date.toDate())}.jpg"
+                        ticket.uriPhoto = "${MngRooms.getRoomSelected().uid}${MngRooms.getUser().tag}${formatterPhoto.format(ticket.date.toDate())}/ticketPhoto.jpg"
                         CloudController.savePhoto(uri,"${DatabaseStrings.COLLECTION_PHOTOS_TICKETS}${ticket.uriPhoto}")
                     }
                     FirestoreController.saveTicket(ticket)
@@ -105,7 +105,6 @@ class CreationTicket : Fragment(), View.OnClickListener {
                     this.description!!.setText("")
                     this.imageSelected!!.setImageURI(null)
                     this.importanceSelected = 3
-                    this.impText!!.setText("3")
                     Toast.makeText(v.context,"SAVE CORRETLY",Toast.LENGTH_LONG)
                 }else{
                     Toast.makeText(v.context,"YOU NEED WRITE TITLE AND DESCRIPTION",Toast.LENGTH_LONG)
@@ -139,11 +138,11 @@ class CreationTicket : Fragment(), View.OnClickListener {
         this.title = view.findViewById(R.id.titleTicket)
         this.description = view.findViewById(R.id.description)
         this.imageSelected = view.findViewById(R.id.image)
-        this.impText = view.findViewById(R.id.numberImportance)
         this.setImg = view.findViewById(R.id.addImage)
         this.setImg!!.setOnClickListener(this)
         this.create = view.findViewById(R.id.createTicket)
         this.create!!.setOnClickListener(this)
+        changeImportance(importanceSelected)
 
 
         return view
@@ -205,12 +204,55 @@ class CreationTicket : Fragment(), View.OnClickListener {
     }
     fun changeImportance(num:Int){
         this.importanceSelected = num
-        this.impText!!.text = " $num "
+        when(num){
+            1 ->{
+             imp1!!.setBackgroundResource(R.color.ColorSelected)
+             imp2!!.setBackgroundResource(R.color.ColorNotSelected)
+             imp3!!.setBackgroundResource(R.color.ColorNotSelected)
+             imp4!!.setBackgroundResource(R.color.ColorNotSelected)
+             imp5!!.setBackgroundResource(R.color.ColorNotSelected)
+
+            }
+            2 ->{
+                imp1!!.setBackgroundResource(R.color.ColorNotSelected)
+                imp2!!.setBackgroundResource(R.color.ColorSelected)
+                imp3!!.setBackgroundResource(R.color.ColorNotSelected)
+                imp4!!.setBackgroundResource(R.color.ColorNotSelected)
+                imp5!!.setBackgroundResource(R.color.ColorNotSelected)
+
+            }
+            3 ->{
+                imp1!!.setBackgroundResource(R.color.ColorNotSelected)
+                imp2!!.setBackgroundResource(R.color.ColorNotSelected)
+                imp3!!.setBackgroundResource(R.color.ColorSelected)
+                imp4!!.setBackgroundResource(R.color.ColorNotSelected)
+                imp5!!.setBackgroundResource(R.color.ColorNotSelected)
+
+            }
+            4    ->{
+                imp1!!.setBackgroundResource(R.color.ColorNotSelected)
+                imp2!!.setBackgroundResource(R.color.ColorNotSelected)
+                imp3!!.setBackgroundResource(R.color.ColorNotSelected)
+                imp4!!.setBackgroundResource(R.color.ColorSelected)
+                imp5!!.setBackgroundResource(R.color.ColorNotSelected)
+
+            }
+            5 ->{
+                imp1!!.setBackgroundResource(R.color.ColorNotSelected)
+                imp2!!.setBackgroundResource(R.color.ColorNotSelected)
+                imp3!!.setBackgroundResource(R.color.ColorNotSelected)
+                imp4!!.setBackgroundResource(R.color.ColorNotSelected)
+                imp5!!.setBackgroundResource(R.color.ColorSelected)
+
+            }
+        }
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == CODE_PICK_IMG && resultCode == Activity.RESULT_OK){
             uri = data!!.data
             imageSelected!!.setImageURI(uri)
         }
     }
+
 }

@@ -2,12 +2,34 @@ package com.mhdeveloper.compas.model;
 
 import com.google.firebase.Timestamp;
 
+/**
+ * Clase Modelo para los mensajes
+ * @author  Misael Harinero
+ */
 public class Message {
+    /**
+     * tag del Usuario que manda el mensaje
+     * */
     private String tagUser;
+    /**
+     * tag del ticket al que pertenece el  mensaje
+     * */
     private String tagTicket;
+    /**
+     * Tipo del mensaje
+     * */
     private String typeMessage;
+    /**
+     * Contenido de Texto del Mensaje
+     * */
     private String text;
+    /**
+     * url de la foto en el Cloud
+     * */
     private String uriPhoto;
+    /**
+     * Fecha del Mensaje
+     * */
     private Timestamp date;
     public final static String TYPE_PHOTO = "pht";
     public final static String TYPE_TEXT = "txt";

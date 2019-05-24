@@ -8,7 +8,7 @@
             android:text="@string/fragment_user_add_new_user"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" android:id="@+id/textView9" android:textAlignment="center"
-            android:textSize="24sp" android:textStyle="bold"/>
+            android:textSize="24sp" android:textStyle="bold" android:fontFamily="@font/oxygen"/>
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -17,14 +17,14 @@
                 android:text="@string/fragment_user_add_new_user_tag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:id="@+id/textView11"
-                android:paddingRight="@dimen/fab_margin"/>
+                android:paddingRight="@dimen/fab_margin" android:fontFamily="@font/oxygen"/>
         <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:ems="10"
                 android:id="@+id/tag" android:layout_weight="1"
-                android:hint="@string/fragment_user_add_new_user_tag_example"/>
+                android:hint="@string/fragment_user_add_new_user_tag_example" android:fontFamily="@font/oxygen"/>
     </LinearLayout>
     <Spinner
             android:layout_width="match_parent"

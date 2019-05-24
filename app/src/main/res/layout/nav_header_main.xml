@@ -31,7 +31,7 @@
                 android:paddingTop="@dimen/nav_header_vertical_spacing"
                 android:text="@string/nav_header_title"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1" android:id="@+id/nameUserID"
-                android:layout_marginRight="@dimen/height_margin"/>
+                android:layout_marginRight="@dimen/height_margin" android:fontFamily="@font/oxygen"/>
     </LinearLayout>
 
     <LinearLayout
@@ -42,22 +42,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/nav_header_subtitle"
-                android:id="@+id/mailUserID" android:layout_weight="10"/>
+                android:id="@+id/mailUserID" android:layout_weight="10" android:fontFamily="@font/oxygen"/>
         <ImageButton
                 android:layout_width="@dimen/height_margin"
                 android:layout_height="wrap_content" app:srcCompat="@android:drawable/ic_popup_reminder"
                 android:id="@+id/notificationMenu" android:background="@color/clear"
                 android:layout_marginRight="@dimen/fab_margin"/>
         <ImageButton
-                android:layout_width="@dimen/activity_horizontal_margin"
-                app:srcCompat="@android:drawable/btn_dialog"
+                android:layout_width="@dimen/height_margin"
+                app:srcCompat="@drawable/logout_a"
                 android:id="@+id/logOutButton" android:background="@color/clear"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" android:padding="@dimen/nav_header_vertical_spacing"/>
     </LinearLayout>
     <TextView
             android:text="@string/fragment_user_add_new_user_tag_example"
             android:layout_width="match_parent"
             android:layout_height="match_parent" android:id="@+id/tagUser"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1" android:gravity="bottom"/>
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" android:gravity="bottom"
+            android:fontFamily="@font/oxygen"/>
 
 </LinearLayout>

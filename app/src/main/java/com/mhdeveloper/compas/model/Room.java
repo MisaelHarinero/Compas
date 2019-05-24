@@ -1,8 +1,9 @@
 package com.mhdeveloper.compas.model;
 
 import androidx.collection.ArrayMap;
+import com.google.firebase.Timestamp;
 
-import java.sql.Timestamp;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -15,6 +16,9 @@ public class Room {
     private String uid;
     private String name;
     private String urlImage;
+    /**
+     * Lista de permisos
+     * */
     private ArrayList<Permission> permissions;
     /**
      * Map de permisos : 

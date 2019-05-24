@@ -3,7 +3,7 @@
              xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context=".view.FragmentRegister">
+             tools:context=".view.FragmentRegister" android:background="@drawable/back">
 
     <ScrollView
             android:layout_width="match_parent"
@@ -22,19 +22,21 @@
                     android:layout_marginBottom="50dp"
                     android:text="@string/register"
                     android:textAlignment="center"
-                    android:textSize="30sp" />
+                    android:textSize="30sp" android:fontFamily="@font/oxygen" android:textColor="@color/ColorSelected"
+                    android:textStyle="bold"/>
 
             <ImageButton
-                    android:src="@drawable/admin"
+                    android:src="@drawable/imageuser"
                     android:layout_width="@dimen/height_width_photo"
                     android:layout_height="@dimen/height_width_photo" android:id="@+id/selectPhoto"
-                    android:layout_gravity="center_horizontal" android:scaleType="fitXY"/>
+                    android:layout_gravity="center_horizontal" android:scaleType="fitXY"
+                    android:background="@color/clear"/>
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="10dp"
                     android:orientation="vertical"
-                    android:padding="5dp">
+                    android:padding="@dimen/nav_header_vertical_spacing">
 
                 <LinearLayout
                         android:layout_width="match_parent"
@@ -46,7 +48,8 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="@string/name" />
+                            android:text="@string/name" android:fontFamily="@font/oxygen"
+                            android:textColor="@color/ColorNotSelected" android:textStyle="bold"/>
 
                     <EditText
                             android:id="@+id/etName"
@@ -54,7 +57,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
                             android:ems="10"
-                            android:inputType="textPersonName" />
+                            android:inputType="textPersonName" android:fontFamily="@font/oxygen"
+                            android:textColor="@color/ColorNotSelected"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -67,7 +71,8 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="@string/surname" />
+                            android:text="@string/surname" android:fontFamily="@font/oxygen"
+                            android:textColor="@color/ColorNotSelected" android:textStyle="bold"/>
 
                     <EditText
                             android:id="@+id/etSurname"
@@ -75,7 +80,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
                             android:ems="10"
-                            android:inputType="textPersonName" />
+                            android:inputType="textPersonName" android:fontFamily="@font/oxygen"
+                            android:textColor="@color/ColorNotSelected"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -88,7 +94,8 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="@string/birthdate" />
+                            android:text="@string/birthdate" android:fontFamily="@font/oxygen"
+                            android:textColor="@color/ColorNotSelected" android:textStyle="bold"/>
 
                     <EditText
                             android:id="@+id/etDate"
@@ -96,7 +103,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
                             android:ems="10"
-                            android:inputType="date" />
+                            android:inputType="date" android:fontFamily="@font/oxygen"
+                            android:textColor="@color/ColorNotSelected"/>
 
                 </LinearLayout>
 
@@ -110,7 +118,8 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="@string/email" />
+                            android:text="@string/email" android:fontFamily="@font/oxygen"
+                            android:textColor="@color/ColorNotSelected" android:textStyle="bold"/>
 
                     <EditText
                             android:id="@+id/etMail"
@@ -118,7 +127,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
                             android:ems="10"
-                            android:inputType="textEmailAddress" />
+                            android:inputType="textEmailAddress" android:fontFamily="@font/oxygen"
+                            android:textColor="@color/ColorNotSelected"/>
 
                 </LinearLayout>
 
@@ -132,7 +142,8 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="@string/password" />
+                            android:text="@string/password" android:fontFamily="@font/oxygen"
+                            android:textColor="@color/ColorNotSelected" android:textStyle="bold"/>
 
                     <EditText
                             android:id="@+id/etPass"
@@ -140,7 +151,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
                             android:ems="10"
-                            android:inputType="textPassword" />
+                            android:inputType="textPassword" android:fontFamily="@font/oxygen"
+                            android:textColor="@color/common_google_signin_btn_text_dark_focused"/>
 
                 </LinearLayout>
 
@@ -154,7 +166,8 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="@string/repeatpass" />
+                            android:text="@string/repeatpass" android:fontFamily="@font/oxygen"
+                            android:textColor="@color/ColorNotSelected" android:textStyle="bold"/>
 
                     <EditText
                             android:id="@+id/etRepeatPass"
@@ -162,7 +175,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
                             android:ems="10"
-                            android:inputType="textPassword" />
+                            android:inputType="textPassword" android:fontFamily="@font/oxygen"
+                            android:textColor="@color/common_google_signin_btn_text_dark_focused"/>
 
                 </LinearLayout>
 
@@ -171,19 +185,24 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="30dp"
-                        android:text="@string/accept" />
+                        android:text="@string/accept" android:fontFamily="@font/oxygen"
+                        android:textColor="@color/ColorNotSelected"/>
 
                 <TextView
                         android:id="@+id/errorMssg"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/colorIncorrect" />
+                        android:textColor="@color/colorIncorrect"/>
 
                 <Button
                         android:id="@+id/buttonContinue"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/fragment_creation_user_button" />
+                        android:text="@string/fragment_creation_user_button" android:fontFamily="@font/oxygen"
+                        android:textStyle="bold" android:textSize="18sp" android:background="@color/ColorNotSelected"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_marginRight="@dimen/activity_horizontal_margin"
+                        android:layout_marginBottom="@dimen/nav_header_vertical_spacing"/>
 
             </LinearLayout>
         </LinearLayout>

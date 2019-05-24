@@ -6,8 +6,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".LogInActivity"
-        android:orientation="vertical" android:layout_margin="@dimen/height_margin"
->
+        android:orientation="vertical"
+        android:background="@drawable/back" android:padding="@dimen/fab_margin">
 
     <LinearLayout
             android:orientation="vertical"
@@ -37,7 +37,8 @@
                         android:layout_height="wrap_content"
                         android:inputType="textEmailAddress"
                         android:ems="10"
-                        android:id="@+id/email" android:layout_weight="1" android:hint="@string/hint_email"/>
+                        android:id="@+id/email" android:layout_weight="1" android:hint="@string/hint_email"
+                        android:textColor="@color/ColorSelected" android:textColorHint="@color/ColorNotSelected"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"
@@ -52,7 +53,8 @@
                         android:layout_height="wrap_content"
                         android:inputType="textPassword"
                         android:ems="10"
-                        android:id="@+id/passwd" android:layout_weight="1" android:hint="@string/hint_password"/>
+                        android:id="@+id/passwd" android:layout_weight="1" android:hint="@string/hint_password"
+                        android:textColorHint="@color/ColorNotSelected" android:textColor="@color/ColorSelected"/>
             </LinearLayout>
         </LinearLayout>
         <Button
@@ -71,7 +73,7 @@
                     android:layout_height="wrap_content" android:id="@+id/forgotPasswd"
                     android:background="@color/clear"
                     android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                    android:layout_gravity="center_horizontal"/>
+                    android:layout_gravity="center_horizontal" android:textColor="@color/ColorSelected"/>
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
@@ -81,14 +83,16 @@
             <TextView
                     android:text="@string/register_in_text"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/textView7"/>
+                    android:layout_height="wrap_content" android:id="@+id/textView7" android:textStyle="bold"
+                    android:textColor="@color/ColorSelected"/>
             <Button
                     android:text="@string/register_in_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:id="@+id/createAccount"
                     android:background="@color/clear"
                     android:drawableBottom="@color/clear"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    android:textColor="@color/ColorSelected"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

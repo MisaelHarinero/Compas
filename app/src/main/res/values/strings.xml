@@ -74,4 +74,11 @@
     <string name="string_delete_ticket_data">Delete</string>
     <string name="string_finished_ticket_data">Finished</string>
     <string name="change_photo_menu">Change Avatar</string>
+    <!-- Data TIckets -->
+    <string name="fragment_data_user_emmiter">User Emmiter :</string>
+    <string name="fragment_data_user_Atteded">Responsable :</string>
+    <string name="fragment_data_ticket_title">Ticket Data</string>
+    <string name="room_tag">Tag : </string>
+    <string name="date_creation">Creation Date :</string>
+    <string name="number_user">Number Of Users :</string>
 </resources>

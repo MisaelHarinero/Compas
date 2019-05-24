@@ -8,6 +8,10 @@ import com.mhdeveloper.compas.controller.dao.FirestoreController;
 import com.mhdeveloper.compas.model.User;
 import com.mhdeveloper.compas.view.FragmentWait;
 
+/**
+ *  Clase en la que realizamos la transicion entre el registro y la carga de datos poniendo una pantalla de carga entre medias,
+ *  cuando se haya realizado el evento se llamara al action de la clase
+ */
 public class NtRegister implements INt {
     private static Fragment  fragment;
     public static  void register(String mail,String passwd, User user, Uri uri){

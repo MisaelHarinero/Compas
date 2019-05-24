@@ -11,6 +11,7 @@ import android.widget.ImageButton
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.ListenerRegistration
@@ -19,6 +20,7 @@ import com.mhdeveloper.compas.controller.dao.DatabaseStrings
 import com.mhdeveloper.compas.controller.dao.FirestoreController
 import com.mhdeveloper.compas.controller.managements.MngRooms
 import com.mhdeveloper.compas.model.Message
+import com.mhdeveloper.compas.model.Ticket
 import com.mhdeveloper.compas.view.adapters.AdapterMessages
 import java.text.SimpleDateFormat
 
@@ -53,7 +55,7 @@ class MessageActivity : AppCompatActivity(), View.OnClickListener {
         ticketTag = intent.getStringExtra("ticketTag")
         recycler = findViewById(R.id.recycler)
         var adapter = AdapterMessages(this.mssgs,this)
-        event = FirestoreController.getMessagesByTicketTag(ticketTag).addSnapshotListener(EventListener { t, firebaseFirestoreException ->
+        event = FirestoreController.getMessagesByTicketTag(ticketTag).addSnapshotListener(EventListener { t, exception ->
             if (t != null && !t.isEmpty){
                 for (doc in t.documentChanges){
                     var msg = doc.document.toObject(Message::class.java)
@@ -70,6 +72,12 @@ class MessageActivity : AppCompatActivity(), View.OnClickListener {
         recycler!!.layoutManager = LinearLayoutManager(this)
         recycler!!.adapter = adapter
         buttonReturn = findViewById(R.id.toolbarMssg)
+        FirestoreController.db.collection(DatabaseStrings.COLLECTION_TICKETS).document(ticketTag!!).get().addOnCompleteListener {
+            if (it.isSuccessful){
+                buttonReturn!!.title = it.result!!.toObject(Ticket::class.java)?.title
+            }
+
+        }
         buttonReturn!!.setNavigationOnClickListener(View.OnClickListener {
             if (event != null){
                 event!!.remove()
@@ -115,8 +123,14 @@ class MessageActivity : AppCompatActivity(), View.OnClickListener {
             text!!.setText("")
             var formatterPhoto = SimpleDateFormat("dd_MM_yyyy_H_M_s")
             message.uriPhoto = "${message.tagUser}_${message.tagUser}_${formatterPhoto.format(message.date.toDate())}.jpg"
-            CloudController.savePhoto(uri,"${DatabaseStrings.COLLECTION_PHOTOS_TICKETS}${message.tagTicket}/${DatabaseStrings.COLLECTION_PHOTOS_MESSAGES}${message.uriPhoto}")
-            FirestoreController.saveMessagesByTicketTag(message)
+            //Realizamos la carga de la foto en la vista para poder llamar a evento On COmplete
+            val reference =CloudController.getStorage().reference
+            reference.child(DatabaseStrings.COLLECTION_PHOTOS + "${DatabaseStrings.COLLECTION_PHOTOS_TICKETS}${message.tagTicket}/${DatabaseStrings.COLLECTION_PHOTOS_MESSAGES}${message.uriPhoto}").putFile(uri!!).addOnCompleteListener( OnCompleteListener {
+                if (it.isSuccessful){
+                    FirestoreController.saveMessagesByTicketTag(message)
+                }
+
+            })
         }
     }
 

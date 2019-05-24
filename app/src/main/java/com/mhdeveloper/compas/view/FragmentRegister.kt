@@ -19,6 +19,7 @@ import com.mhdeveloper.compas.controller.dao.DatabaseStrings
 import com.mhdeveloper.compas.controller.dao.UtilitiesClass
 import com.mhdeveloper.compas.controller.notifications.NtRegister
 import com.mhdeveloper.compas.model.User
+import kotlinx.android.synthetic.main.fragment_fragment_register.*
 import java.sql.Date
 
 
@@ -78,7 +79,8 @@ class FragmentRegister : Fragment(), View.OnKeyListener, View.OnClickListener {
     override fun onKey(v: View?, keyCode: Int, event: KeyEvent?): Boolean {
        when(v!!.id){
             R.id.etRepeatPass ->{
-                if (password!!.getText().toString().equals(rePassword!!.getText().toString())) {
+
+                if (password!!.getText().toString().equals(rePassword!!.getText().toString()) && UtilitiesClass.checkPassword(password!!.text.toString())) {
                     password!!.setBackgroundColor(getResources().getColor(R.color.colorCorrect, null))
                     rePassword!!.setBackgroundColor(getResources().getColor(R.color.colorCorrect, null))
                 } else {
@@ -86,6 +88,15 @@ class FragmentRegister : Fragment(), View.OnKeyListener, View.OnClickListener {
                     rePassword!!.setBackgroundColor(getResources().getColor(R.color.colorIncorrect, null))
                 }
             }
+           R.id.etPass ->{
+               if (password!!.getText().toString().equals(rePassword!!.getText().toString()) && UtilitiesClass.checkPassword(password!!.text.toString())) {
+                   password!!.setBackgroundColor(getResources().getColor(R.color.colorCorrect, null))
+                   rePassword!!.setBackgroundColor(getResources().getColor(R.color.colorCorrect, null))
+               } else {
+                   password!!.setBackgroundColor(getResources().getColor(R.color.colorIncorrect, null))
+                   rePassword!!.setBackgroundColor(getResources().getColor(R.color.colorIncorrect, null))
+               }
+           }
         }
         return false
     }
@@ -118,6 +129,7 @@ class FragmentRegister : Fragment(), View.OnKeyListener, View.OnClickListener {
         this.error = view.findViewById(R.id.errorMssg)
         this.imageSelected = view.findViewById(R.id.selectPhoto)
         this.imageSelected!!.setOnClickListener(this)
+        this.password!!.setOnKeyListener(this)
         this.rePassword!!.setOnKeyListener(this)
         this.buttonRegister!!.setOnClickListener(this)
 
@@ -224,6 +236,9 @@ class FragmentRegister : Fragment(), View.OnKeyListener, View.OnClickListener {
 
         this.error!!.setText(mmsg)
     }
+    /**
+     * Metodo qe  nos carga el Intent de selecion de imagen de la galeria
+     * */
     fun chargePhoto (){
         val getIntent: Intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
         getIntent.setType("image/*")

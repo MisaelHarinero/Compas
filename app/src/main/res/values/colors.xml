@@ -9,4 +9,8 @@
     <color name="colorCorrect">#AD8BC34A</color>
     <color name="colorIncorrect">#ADC34A4A</color>
     <color name="grayBack">#716A7C</color>
+    <color name="ColorSelected">#79D2FD</color>
+    <color name="ColorNotSelected">#B6D4EE</color>
+    <color name="dark_blue">#7595B7</color>
+    <color name="darkGray">#1F1F1F</color>
 </resources>

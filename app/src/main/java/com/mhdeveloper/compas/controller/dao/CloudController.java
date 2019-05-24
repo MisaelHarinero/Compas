@@ -46,16 +46,37 @@ public class CloudController{
             e.printStackTrace();
         }
     }
+
+    /**
+     * Metodo con el cual guardamos una foto que recogemos del dispositivo
+     * @param photo
+     * @param url
+     */
     public static void savePhoto(Uri photo,String url){
         instanceFirebase();
         StorageReference reference = storage.getReference();
         reference.child(DatabaseStrings.COLLECTION_PHOTOS+url).putFile(photo);
     }
+
+    public static FirebaseStorage getStorage() {
+        return storage;
+    }
+
+    public static void setStorage(FirebaseStorage storage) {
+        CloudController.storage = storage;
+    }
+
+    /**
+     * Metodo con el cual cargamos una foto obtenida en la Cloud en una ImageView
+     * @param imageView
+     * @param url
+     * @param context
+     */
     public static void chargePhoto(final ImageView imageView, String url, Context context){
         instanceFirebase();
         StorageReference reference = storage.getReference();
         try {
-            final File tempFile = File.createTempFile("images","jpg");
+            final File tempFile = File.createTempFile("images"+System.nanoTime(),"jpg");
             reference.child(DatabaseStrings.COLLECTION_PHOTOS+url).getFile(tempFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
@@ -69,7 +90,11 @@ public class CloudController{
             e.printStackTrace();
         }
     }
+    /**
+     * Metodo el cual no se ejecutara debido a que actualmente en firestore no se puede realizar una eliminacion de carpetas, por lo que habria que recorrer todos los mensajes de un ticket para eliminar las fotos,
+     * por lo que solo eliminaremos las de los tickets.
+     * */
     public static void deleteMediaTicket(String ticketTag){
-        storage.getReference(DatabaseStrings.COLLECTION_PHOTOS+DatabaseStrings.COLLECTION_PHOTOS_TICKETS+ticketTag).delete();
+        storage.getReference(DatabaseStrings.COLLECTION_PHOTOS+ticketTag).delete();
     }
 }

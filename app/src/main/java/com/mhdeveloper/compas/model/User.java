@@ -8,14 +8,31 @@ import com.google.firebase.Timestamp;
  * Clase User -- Modelo que guarda los datos de nuestro user
  */
 public class User {
-
+    /**
+     * Tag de nuestro Usuario
+     * */
     private String tag;
     private String alias;
+    /**
+     * Nombre del usuario
+     * */
     private String name;
+    /**
+     * Apellido del usuario
+     * */
     private String surname;
+    /**
+     * Email del usuario
+     * */
     private String email;
+    /**
+     * Fecha de nacimiento del usuario
+     * */
     private Timestamp dateBorn;
     private boolean showAlias;
+    /**
+     * Ruta de la imagen del usuario en la base de datos
+     * */
     private String imageRoute;
 
     public User(){

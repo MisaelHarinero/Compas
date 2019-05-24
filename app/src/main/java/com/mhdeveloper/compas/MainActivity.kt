@@ -39,20 +39,34 @@ import org.w3c.dom.Text
 import java.text.SimpleDateFormat
 import java.util.*
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, View.OnClickListener ,NotRoomFragment.OnFragmentInteractionListener,CreateRoomFragment.OnFragmentInteractionListener,NotificationsFragment.OnFragmentInteractionListener,CreationTicket.OnFragmentInteractionListener,FragmentControllRoom.OnFragmentInteractionListener,
-FragmentUsers.OnFragmentInteractionListener, FragmentViewUser.OnFragmentInteractionListener,FragmentViewTickets.OnFragmentInteractionListener,ViewAllTickets.OnFragmentInteractionListener,FragmentMyTikects.OnFragmentInteractionListener, FragmentVeiwTicketsAttended.OnFragmentInteractionListener{
+/**
+ * Clase que se encarga del control de la pantalla principal . La cual se encarga de la carga de datos, de el control de las Rooms, es la Actividad Principal de Nuestra Aplicación.
+ * @author Misael Harinero
+ * */
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, View.OnClickListener,
+    NotRoomFragment.OnFragmentInteractionListener, CreateRoomFragment.OnFragmentInteractionListener,
+    NotificationsFragment.OnFragmentInteractionListener, CreationTicket.OnFragmentInteractionListener,
+    FragmentControllRoom.OnFragmentInteractionListener,
+    FragmentUsers.OnFragmentInteractionListener, FragmentViewUser.OnFragmentInteractionListener,
+    FragmentViewTickets.OnFragmentInteractionListener, ViewAllTickets.OnFragmentInteractionListener,
+    FragmentMyTikects.OnFragmentInteractionListener, FragmentVeiwTicketsAttended.OnFragmentInteractionListener,
+    FragmentDataUserChange.OnFragmentInteractionListener, FragmentDataTicket.OnFragmentInteractionListener ,
+    FragmentRoomData.OnFragmentInteractionListener{
     // Not used
     override fun onFragmentInteraction(uri: Uri) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
 
-    var recycler:RecyclerView?= null
-    var chargedFirst:Boolean = false
-    private var CHANNEL_ID:String? = null
-    private var uri:Uri? = null
-    var imageId:ImageView? = null
-    val CODE_PICK_IMG = 21300
+    var recycler: RecyclerView? = null
+    var chargedFirst: Boolean = false
+    private var CHANNEL_ID: String? = null
+    var imageId: ImageView? = null
+    val CODE_PICK_IMG = 1234
+    //Interface Elements
+    var buttonAdd: ImageButton? = null
+    var buttonViewTicketsNotAttended: ImageButton? = null
+    var buttonShowUser: ImageButton? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,42 +82,39 @@ FragmentUsers.OnFragmentInteractionListener, FragmentViewUser.OnFragmentInteract
         //Instance Elements Data
         createChanellNotification()
         FirestoreController.instanceFirestore()
-        FirestoreController.getSnapshotForTickets(MngRooms.getUser().tag)
         MngRooms.chargeRooms()
         NtOneSelected.setActivity(this)
         NtNotificationNewTickets.setActivity(this)
         // Create the Room list from
         recycler = findViewById(R.id.recycler)
         var adapter: AdapterRecyclerArea =
-            AdapterRecyclerArea(this,this)
+            AdapterRecyclerArea(this, this)
         recycler!!.layoutManager = LinearLayoutManager(this)
         recycler!!.adapter = adapter
         nav_view.setNavigationItemSelectedListener(this)
         // Elements for Interface Menu
-        val name : TextView = findViewById(R.id.nameUserID)
-        val email:TextView = findViewById(R.id.mailUserID)
-        val tag :TextView = findViewById(R.id.tagUser)
-        this.imageId= findViewById(R.id.imageId)
-        if (MngRooms.getUser().imageRoute != null){
-            CloudController.chargePhoto(imageId,"${DatabaseStrings.COLLECTION_PHOTOS_USERS}${MngRooms.getUser().imageRoute}",this)
-        }
-        name.text="${MngRooms.getUser().name} ${MngRooms.getUser().surname}"
-        email.text=MngRooms.getUser().email
+        val name: TextView = findViewById(R.id.nameUserID)
+        val email: TextView = findViewById(R.id.mailUserID)
+        val tag: TextView = findViewById(R.id.tagUser)
+        this.imageId = findViewById(R.id.imageId)
+        chargePhotoUser()
+        name.text = "${MngRooms.getUser().name} ${MngRooms.getUser().surname}"
+        email.text = MngRooms.getUser().email
         tag.text = MngRooms.getUser().tag
-        val exit:ImageButton = findViewById(R.id.logOutButton)
+        val exit: ImageButton = findViewById(R.id.logOutButton)
         exit.setOnClickListener(this)
-        val buttonAddRoom :ImageButton = findViewById(R.id.addRoom)
-        val notificationMenu:ImageButton  = findViewById(R.id.notificationMenu)
+        val buttonAddRoom: ImageButton = findViewById(R.id.addRoom)
+        val notificationMenu: ImageButton = findViewById(R.id.notificationMenu)
         buttonAddRoom.setOnClickListener(this)
         notificationMenu.setOnClickListener(this)
         // Buttons For Interface to change betwenn  fragmednts
-        val buttonAdd : ImageButton = findViewById(R.id.buttonAdd)
-        val buttonViewTicketsNotAttended : ImageButton = findViewById(R.id.TicketNotAttended)
-        val buttonShowUser:ImageButton = findViewById(R.id.ViewUser)
+        this.buttonAdd = findViewById(R.id.buttonAdd)
+        this.buttonViewTicketsNotAttended = findViewById(R.id.TicketNotAttended)
+        this.buttonShowUser = findViewById(R.id.ViewUser)
 
-        buttonAdd.setOnClickListener(this)
-        buttonViewTicketsNotAttended.setOnClickListener(this)
-        buttonShowUser.setOnClickListener(this)
+        buttonAdd!!.setOnClickListener(this)
+        buttonViewTicketsNotAttended!!.setOnClickListener(this)
+        buttonShowUser!!.setOnClickListener(this)
         //In case not Room for that user we charge fragment to create one
 
 
@@ -131,27 +142,32 @@ FragmentUsers.OnFragmentInteractionListener, FragmentViewUser.OnFragmentInteract
             R.id.action_settings -> {
                 return true
             }
-            R.id.changeAvatar ->{
-                chargePhoto()
+            R.id.changeAvatar -> {
+                var fragment = FragmentDataUserChange()
+                supportFragmentManager.beginTransaction().replace(R.id.container, fragment).commit()
                 return true
             }
             else -> return super.onOptionsItemSelected(item)
         }
     }
+
     /**
      * Method that charge A Fragment First Time when we select a Room
      * */
-    fun chargeRoom(){
-        if (MngRooms.getPermissions().isWriteTk){
+    fun chargeRoom() {
+        if (MngRooms.getPermissions().isWriteTk) {
             var fragment = CreationTicket()
-            supportFragmentManager.beginTransaction().replace(R.id.container,fragment).commit()
-        }else{
+            supportFragmentManager.beginTransaction().replace(R.id.container, fragment).commit()
+            selectButton(1)
+        } else {
             var fragment = FragmentViewTickets()
-            supportFragmentManager.beginTransaction().replace(R.id.container,fragment).commit()
+            supportFragmentManager.beginTransaction().replace(R.id.container, fragment).commit()
+            selectButton(2)
         }
         drawer_layout.closeDrawer(GravityCompat.START)
 
     }
+
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         when (item.itemId) {
@@ -164,159 +180,171 @@ FragmentUsers.OnFragmentInteractionListener, FragmentViewUser.OnFragmentInteract
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
     }
+
     override fun onClick(v: View?) {
-        when(v!!.id){
+        when (v!!.id) {
             R.id.logOutButton -> {
-                var intent = Intent(this,LogInActivity::class.java)
+                var intent = Intent(this, LogInActivity::class.java)
                 AuthController().logOut()
                 startActivity(intent)
                 finish()
                 MngRooms.clear()
             }
-            R.id.buttonAdd ->{
-              if (MngRooms.getRoomSelected() != null && MngRooms.getPermissions()!=null){
-                  if (MngRooms.getPermissions().isWriteTk){
-                      var fragment = CreationTicket()
-                      supportFragmentManager.beginTransaction().replace(R.id.container,fragment).commit()
-                  }else{
-                      Snackbar.make(v,R.string.not_permissions,Snackbar.LENGTH_LONG)
-                  }
-              }
+            R.id.buttonAdd -> {
+                if (MngRooms.getRoomSelected() != null && MngRooms.getPermissions() != null) {
+                    if (MngRooms.getPermissions().isWriteTk) {
+                        var fragment = CreationTicket()
+                        supportFragmentManager.beginTransaction().replace(R.id.container, fragment).commit()
+                        selectButton(1)
+                    } else {
+                        Snackbar.make(v, R.string.not_permissions, Snackbar.LENGTH_LONG)
+                    }
+                }
 
             }
             R.id.TicketNotAttended -> {
-                if (MngRooms.getRoomSelected() != null && MngRooms.getPermissions()!=null) {
+                if (MngRooms.getRoomSelected() != null && MngRooms.getPermissions() != null) {
                     var fragment = FragmentViewTickets()
                     supportFragmentManager.beginTransaction().replace(R.id.container, fragment).commit()
+                    selectButton(2)
                 }
             }
 
-            R.id.ViewUser ->{
-                if (MngRooms.getRoomSelected() != null && MngRooms.getPermissions()!=null) {
+            R.id.ViewUser -> {
+                if (MngRooms.getRoomSelected() != null && MngRooms.getPermissions() != null) {
                     var fragment = FragmentControllRoom()
                     supportFragmentManager.beginTransaction().replace(R.id.container, fragment).commit()
+                    selectButton(3)
                 }
             }
             R.id.addRoom -> {
                 var fragment = CreateRoomFragment()
-                supportFragmentManager.beginTransaction().replace(R.id.container,fragment).commit()
+                supportFragmentManager.beginTransaction().replace(R.id.container, fragment).commit()
                 drawer_layout.closeDrawer(GravityCompat.START)
             }
-            R.id.notificationMenu ->{
+            R.id.notificationMenu -> {
                 var fragment = NotificationsFragment()
-                supportFragmentManager.beginTransaction().replace(R.id.container,fragment).commit()
+                supportFragmentManager.beginTransaction().replace(R.id.container, fragment).commit()
                 drawer_layout.closeDrawer(GravityCompat.START)
             }
         }
     }
+
     /**
      * Method to chargea room in case that the user have got any one, but if he havent got any charge the not Room Fragment
      * */
-    fun firstTimeCharge(){
-       if (!chargedFirst){
-           if (MngRooms.getRoomSelected() == null){
-               var fragment = NotRoomFragment()
-               supportFragmentManager.beginTransaction().replace(R.id.container,fragment).commit()
-           }else{
-               chargeRoom()
-               chargedFirst = true
-           }
-       }
+    fun firstTimeCharge() {
+        if (!chargedFirst || MngRooms.getRoomSelected() == null) {
+            if (MngRooms.getRoomSelected() == null) {
+                var fragment = NotRoomFragment()
+                supportFragmentManager.beginTransaction().replace(R.id.container, fragment).commit()
+            } else {
+                chargeRoom()
+                chargedFirst = true
+            }
+        }
 
 
     }
+
     /**
      * Method to post a Notification
      * */
-    fun notificationNewTicket(tk:Ticket){
+    fun notificationNewTicket(tk: Ticket) {
         var formatter = SimpleDateFormat("dd/MM/yyyy HH:mm")
-        var notification = NotificationCompat.Builder(this,CHANNEL_ID!!)
-            .setContentTitle("${tk.title} - ${if(tk.date != null){formatter.format(tk.date.toDate())}else{}}")
+        var notification = NotificationCompat.Builder(this, CHANNEL_ID!!)
+            .setContentTitle(
+                "${tk.title} - ${if (tk.date != null) {
+                    formatter.format(tk.date.toDate())
+                } else {
+                }}"
+            )
             .setSubText(tk.description)
             .setAutoCancel(true)
             .setSmallIcon(R.mipmap.ic_launcher)
             .setPriority(tk.importance)
         with(NotificationManagerCompat.from(this)) {
             // notificationId is a unique int for each notification that you must define
-            notify((Math.floor(Math.random()*19999).toInt()), notification.build())
+            notify((Math.floor(Math.random() * 19999).toInt()), notification.build())
         }
     }
-    fun createChanellNotification(){
+
+    fun createChanellNotification() {
         CHANNEL_ID = getString(R.string.channel_id)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                val name = getString(R.string.channel_notification_tickets)
-                val descriptionText = getString(R.string.channel_description_notification_tickets)
-                val importance = NotificationManager.IMPORTANCE_DEFAULT
-                val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
-                    description = descriptionText
-                }
-                // Register the channel with the system
-                val notificationManager: NotificationManager =
-                    getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-                notificationManager.createNotificationChannel(channel)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = getString(R.string.channel_notification_tickets)
+            val descriptionText = getString(R.string.channel_description_notification_tickets)
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
+                description = descriptionText
             }
+            // Register the channel with the system
+            val notificationManager: NotificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
 
     }
-    /**
-     * Method to charge a Photo from the Galery
-     * */
-    fun chargePhoto (){
-        val getIntent: Intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-        getIntent.setType("image/*")
-        getIntent.addCategory(Intent.CATEGORY_OPENABLE)
-        startActivityForResult(getIntent,CODE_PICK_IMG)
-    }
+
     /**
      * Method to do an Intent to Message Activity
      * */
-    fun chargeMssgActivity(ticketTag:String){
-        if (ticketTag !=null){
-                var intent = Intent(this,MessageActivity::class.java)
-                intent.putExtra("ticketTag",ticketTag)
-                startActivity(intent)
+    fun chargeMssgActivity(ticketTag: String) {
+        if (ticketTag != null) {
+            var intent = Intent(this, MessageActivity::class.java)
+            intent.putExtra("ticketTag", ticketTag)
+            startActivity(intent)
         }
     }
+
     /**
      * Show PopUp Menu for My Tickets Layout if you do a long click
      * */
-    fun showPopUp( ticket:Ticket, view: View){
-        var menu =PopupMenu(this,view)
-        menu.menuInflater.inflate(R.menu.menu_ticket,menu.menu)
+    fun showPopUp(ticket: Ticket, view: View) {
+        var menu = PopupMenu(this, view)
+        menu.menuInflater.inflate(R.menu.menu_ticket, menu.menu)
         menu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener {
-           when (it!!.itemId){
-                R.id.viewAll ->{
-
+            when (it!!.itemId) {
+                R.id.viewData -> {
+                    var fragment = FragmentDataTicket()
+                    fragment.setTicket(ticket)
+                    supportFragmentManager.beginTransaction().replace(R.id.stack, fragment).commit()
                     true
                 }
-               R.id.delete ->{
-                   Toast.makeText(this,"Delete ${ticket.tag} completed",Toast.LENGTH_LONG)
-                   CloudController.deleteMediaTicket(ticket.tag)
-                   FirestoreController.deleteATicket(ticket.tag)
-                   NtRechargeAdapterData()
-                   true
-               }
-               else -> {
-                   false
-               }
-           }
+                R.id.delete -> {
+                    Toast.makeText(this, "Delete ${ticket.tag} completed", Toast.LENGTH_LONG)
+                    if (ticket.uriPhoto != null) {
+                        CloudController.deleteMediaTicket("${DatabaseStrings.COLLECTION_PHOTOS_TICKETS}${ticket.uriPhoto}")
+                    }
+                    FirestoreController.deleteATicket(ticket.tag)
+                    NtRechargeAdapterData()
+                    true
+                }
+                else -> {
+                    false
+                }
+            }
         })
         menu.show()
 
     }
+
     /**
      * Method to show Menu for Ticket Layout Attended if you do a long click
      * */
-    fun showPopUpReader( ticket:Ticket, view: View, adapter:AdapterRecyclerTicketAttendendedByMe){
-        var menu =PopupMenu(this,view)
-        menu.menuInflater.inflate(R.menu.menu_ticket_reader,menu.menu)
+    fun showPopUpReader(ticket: Ticket, view: View, adapter: AdapterRecyclerTicketAttendendedByMe) {
+        var menu = PopupMenu(this, view)
+        menu.menuInflater.inflate(R.menu.menu_ticket_reader, menu.menu)
         menu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener {
-            when (it!!.itemId){
-                R.id.viewAll ->{
-
+            when (it!!.itemId) {
+                R.id.viewData -> {
+                    var fragment = FragmentDataTicket()
+                    fragment.setTicket(ticket)
+                    supportFragmentManager.beginTransaction().replace(R.id.stack, fragment).commit()
                     true
                 }
-                R.id.finish ->{
-                    Toast.makeText(this,"Finish ${ticket.tag}",Toast.LENGTH_LONG)
+                R.id.finish -> {
+                    Toast.makeText(this, "Finish ${ticket.tag}", Toast.LENGTH_LONG)
                     ticket.isFinished = true
                     FirestoreController.saveTicket(ticket)
                     adapter.notifyDataSetChanged()
@@ -330,21 +358,36 @@ FragmentUsers.OnFragmentInteractionListener, FragmentViewUser.OnFragmentInteract
         menu.show()
 
     }
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == CODE_PICK_IMG && resultCode == Activity.RESULT_OK){
-            uri = data!!.data
-            imageId!!.setImageURI(uri)
-            if (MngRooms.getUser().imageRoute == null){
-                MngRooms.getUser().imageRoute =  "${MngRooms.getUser().tag}/avatar.png"
-                FirestoreController.saveUser(MngRooms.getUser())
-            }
-            CloudController.savePhoto(uri,"${DatabaseStrings.COLLECTION_PHOTOS_USERS}${MngRooms.getUser().imageRoute}")
-        }
 
+    fun chargePhotoUser() {
+        if (MngRooms.getUser().imageRoute != null) {
+            CloudController.chargePhoto(
+                imageId,
+                "${DatabaseStrings.COLLECTION_PHOTOS_USERS}${MngRooms.getUser().imageRoute}",
+                this
+            )
+        }
     }
 
-
-
+    fun selectButton(num: Int) {
+        when (num) {
+            1 -> {
+                this.buttonAdd!!.setBackgroundResource(R.color.ColorSelected)
+                this.buttonViewTicketsNotAttended!!.setBackgroundResource(R.color.clear)
+                this.buttonShowUser!!.setBackgroundResource(R.color.clear)
+            }
+            2 -> {
+                this.buttonAdd!!.setBackgroundResource(R.color.clear)
+                this.buttonViewTicketsNotAttended!!.setBackgroundResource(R.color.ColorSelected)
+                this.buttonShowUser!!.setBackgroundResource(R.color.clear)
+            }
+            3 -> {
+                this.buttonAdd!!.setBackgroundResource(R.color.clear)
+                this.buttonViewTicketsNotAttended!!.setBackgroundResource(R.color.clear)
+                this.buttonShowUser!!.setBackgroundResource(R.color.ColorSelected)
+            }
+        }
+    }
 
 
 }

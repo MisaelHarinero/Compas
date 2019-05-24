@@ -7,11 +7,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 
 import com.mhdeveloper.compas.R
-import com.mhdeveloper.compas.controller.managements.MngRooms
+import com.mhdeveloper.compas.controller.dao.CloudController
+import com.mhdeveloper.compas.controller.dao.DatabaseStrings
+import com.mhdeveloper.compas.model.Ticket
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,28 +23,24 @@ private const val ARG_PARAM2 = "param2"
 /**
  * A simple [Fragment] subclass.
  * Activities that contain this fragment must implement the
- * [FragmentControllRoom.OnFragmentInteractionListener] interface
+ * [FragmentDataTicket.OnFragmentInteractionListener] interface
  * to handle interaction events.
- * Use the [FragmentControllRoom.newInstance] factory method to
+ * Use the [FragmentDataTicket.newInstance] factory method to
  * create an instance of this fragment.
- * @author Misael Harinero
  *
  */
-class FragmentControllRoom : Fragment(), View.OnClickListener {
-
-
+class FragmentDataTicket : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
-    /**
-     * variables
-     * */
-    private var nameRoom: TextView? = null
-    private var tagRoom: TextView? = null
-    private var buttonGestRoom: ImageButton? = null
-    private var buttonGestUser: ImageButton? = null
-
+    private var dataTicket:Ticket? = null
+    private var title:TextView? = null
+    private var description:TextView? = null
+    private var importance:TextView? = null
+    private var userEmmiter:TextView? = null
+    private var responsable:TextView? = null
+    private var image:ImageView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,48 +54,28 @@ class FragmentControllRoom : Fragment(), View.OnClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // Inflate the layout for this fragment
+        var view =  inflater.inflate(R.layout.fragment_fragment_data_ticket, container, false)
+        this.title = view.findViewById(R.id.title)
+        this.description = view.findViewById(R.id.description)
+        this.importance = view.findViewById(R.id.importance)
+        this.userEmmiter = view.findViewById(R.id.emmiter)
+        this.responsable = view.findViewById(R.id.responsable)
+        this.image = view.findViewById(R.id.image)
+        title!!.text = dataTicket!!.title
+        this.description!!.text = dataTicket!!.description?:""
+        importance!!.text = Integer.toString(dataTicket!!.importance)
+        userEmmiter!!.text = dataTicket!!.tagUserEmmiter
+        responsable!!.text = dataTicket!!.tagUserAttended?:""
+        CloudController.chargePhoto(image,"${DatabaseStrings.COLLECTION_PHOTOS_TICKETS}${dataTicket!!.uriPhoto}",view.context)
 
-        var view = inflater.inflate(R.layout.fragment_fragment_controll_room, container, false)
-        nameRoom = view.findViewById(R.id.nameRoom)
-        tagRoom = view.findViewById(R.id.tagRoom)
-        //Set Data
-        nameRoom!!.text = MngRooms.getRoomSelected().name
-        tagRoom!!.text = MngRooms.getRoomSelected().uid
-        //Set Button Data
-        buttonGestRoom = view.findViewById(R.id.buttonEditRoom)
-        buttonGestUser = view.findViewById(R.id.buttonUsers)
-        //Listener to Events
-        buttonGestUser!!.setOnClickListener(this)
-        buttonGestRoom!!.setOnClickListener(this)
-        chargeDataRoom()
+
         return view
-    }
-    override fun onClick(v: View?) {
-
-        when(v!!.id){
-            R.id.buttonEditRoom ->{
-                chargeDataRoom()
-            }
-            R.id.buttonUsers ->{
-                var fragment = FragmentUsers()
-                activity!!.supportFragmentManager.beginTransaction().replace(R.id.stack,fragment).commit()
-                changeColor(2)
-
-            }
-        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
-    }
-     fun renewData(){
-        if (nameRoom != null){
-            nameRoom!!.text = MngRooms.getRoomSelected().name
-        }
-         if (tagRoom != null) {
-             tagRoom!!.text = MngRooms.getRoomSelected().uid
-         }
     }
 
     override fun onAttach(context: Context) {
@@ -129,6 +107,9 @@ class FragmentControllRoom : Fragment(), View.OnClickListener {
         // TODO: Update argument type and name
         fun onFragmentInteraction(uri: Uri)
     }
+    fun setTicket(ticket: Ticket){
+        this.dataTicket = ticket
+    }
 
     companion object {
         /**
@@ -137,33 +118,16 @@ class FragmentControllRoom : Fragment(), View.OnClickListener {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment FragmentControllRoom.
+         * @return A new instance of fragment FragmentDataTicket.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            FragmentControllRoom().apply {
+            FragmentDataTicket().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
                 }
             }
-    }
-    fun changeColor(num:Int){
-        when(num){
-            1->{
-                buttonGestUser!!.setBackgroundResource(R.color.clear)
-                buttonGestRoom!!.setBackgroundResource(R.color.ColorSelected)
-            }
-            2->{
-                buttonGestUser!!.setBackgroundResource(R.color.ColorSelected)
-                buttonGestRoom!!.setBackgroundResource(R.color.clear)
-            }
-        }
-    }
-    fun chargeDataRoom(){
-        var fragment = FragmentRoomData()
-        activity!!.supportFragmentManager.beginTransaction().replace(R.id.stack,fragment).commit()
-        changeColor(1)
     }
 }

@@ -10,9 +10,9 @@
     <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/hello_blank_fragment" android:textSize="@dimen/title"
+            android:text="@string/fragment_creation_button_create_ticket" android:textSize="@dimen/title"
             android:textAlignment="center"
-            android:textStyle="bold"/>
+            android:textStyle="bold" android:fontFamily="@font/oxygen"/>
     <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -21,13 +21,14 @@
                 android:text="@string/fragment_creation_title_ticket"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" android:id="@+id/textView5" android:textSize="@dimen/subtitle"
-                android:textStyle="bold"/>
+                android:textStyle="bold" android:fontFamily="@font/oxygen"/>
         <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:ems="10"
-                android:id="@+id/titleTicket" android:hint="@string/fragment_creation_title_ticket_contains"/>
+                android:id="@+id/titleTicket" android:hint="@string/fragment_creation_title_ticket_contains"
+                android:fontFamily="@font/oxygen"/>
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -36,11 +37,8 @@
                     android:text="@string/fragment_creation_importance_ticket"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:id="@+id/textView8" android:textStyle="bold"
-                    android:layout_marginRight="@dimen/nav_header_vertical_spacing" android:textSize="@dimen/subtitle"/>
-            <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:id="@+id/numberImportance" android:textStyle="bold"
-                    android:textSize="@dimen/subtitle" android:text="3"/>
+                    android:layout_marginRight="@dimen/nav_header_vertical_spacing" android:textSize="@dimen/subtitle"
+                    android:fontFamily="@font/oxygen"/>
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
@@ -50,27 +48,32 @@
                     android:text="1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:id="@+id/im1" android:layout_weight="1"
-                    android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"/>
+                    android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"
+                    android:fontFamily="@font/oxygen"/>
             <Button
                     android:text="2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:id="@+id/im2" android:layout_weight="1"
-                    android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"/>
+                    android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"
+                    android:fontFamily="@font/oxygen"/>
             <Button
                     android:text="3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:id="@+id/im3" android:layout_weight="1"
-                    android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"/>
+                    android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"
+                    android:fontFamily="@font/oxygen"/>
             <Button
                     android:text="4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:id="@+id/im4" android:layout_weight="1"
-                    android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"/>
+                    android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"
+                    android:fontFamily="@font/oxygen"/>
             <Button
                     android:text="5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:id="@+id/im5" android:layout_weight="1"
-                    android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"/>
+                    android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"
+                    android:fontFamily="@font/oxygen"/>
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
@@ -84,12 +87,13 @@
                         android:src="@color/clear"
                         android:layout_width="@dimen/button_height_width"
                         android:layout_height="@dimen/button_height_width" android:id="@+id/image"
-                        android:scaleType="fitXY"/>
+                        android:scaleType="fitCenter"/>
                 <Button
                         android:text="@string/fragment_creation_image_ticket"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" android:id="@+id/addImage"
-                        android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"/>
+                        android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"
+                        android:fontFamily="@font/oxygen"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="vertical"
@@ -100,7 +104,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" android:id="@+id/textView10"
                         android:textSize="@dimen/subtitle"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" android:fontFamily="@font/oxygen"/>
                 <EditText
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/nav_header_height"
@@ -119,7 +123,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" android:id="@+id/createTicket"
                     android:layout_gravity="bottom|center_horizontal"
-                    android:background="@color/colorBaseCompas"/>
+                    android:background="@color/ColorNotSelected" android:fontFamily="@font/oxygen"/>
         </com.google.android.material.bottomnavigation.BottomNavigationView>
     </LinearLayout>
 

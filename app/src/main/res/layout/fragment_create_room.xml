@@ -11,7 +11,7 @@
             android:text="@string/fragment_create_room_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" android:id="@+id/titleCreationRoom" android:textStyle="bold"
-            android:textAlignment="center" android:textSize="30sp"/>
+            android:textAlignment="center" android:textSize="30sp" android:fontFamily="@font/oxygen"/>
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -28,13 +28,14 @@
         <TextView
                 android:text="@string/fragment_create_room_name"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/textView2" android:textStyle="bold"/>
+                android:layout_height="wrap_content" android:id="@+id/textView2" android:textStyle="bold"
+                android:fontFamily="@font/oxygen"/>
         <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:ems="10"
-                android:id="@+id/nameRoom"/>
+                android:id="@+id/nameRoom" android:fontFamily="@font/oxygen"/>
         <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
@@ -43,7 +44,7 @@
                     android:text="@string/fragment_create_room_create"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" android:id="@+id/button"
-                    android:layout_margin="@dimen/height_width_margin"/>
+                    android:layout_margin="@dimen/height_width_margin" android:fontFamily="@font/oxygen"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

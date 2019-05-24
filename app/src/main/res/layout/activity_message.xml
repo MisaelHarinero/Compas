@@ -11,10 +11,10 @@
     <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
+            android:background="@drawable/side_nav_bar"
             android:theme="?attr/actionBarTheme"
             android:minHeight="?attr/actionBarSize" android:id="@+id/toolbarMssg"
-            app:navigationIcon="@drawable/ic_menu_share"/>
+            app:navigationIcon="@drawable/return"/>
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
             android:layout_width="match_parent"
@@ -28,12 +28,13 @@
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:orientation="horizontal"
-            android:padding="10dp" android:gravity="center_horizontal|center_vertical">
+            android:padding="10dp" android:gravity="center_horizontal|center_vertical"
+            android:background="@color/ColorNotSelected">
 
         <ImageButton
                 android:layout_width="0dp"
-                android:layout_height="wrap_content" app:srcCompat="@drawable/ic_menu_manage"
-                android:id="@+id/addImage" android:layout_weight="2"/>
+                android:layout_height="match_parent" app:srcCompat="@drawable/camera"
+                android:id="@+id/addImage" android:layout_weight="2" android:background="@color/clear"/>
         <ScrollView
                 android:layout_width="0dp"
                 android:layout_height="64dp"
@@ -63,7 +64,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="2"
                 android:padding="3dp"
-                android:src="@android:drawable/ic_dialog_email"/>
+                android:src="@android:drawable/ic_dialog_email" android:background="@color/clear"/>
 
     </LinearLayout>
 

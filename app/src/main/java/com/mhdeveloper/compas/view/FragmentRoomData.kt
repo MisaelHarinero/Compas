@@ -7,11 +7,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import android.widget.TextView
-
 import com.mhdeveloper.compas.R
 import com.mhdeveloper.compas.controller.managements.MngRooms
+import java.text.SimpleDateFormat
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,28 +21,19 @@ private const val ARG_PARAM2 = "param2"
 /**
  * A simple [Fragment] subclass.
  * Activities that contain this fragment must implement the
- * [FragmentControllRoom.OnFragmentInteractionListener] interface
+ * [FragmentRoomData.OnFragmentInteractionListener] interface
  * to handle interaction events.
- * Use the [FragmentControllRoom.newInstance] factory method to
+ * Use the [FragmentRoomData.newInstance] factory method to
  * create an instance of this fragment.
- * @author Misael Harinero
  *
  */
-class FragmentControllRoom : Fragment(), View.OnClickListener {
-
-
+class FragmentRoomData : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
-    /**
-     * variables
-     * */
-    private var nameRoom: TextView? = null
-    private var tagRoom: TextView? = null
-    private var buttonGestRoom: ImageButton? = null
-    private var buttonGestUser: ImageButton? = null
-
+    var date:TextView? = null
+    var numberOfUsers:TextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,48 +47,19 @@ class FragmentControllRoom : Fragment(), View.OnClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        var view = inflater.inflate(R.layout.fragment_fragment_controll_room, container, false)
-        nameRoom = view.findViewById(R.id.nameRoom)
-        tagRoom = view.findViewById(R.id.tagRoom)
-        //Set Data
-        nameRoom!!.text = MngRooms.getRoomSelected().name
-        tagRoom!!.text = MngRooms.getRoomSelected().uid
-        //Set Button Data
-        buttonGestRoom = view.findViewById(R.id.buttonEditRoom)
-        buttonGestUser = view.findViewById(R.id.buttonUsers)
-        //Listener to Events
-        buttonGestUser!!.setOnClickListener(this)
-        buttonGestRoom!!.setOnClickListener(this)
-        chargeDataRoom()
+        // Inflate the layout for this fragment
+        var view =  inflater.inflate(R.layout.fragment_fragment_room_data, container, false)
+        date = view.findViewById(R.id.date)
+        numberOfUsers = view.findViewById(R.id.numberOFUser)
+        var dateFormat = SimpleDateFormat("dd/MM/yyyy")
+        date!!.text = dateFormat.format(MngRooms.getRoomSelected().createDate.toDate())
+        numberOfUsers!!.text = Integer.toString(MngRooms.getRoomSelected().members.size)
         return view
-    }
-    override fun onClick(v: View?) {
-
-        when(v!!.id){
-            R.id.buttonEditRoom ->{
-                chargeDataRoom()
-            }
-            R.id.buttonUsers ->{
-                var fragment = FragmentUsers()
-                activity!!.supportFragmentManager.beginTransaction().replace(R.id.stack,fragment).commit()
-                changeColor(2)
-
-            }
-        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
-    }
-     fun renewData(){
-        if (nameRoom != null){
-            nameRoom!!.text = MngRooms.getRoomSelected().name
-        }
-         if (tagRoom != null) {
-             tagRoom!!.text = MngRooms.getRoomSelected().uid
-         }
     }
 
     override fun onAttach(context: Context) {
@@ -137,33 +99,16 @@ class FragmentControllRoom : Fragment(), View.OnClickListener {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment FragmentControllRoom.
+         * @return A new instance of fragment FragmentRoomData.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            FragmentControllRoom().apply {
+            FragmentRoomData().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
                 }
             }
-    }
-    fun changeColor(num:Int){
-        when(num){
-            1->{
-                buttonGestUser!!.setBackgroundResource(R.color.clear)
-                buttonGestRoom!!.setBackgroundResource(R.color.ColorSelected)
-            }
-            2->{
-                buttonGestUser!!.setBackgroundResource(R.color.ColorSelected)
-                buttonGestRoom!!.setBackgroundResource(R.color.clear)
-            }
-        }
-    }
-    fun chargeDataRoom(){
-        var fragment = FragmentRoomData()
-        activity!!.supportFragmentManager.beginTransaction().replace(R.id.stack,fragment).commit()
-        changeColor(1)
     }
 }

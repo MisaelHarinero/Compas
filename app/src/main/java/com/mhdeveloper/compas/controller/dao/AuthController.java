@@ -15,6 +15,10 @@ import com.mhdeveloper.compas.controller.notifications.NtLogInUserTry;
 import com.mhdeveloper.compas.controller.notifications.NtRegister;
 import com.mhdeveloper.compas.model.User;
 
+/**
+ * Clase con la cual manejamos el inicio de sesion
+ * @author Misael Harinero
+ */
 public class AuthController {
     private FirebaseAuth instance;
     private FirebaseUser user;
@@ -36,8 +40,11 @@ public class AuthController {
     public void setUser(FirebaseUser user) {
         this.user = user;
     }
+
     /**
-     * Insert an Event
+     * Metodo en el cual con los datos introducidos iniciamos sesion
+     * @param user
+     * @param passwd
      */
     public void signInWithMailPasswd(final String user, String passwd){
         this.instance.signInWithEmailAndPassword(user,passwd).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -56,12 +63,23 @@ public class AuthController {
             }
         });
     }
+    /**
+     * Metodo en el cual  cerramos sesion
+     * */
     public void logOut(){
         if (isUserSignIn()){
             instance.signOut();
         }
     }
 
+    /**
+     * Metodo con el cual con los datos pasados como parametro Registramos un nuevo usuario en Firebase Auth
+     * Si todo sale correctamente sus datos se guardaran en Firestore
+     * @param mail
+     * @param passwd
+     * @param user
+     * @param uri
+     */
     public void registerUser(String mail, String passwd, final User user, final Uri uri){
         this.instance.createUserWithEmailAndPassword(mail,passwd).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override

@@ -17,6 +17,7 @@ import java.util.Queue;
 
 public class FirestoreController {
     public static FirebaseFirestore db = null;
+    private static ArrayList<ListenerRegistration> notifRegistration = new ArrayList<ListenerRegistration>();
 
     public static void instanceFirestore() {
         db = FirebaseFirestore.getInstance();
@@ -58,6 +59,7 @@ public class FirestoreController {
                     MngRooms.rechargeRoomSelected();
                     MngRooms.selectFirstInit();
                     new NtOneSelected();
+                    new NtRechargeListener();
                 } else {
 
                     //Error Mssg Class Implementation
@@ -242,75 +244,31 @@ public class FirestoreController {
      * Listen to the database to notify the user for new Tickets on the database ,
      * get All rooms and do another event that get The documents  changes
      */
-    public static void getSnapshotForTickets(String userTag) {
-        MngRooms.getRegistrations().add(db.collection(DatabaseStrings.COLLECTION_ROOMS).whereArrayContains("members", userTag).whereEqualTo("permissesUser." + userTag, "reader").addSnapshotListener(new EventListener<QuerySnapshot>() {
+    public static void getSnapshotForTickets( String room) {
+
+        final Counter ct = new Counter();
+        notifRegistration.add(db.collection(DatabaseStrings.COLLECTION_TICKETS).whereEqualTo("tagUserAttended", null).whereEqualTo("roomTag", room).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                if (queryDocumentSnapshots != null) {
-                    if (!queryDocumentSnapshots.isEmpty()) {
-                        for (DocumentChange documentReference :
+
+                if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()) {
+                    if (ct.getCount() > 0) {
+                        for (DocumentChange change :
                                 queryDocumentSnapshots.getDocumentChanges()) {
-                            Room room = documentReference.getDocument().toObject(Room.class);
-                            final Counter ct = new Counter();
-                            db.collection(DatabaseStrings.COLLECTION_TICKETS).whereEqualTo("tagUserAttended", null).whereEqualTo("roomTag", room.getUid()).addSnapshotListener(new EventListener<QuerySnapshot>() {
-                                @Override
-                                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-
-                                    if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()) {
-                                        if (ct.getCount() > 0) {
-                                            for (DocumentChange change :
-                                                    queryDocumentSnapshots.getDocumentChanges()) {
-                                                Ticket tk = change.getDocument().toObject(Ticket.class);
-                                                if (tk.getTagUserAttended() == null) {
-                                                    new NtNotificationNewTickets(tk);
-                                                }
-                                            }
-                                        }
-                                        ct.plusCount();
-
-
-                                    }
-                                }
-                            });
+                            Ticket tk = change.getDocument().toObject(Ticket.class);
+                            if (tk.getTagUserAttended() == null) {
+                                new NtNotificationNewTickets(tk);
+                            }
                         }
                     }
+                    ct.plusCount();
+                    System.out.println(ct.getCount());
+
+
                 }
             }
         }));
-        MngRooms.getRegistrations().add(db.collection(DatabaseStrings.COLLECTION_ROOMS).whereArrayContains("members", userTag).whereEqualTo("permissesUser." + userTag, "admin").addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                if (queryDocumentSnapshots != null) {
-                    if (!queryDocumentSnapshots.isEmpty()) {
-                        for (DocumentChange documentReference :
-                                queryDocumentSnapshots.getDocumentChanges()) {
-                            Room room = documentReference.getDocument().toObject(Room.class);
-                            final Counter ct = new Counter();
-                            db.collection(DatabaseStrings.COLLECTION_TICKETS).whereEqualTo("tagUserAttended", null).whereEqualTo("roomTag", room.getUid()).addSnapshotListener(new EventListener<QuerySnapshot>() {
-                                @Override
-                                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
 
-                                    if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()) {
-                                        if (ct.getCount() > 0) {
-                                            for (DocumentChange change :
-                                                    queryDocumentSnapshots.getDocumentChanges()) {
-                                                Ticket tk = change.getDocument().toObject(Ticket.class);
-                                                if (tk.getTagUserAttended() == null) {
-                                                    new NtNotificationNewTickets(tk);
-                                                }
-                                            }
-                                        }
-                                        ct.plusCount();
-
-
-                                    }
-                                }
-                            });
-                        }
-                    }
-                }
-            }
-        }));
 
     }
 
@@ -324,58 +282,72 @@ public class FirestoreController {
 
     /**
      * Method that return the query that get the tickets of the user
+     *
      * @param roomUid
      * @param tagUserEmmiter
      * @return
      */
-    public static Query getMyTickets(String roomUid,String tagUserEmmiter) {
-        return db.collection(DatabaseStrings.COLLECTION_TICKETS).whereEqualTo("roomTag",roomUid).whereEqualTo("tagUserEmmiter",tagUserEmmiter).orderBy("importance",Query.Direction.DESCENDING);
+    public static Query getMyTickets(String roomUid, String tagUserEmmiter) {
+        return db.collection(DatabaseStrings.COLLECTION_TICKETS).whereEqualTo("roomTag", roomUid).whereEqualTo("tagUserEmmiter", tagUserEmmiter).orderBy("importance", Query.Direction.DESCENDING);
     }
 
     /**
      * Method that get the Tickets Attended By the User
+     *
      * @param roomUid
      * @param tagUserAttended
      * @return
      */
-    public static Query getTicketsAttendedByMe(String roomUid,String tagUserAttended) {
-        return db.collection(DatabaseStrings.COLLECTION_TICKETS).whereEqualTo("roomTag",roomUid).whereEqualTo("tagUserAttended",tagUserAttended).orderBy("importance",Query.Direction.DESCENDING);
+    public static Query getTicketsAttendedByMe(String roomUid, String tagUserAttended) {
+        return db.collection(DatabaseStrings.COLLECTION_TICKETS).whereEqualTo("roomTag", roomUid).whereEqualTo("tagUserAttended", tagUserAttended).orderBy("importance", Query.Direction.DESCENDING);
     }
 
     /**
      * Method that get the Messages of a ticket
+     *
      * @param tagTicket
      * @return
      */
-    public static Query getMessagesByTicketTag(String tagTicket){
-       return db.collection(DatabaseStrings.COLLECTION_TICKETS).document(tagTicket).collection(DatabaseStrings.COLLECTION_MESSAGES).orderBy("date");
+    public static Query getMessagesByTicketTag(String tagTicket) {
+        return db.collection(DatabaseStrings.COLLECTION_TICKETS).document(tagTicket).collection(DatabaseStrings.COLLECTION_MESSAGES).orderBy("date");
     }
 
     /**
      * Method that save a Message in the collection of his ticket
+     *
      * @param message
      */
-    public static void saveMessagesByTicketTag(Message message){
+    public static void saveMessagesByTicketTag(Message message) {
         db.collection(DatabaseStrings.COLLECTION_TICKETS).document(message.getTagTicket()).collection(DatabaseStrings.COLLECTION_MESSAGES).document().set(message);
     }
 
     /**
      * Method for delete a Ticket
+     *
      * @param ticketTag
      */
-    public static void deleteATicket(String ticketTag){
+    public static void deleteATicket(String ticketTag) {
         db.collection(DatabaseStrings.COLLECTION_TICKETS).document(ticketTag).collection(DatabaseStrings.COLLECTION_MESSAGES).document().delete();
         db.collection(DatabaseStrings.COLLECTION_TICKETS).document(ticketTag).delete();
     }
 
     /**
      * Save data of user when exist on database
+     *
      * @param user
      */
-    public static void saveUser(User user){
+    public static void saveUser(User user) {
         db.collection(DatabaseStrings.COLLECTION_USERS).document(new AuthController().getUser().getUid()).set(user);
     }
 
+    public static void clearListener() {
+        if (notifRegistration.size() > 0) {
+            for (ListenerRegistration listener : notifRegistration) {
+                listener.remove();
+            }
+            notifRegistration.clear();
+        }
+    }
 
 
 }

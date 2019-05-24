@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="start"
-            android:fitsSystemWindows="false">
+            android:fitsSystemWindows="false" android:background="@drawable/side_nav_bar">
         <androidx.core.widget.NestedScrollView android:layout_width="match_parent"
                                                android:layout_height="match_parent">
             <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
@@ -32,12 +32,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:id="@+id/recycler"
-                        android:background="@color/colorAccent"
+                        android:background="@drawable/back"
                         android:nestedScrollingEnabled="false"/>
                 <ImageButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" app:srcCompat="@mipmap/ic_launcher_round"
-                        android:id="@+id/addRoom" android:contentDescription="TODO"/>
+                        android:layout_width="@dimen/height_width_photo"
+                        android:layout_height="@dimen/height_width_photo"
+                        app:srcCompat="@android:drawable/ic_menu_slideshow"
+                        android:id="@+id/addRoom" android:contentDescription="TODO" android:background="@color/clear"
+                        android:layout_margin="@dimen/fab_margin"/>
 
 
             </LinearLayout>

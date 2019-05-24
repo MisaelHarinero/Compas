@@ -12,25 +12,26 @@
             android:layout_height="wrap_content"
             android:text="@string/fragment_create_room_name" android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" android:textStyle="bold"
-            android:id="@+id/nameRoom"/>
+            android:id="@+id/nameRoom" android:fontFamily="@font/oxygen"/>
     <TextView
             android:text="@string/fragment_notroom_title"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:id="@+id/tagRoom" android:textAlignment="center"/>
+            android:layout_height="wrap_content" android:id="@+id/tagRoom" android:textAlignment="center"
+            android:fontFamily="@font/oxygen"/>
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:gravity="center">
+            android:layout_height="wrap_content" android:gravity="center" android:background="@color/ColorNotSelected">
         <ImageButton
                 android:src="@android:drawable/ic_dialog_dialer"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/buttonEditRoom"
-                android:background="@color/clear" android:layout_margin="@dimen/fab_margin"/>
+                android:layout_height="match_parent" android:id="@+id/buttonEditRoom"
+                android:background="@color/clear" android:padding="@dimen/activity_vertical_margin"/>
         <ImageButton
                 android:src="@android:drawable/ic_menu_view"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/buttonUsers"
-                android:layout_margin="@dimen/fab_margin" android:background="@color/clear"/>
+                android:layout_height="match_parent" android:id="@+id/buttonUsers"
+                android:background="@color/clear" android:padding="@dimen/activity_vertical_margin"/>
     </LinearLayout>
     <ScrollView
             android:layout_width="match_parent"

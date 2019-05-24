@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
+import com.google.firebase.Timestamp
 
 import com.mhdeveloper.compas.R
 import com.mhdeveloper.compas.controller.dao.CloudController
@@ -48,6 +49,7 @@ class CreateRoomFragment : Fragment(), View.OnClickListener {
 
                 }
                 var room = Room("${nameRoom!!.text}${UtilitiesClass.generateTag()}",nameRoom!!.text.toString(),MngRooms.getUser().tag)
+                room.createDate = Timestamp.now()
                 if (uri != null){
                     room.urlImage = "${nameRoom!!.text}_avatar.jpg"
                     CloudController.savePhoto(uri,"${DatabaseStrings.COLLECTION_PHOTOS_ROOMS}${room.urlImage}")
@@ -67,8 +69,7 @@ class CreateRoomFragment : Fragment(), View.OnClickListener {
     private var nameRoom : EditText? = null
     //Photo
     var uri:Uri? = null
-    val CODE_PICK_IMG = 1234
-
+    val CODE_PICK_IMG = 1232
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

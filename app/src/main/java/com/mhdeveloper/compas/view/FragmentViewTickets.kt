@@ -62,6 +62,7 @@ class FragmentViewTickets : Fragment(), View.OnClickListener {
         if (MngRooms.getPermissions().isWriteTk){
             buttonMy!!.setOnClickListener(this)
             chargeMyTickets()
+            changeColors(2)
             if (!MngRooms.getPermissions().isReadTk){
                 buttonAll!!.visibility = Button.GONE
                 buttonAttended!!.visibility = Button.GONE
@@ -74,6 +75,7 @@ class FragmentViewTickets : Fragment(), View.OnClickListener {
             buttonAttended!!.setOnClickListener(this)
             buttonMy!!.visibility = Button.GONE
             chargeAllTicket()
+            changeColors(1)
         }
 
         return view
@@ -82,14 +84,17 @@ class FragmentViewTickets : Fragment(), View.OnClickListener {
         when(v!!.id){
             R.id.viewAll ->{
                 chargeAllTicket()
+                changeColors(1)
             }
             R.id.myTickets ->{
-               chargeMyTickets()
+                chargeMyTickets()
+                changeColors(2)
 
             }
             R.id.AttendByMe ->{
                 var fragment = FragmentVeiwTicketsAttended()
                 fragmentManager!!.beginTransaction().replace(R.id.stack,fragment).commit()
+                changeColors(3)
             }
         }
     }
@@ -155,5 +160,28 @@ class FragmentViewTickets : Fragment(), View.OnClickListener {
     fun chargeMyTickets(){
         var fragment = FragmentMyTikects()
         fragmentManager!!.beginTransaction().replace(R.id.stack,fragment).commit()
+    }
+    fun changeColors( id:Int){
+        when(id){
+            1 ->{
+               buttonAll!!.setBackgroundResource(R.color.ColorSelected)
+               buttonAttended!!.setBackgroundResource(R.color.ColorNotSelected)
+               buttonMy!!.setBackgroundResource(R.color.ColorNotSelected)
+
+            }
+            2 ->{
+
+                buttonAll!!.setBackgroundResource(R.color.ColorNotSelected)
+                buttonMy!!.setBackgroundResource(R.color.ColorSelected)
+                buttonAttended!!.setBackgroundResource(R.color.ColorNotSelected)
+
+            }
+            3 ->{
+
+                buttonAll!!.setBackgroundResource(R.color.ColorNotSelected)
+                buttonMy!!.setBackgroundResource(R.color.ColorNotSelected)
+                buttonAttended!!.setBackgroundResource(R.color.ColorSelected)
+            }
+        }
     }
 }

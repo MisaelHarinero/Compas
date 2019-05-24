@@ -6,16 +6,50 @@ import com.google.firebase.Timestamp;
 import java.util.ArrayList;
 import java.util.Comparator;
 
+/**
+ * Clase Modelo para guardar los dastos de los tickets
+ * @author Misael Harinero
+ */
 public class Ticket  implements Comparator<Ticket> {
+    /**
+     * Tag del Ticket
+     * */
     private String tag;
+    /**
+     * Tag de la room a la que pertenece el ticket
+     * */
     private String roomTag;
+    /**
+     * Importancia del ticked
+     * */
     private int importance;
+    /**
+     * Si ha sido finalizaado el ticket
+     * */
     private boolean finished;
+    /**
+     * Url de la foto en el caso de que la tenga
+     * */
     private String uriPhoto;
+    /**
+     * Titulo del Ticket
+     * */
     private String title;
+    /**
+     * Descripcion del Ticket
+     * */
     private String description;
+    /**
+     * Tag del Emisor
+     * */
     private String tagUserEmmiter;
+    /**
+     * Tag del Receptor
+     * */
     private String tagUserAttended;
+    /**
+     * Fecha de Creación
+     * */
     private Timestamp date;
 
     public Ticket() {
