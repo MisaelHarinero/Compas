@@ -39,11 +39,15 @@ public class AdapterRecyclerNotifications extends RecyclerView.Adapter<AdapterRe
             @Override
             public void onClick(View v) {
                 FirestoreController.eventNotification(notifications.get(position),true);
+                notifications.remove(position);
+                notifyDataSetChanged();
             }
         });
         holder.buttonDecline.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                notifyDataSetChanged();
+                notifications.remove(position);
                 FirestoreController.eventNotification(notifications.get(position),false);
             }
         });

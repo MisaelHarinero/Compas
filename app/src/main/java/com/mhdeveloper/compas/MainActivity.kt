@@ -139,9 +139,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         when (item.itemId) {
-            R.id.action_settings -> {
-                return true
-            }
+
             R.id.changeAvatar -> {
                 var fragment = FragmentDataUserChange()
                 supportFragmentManager.beginTransaction().replace(R.id.container, fragment).commit()
@@ -358,6 +356,36 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         menu.show()
 
     }
+    /**
+     * Method to show Menu for Ticket Layout Attended if you do a long click
+     * */
+    fun showPopUpReaderClosed(ticket: Ticket, view: View, adapter: AdapterRecyclerTicketAttendendedByMe) {
+        var menu = PopupMenu(this, view)
+        menu.menuInflater.inflate(R.menu.menu_ticket_closed, menu.menu)
+        menu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener {
+            when (it!!.itemId) {
+                R.id.viewData -> {
+                    var fragment = FragmentDataTicket()
+                    fragment.setTicket(ticket)
+                    supportFragmentManager.beginTransaction().replace(R.id.stack, fragment).commit()
+                    true
+                }
+                R.id.finish -> {
+                    Toast.makeText(this, "Open ${ticket.tag}", Toast.LENGTH_LONG)
+                    ticket.isFinished = false
+                    adapter.notifyDataSetChanged()
+                    FirestoreController.saveTicket(ticket)
+                    true
+                }
+                else -> {
+                    false
+                }
+            }
+        })
+        menu.show()
+
+    }
+
 
     fun chargePhotoUser() {
         if (MngRooms.getUser().imageRoute != null) {
@@ -387,6 +415,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 this.buttonShowUser!!.setBackgroundResource(R.color.ColorSelected)
             }
         }
+    }
+    fun changePhotoUser(uri:Uri){
+        this.imageId!!.setImageURI(uri)
     }
 
 

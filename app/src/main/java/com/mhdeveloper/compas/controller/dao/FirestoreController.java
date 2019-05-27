@@ -55,7 +55,7 @@ public class FirestoreController {
                         rooms.add(document.toObject(Room.class));
                     }
                     notification.action();
-                    ntChargeTickets.action();
+                    //ntChargeTickets.action();
                     MngRooms.rechargeRoomSelected();
                     MngRooms.selectFirstInit();
                     new NtOneSelected();
@@ -273,7 +273,7 @@ public class FirestoreController {
     }
 
     /**
-     * That Method return a QUERY that listen to the Database to get the tickets that the attribute named tagUserAttended are null and the roomTag is the room
+     * That Method returned a QUERY that listen to the Database to get the tickets that the attribute named tagUserAttended are null and the roomTag is the room
      * selected by the user
      */
     public static Query getTicketsNotAttended(String roomUid) {
@@ -281,7 +281,7 @@ public class FirestoreController {
     }
 
     /**
-     * Method that return the query that get the tickets of the user
+     * Method that returned the query that get the tickets of the user
      *
      * @param roomUid
      * @param tagUserEmmiter

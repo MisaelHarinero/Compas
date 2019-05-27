@@ -70,6 +70,8 @@ public class AdapterMyTickets extends RecyclerView.Adapter<AdapterMyTickets.MyVi
             }
         });
         ColorSelect.setState(holder.state,tickets.get(position).isFinished());
+        ColorSelect.ticketColorSelect(holder.view,tickets.get(position));
+        ColorSelect.setColorImportance(holder.importance,tickets.get(position).getImportance());
 
     }
 

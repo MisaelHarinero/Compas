@@ -19,7 +19,7 @@
         <ImageButton
                 android:layout_width="@dimen/height_width_photo"
                 android:layout_height="@dimen/height_width_photo" android:id="@+id/imageChargeRoom"
-                android:background="@drawable/rounded_border" android:src="@mipmap/ic_launcher"/>
+                android:background="@drawable/rounded_border" android:src="@drawable/database"/>
     </LinearLayout>
     <LinearLayout
             android:orientation="vertical"

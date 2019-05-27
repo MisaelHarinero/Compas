@@ -7,40 +7,45 @@
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent" android:background="@color/backDarkest"
+            android:padding="@dimen/nav_header_vertical_spacing">
         <TextView
                 android:text="TextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" android:id="@+id/titleTicket" android:layout_weight="1"
-                android:textStyle="bold" android:textColor="@color/common_google_signin_btn_text_dark_focused"/>
+                android:textStyle="bold" android:textColor="@color/common_google_signin_btn_text_dark_default"/>
         <TextView
                 android:text="TextView"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent" android:id="@+id/importance"
                 android:paddingLeft="@dimen/nav_header_vertical_spacing"
                 android:paddingRight="@dimen/nav_header_vertical_spacing"
-                android:textColor="@color/common_google_signin_btn_text_dark_focused"/>
+                android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                android:layout_marginRight="@dimen/nav_header_vertical_spacing"/>
         <TextView
                 android:text="TextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:id="@+id/date"
-                android:layout_gravity="right|center_horizontal"/>
+                android:layout_gravity="right|center_horizontal" android:fontFamily="@font/oxygen"
+                android:textColor="@color/common_google_signin_btn_text_dark_default"/>
     </LinearLayout>
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/common_google_signin_btn_text_dark_disabled">
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:id="@+id/description" android:layout_weight="1"
                 android:layout_margin="@dimen/activity_horizontal_margin"/>
         <ImageView
                 android:layout_width="@dimen/imageDimensions"
-                android:layout_height="@dimen/imageDimensions" app:srcCompat="@color/clear" android:id="@+id/imageTicket"
+                android:layout_height="@dimen/imageDimensions" app:srcCompat="@color/clear"
+                android:id="@+id/imageTicket"
         />
     </LinearLayout>
     <Button
             android:text="@string/fragment_ticket_selection_aceptar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:id="@+id/accept"/>
+            android:layout_height="wrap_content" android:id="@+id/accept" android:background="@color/ColorSelected"/>
 </LinearLayout>

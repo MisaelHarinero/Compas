@@ -45,9 +45,7 @@ class CreateRoomFragment : Fragment(), View.OnClickListener {
             }
             R.id.button -> {
             // Creacion de la room ->
-                if (uri != null){
 
-                }
                 var room = Room("${nameRoom!!.text}${UtilitiesClass.generateTag()}",nameRoom!!.text.toString(),MngRooms.getUser().tag)
                 room.createDate = Timestamp.now()
                 if (uri != null){
@@ -55,6 +53,9 @@ class CreateRoomFragment : Fragment(), View.OnClickListener {
                     CloudController.savePhoto(uri,"${DatabaseStrings.COLLECTION_PHOTOS_ROOMS}${room.urlImage}")
                 }
                 FirestoreController.createRoom(room)
+                this.imageSelected!!.setImageResource(R.drawable.database)
+                this.uri = null
+                this.nameRoom!!.setText("")
             }
         }
     }
@@ -140,7 +141,7 @@ class CreateRoomFragment : Fragment(), View.OnClickListener {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment CreateRoomFragment.
+         * @returned A new instance of fragment CreateRoomFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic

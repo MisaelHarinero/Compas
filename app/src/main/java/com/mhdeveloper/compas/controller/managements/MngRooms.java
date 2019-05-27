@@ -9,7 +9,7 @@ import com.mhdeveloper.compas.model.*;
 import java.util.ArrayList;
 
 /**
- *
+ * @author Misael Harinero
  * Clase que nos permite gestionar los datos del Usuario
  */
 public class MngRooms {

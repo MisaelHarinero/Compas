@@ -134,7 +134,7 @@ class LogInFragment : Fragment(), View.OnClickListener {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment LogInFragment.
+         * @returned A new instance of fragment LogInFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic

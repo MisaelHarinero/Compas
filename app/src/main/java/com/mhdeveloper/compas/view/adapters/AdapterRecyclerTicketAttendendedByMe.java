@@ -64,8 +64,9 @@ public class AdapterRecyclerTicketAttendendedByMe extends RecyclerView.Adapter<A
                     activity.showPopUpReader(tickets.get(position),holder.date,adapter);
                     return  true;
                 }else{
-                    if (tickets.get(position).isFinished()){
-                        Toast.makeText(v.getContext(),"Finish Ticket",Toast.LENGTH_LONG);
+                    if (v != null && tickets.get(position).isFinished()){
+                        activity.showPopUpReaderClosed(tickets.get(position),holder.date,adapter);
+                        return true;
                     }
                     return false;
                 }
@@ -73,6 +74,7 @@ public class AdapterRecyclerTicketAttendendedByMe extends RecyclerView.Adapter<A
         });
         ColorSelect.ticketColorSelect(holder.view,tickets.get(position));
         ColorSelect.setState(holder.state,tickets.get(position).isFinished());
+        ColorSelect.setColorImportance(holder.importance,tickets.get(position).getImportance());
     }
 
     @Override

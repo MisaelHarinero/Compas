@@ -14,7 +14,7 @@
             android:background="@drawable/side_nav_bar"
             android:theme="?attr/actionBarTheme"
             android:minHeight="?attr/actionBarSize" android:id="@+id/toolbarMssg"
-            app:navigationIcon="@drawable/return"/>
+            app:navigationIcon="@drawable/returned"/>
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
             android:layout_width="match_parent"
@@ -23,7 +23,8 @@
 
     <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="0dp" android:layout_weight="20" android:id="@+id/recycler"/>
+            android:layout_height="0dp" android:layout_weight="20" android:id="@+id/recycler"
+            android:background="@color/backDarkest"/>
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="80dp"

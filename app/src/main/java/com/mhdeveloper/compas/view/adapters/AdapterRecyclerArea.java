@@ -42,6 +42,9 @@ public class AdapterRecyclerArea  extends RecyclerView.Adapter<AdapterRecyclerAr
     public void onBindViewHolder(@NonNull MyView holder, final int position) {
         if (rooms.get(position).getUrlImage()!= null){
             CloudController.chargePhoto(holder.button, DatabaseStrings.COLLECTION_PHOTOS_ROOMS+rooms.get(position).getUrlImage(),context);
+        }else{
+            holder.button.setImageResource(R.drawable.database);
+
         }
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override

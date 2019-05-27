@@ -124,7 +124,7 @@ class FragmentVeiwTicketsAttended : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment FragmentVeiwTicketsAttended.
+         * @returned A new instance of fragment FragmentVeiwTicketsAttended.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic

@@ -15,17 +15,20 @@
                 android:text="@string/fragment_tickets_button_all"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:id="@+id/viewAll" android:background="@color/clear"
-                android:padding="@dimen/nav_header_vertical_spacing"/>
+                android:padding="@dimen/nav_header_vertical_spacing" android:fontFamily="@font/oxygen"
+                android:textStyle="bold"/>
         <Button
                 android:text="@string/fragment_tickets_button_my"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:id="@+id/myTickets" android:background="@color/clear"
-                android:padding="@dimen/nav_header_vertical_spacing"/>
+                android:padding="@dimen/nav_header_vertical_spacing" android:fontFamily="@font/oxygen"
+                android:textStyle="bold"/>
         <Button
                 android:text="@string/fragment_tickets_button_atendidos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:id="@+id/AttendByMe" android:background="@color/clear"
-                android:padding="@dimen/nav_header_vertical_spacing"/>
+                android:padding="@dimen/nav_header_vertical_spacing" android:fontFamily="@font/oxygen"
+                android:textStyle="bold"/>
     </LinearLayout>
     <LinearLayout
             android:orientation="vertical"

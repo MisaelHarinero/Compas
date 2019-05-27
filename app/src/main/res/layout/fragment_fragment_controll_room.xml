@@ -23,12 +23,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" android:gravity="center" android:background="@color/ColorNotSelected">
         <ImageButton
-                android:src="@android:drawable/ic_dialog_dialer"
+                android:src="@drawable/database"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent" android:id="@+id/buttonEditRoom"
                 android:background="@color/clear" android:padding="@dimen/activity_vertical_margin"/>
         <ImageButton
-                android:src="@android:drawable/ic_menu_view"
+                android:src="@drawable/group"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent" android:id="@+id/buttonUsers"
                 android:background="@color/clear" android:padding="@dimen/activity_vertical_margin"/>

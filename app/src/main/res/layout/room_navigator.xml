@@ -10,7 +10,7 @@
             android:layout_width="@dimen/imageDimensions"
             android:layout_height="@dimen/imageDimensions"
             android:id="@+id/buttonRoom" android:layout_gravity="center|center_horizontal|center_vertical"
-            android:scaleType="centerCrop" android:src="@mipmap/ic_launcher" android:background="@color/clear"/>
+            android:scaleType="centerCrop" android:src="@drawable/database" android:background="@color/clear"/>
     <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content" android:id="@+id/nameRoom" android:textAlignment="center"

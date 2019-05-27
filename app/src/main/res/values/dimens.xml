@@ -14,4 +14,5 @@
     <dimen name="image_height">200dp</dimen>
     <dimen name="marginSidesLog">60dp</dimen>
     <dimen name="height_margin">30dp</dimen>
+    <dimen name="img_width">40dp</dimen>
 </resources>

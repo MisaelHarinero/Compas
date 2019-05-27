@@ -81,4 +81,5 @@
     <string name="room_tag">Tag : </string>
     <string name="date_creation">Creation Date :</string>
     <string name="number_user">Number Of Users :</string>
+    <string name="open_ticket">Open</string>
 </resources>

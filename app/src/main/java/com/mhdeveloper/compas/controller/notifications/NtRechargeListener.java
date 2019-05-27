@@ -5,6 +5,10 @@ import com.mhdeveloper.compas.controller.managements.MngRooms;
 import com.mhdeveloper.compas.model.Permission;
 import com.mhdeveloper.compas.model.Room;
 
+/**
+ * Clase que se encarga de recargar los eventos a las notificaciones
+ * @author Misael Harinero
+ */
 public class NtRechargeListener implements INt {
 
     public NtRechargeListener() {

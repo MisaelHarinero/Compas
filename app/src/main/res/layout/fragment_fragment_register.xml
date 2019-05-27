@@ -103,7 +103,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
                             android:ems="10"
-                            android:inputType="date" android:fontFamily="@font/oxygen"
+                            android:fontFamily="@font/oxygen"
                             android:textColor="@color/ColorNotSelected"/>
 
                 </LinearLayout>

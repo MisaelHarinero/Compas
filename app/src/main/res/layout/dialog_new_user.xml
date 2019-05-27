@@ -2,13 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto" android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent" android:padding="@dimen/activity_vertical_margin">
 
     <TextView
             android:text="@string/fragment_user_add_new_user"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" android:id="@+id/textView9" android:textAlignment="center"
-            android:textSize="24sp" android:textStyle="bold" android:fontFamily="@font/oxygen"/>
+            android:textSize="24sp" android:textStyle="bold" android:fontFamily="@font/oxygen"
+            android:background="@color/ColorNotSelected"
+            android:textColor="@color/common_google_signin_btn_text_dark_focused"/>
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -31,6 +33,6 @@
             android:layout_height="wrap_content" android:id="@+id/spinner"/>
     <ImageButton
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" app:srcCompat="@drawable/ic_menu_send" android:id="@+id/send"
+            android:layout_height="wrap_content" app:srcCompat="@drawable/follow" android:id="@+id/send"
             android:background="@color/clear"/>
 </LinearLayout>

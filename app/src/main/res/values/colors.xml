@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimary">#2196F3</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="clear">#00FFFFFF</color>
@@ -8,9 +8,13 @@
     <color name="colorBaseCompas">#D6CDE5</color>
     <color name="colorCorrect">#AD8BC34A</color>
     <color name="colorIncorrect">#ADC34A4A</color>
-    <color name="grayBack">#716A7C</color>
+    <color name="grayBack">#F2919CA7</color>
     <color name="ColorSelected">#79D2FD</color>
     <color name="ColorNotSelected">#B6D4EE</color>
     <color name="dark_blue">#7595B7</color>
     <color name="darkGray">#1F1F1F</color>
+    <color name="backDarkest">#23283B</color>
+    <color name="lowImportance">#A5FAA6</color>
+    <color name="midImportance">#FFF4A7</color>
+    <color name="highImportance">#FF5F56</color>
 </resources>

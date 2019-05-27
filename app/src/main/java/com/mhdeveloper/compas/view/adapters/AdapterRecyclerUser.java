@@ -50,6 +50,17 @@ public class AdapterRecyclerUser extends RecyclerView.Adapter<AdapterRecyclerUse
         if (per != null){
             if (per.isAdminUser()){
                 imageView.setImageResource(R.drawable.admin);
+            }else if (per.isReadTk() && !per.isWriteTk()){
+                imageView.setImageResource(R.drawable.read);
+
+            }else if (!per.isReadTk() && per.isWriteTk()){
+                imageView.setImageResource(R.drawable.writer);
+
+            }else if (per.isReadTk() && per.isWriteTk()){
+                imageView.setImageResource(R.drawable.read_write);
+
+            }else{
+
             }
         }
 

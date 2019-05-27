@@ -94,13 +94,14 @@ class FragmentViewUser : Fragment(), View.OnClickListener, AdapterView.OnItemSel
                     chargeUpFragment()
                 })
                 builder.create().show()
-
+                changeLastFragment()
             }
             R.id.saveChanges ->{
                 if (permissionSelected != null){
                     MngRooms.getRoomSelected().permissesUser[tagUser] = permissionSelected
                     FirestoreController.saveRoom(MngRooms.getRoomSelected())
                 }
+                changeLastFragment()
             }
         }
     }
@@ -150,7 +151,7 @@ class FragmentViewUser : Fragment(), View.OnClickListener, AdapterView.OnItemSel
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment FragmentViewUser.
+         * @returned A new instance of fragment FragmentViewUser.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
@@ -178,5 +179,8 @@ class FragmentViewUser : Fragment(), View.OnClickListener, AdapterView.OnItemSel
         FirestoreController.cleanForUser(tagUser,MngRooms.getRoomSelected().uid)
         FirestoreController.saveRoom(MngRooms.getRoomSelected())
     }
-
+    fun changeLastFragment(){
+        var fragment = FragmentUsers()
+        activity!!.supportFragmentManager.beginTransaction().replace(R.id.stack,fragment).commit()
+    }
 }

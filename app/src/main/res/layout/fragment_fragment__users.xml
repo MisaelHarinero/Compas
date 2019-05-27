@@ -15,12 +15,13 @@ android:orientation="vertical">
                 android:text="@string/fragment_user_add_new_user"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent" android:id="@+id/textView4"
-                android:paddingRight="@dimen/fab_margin" android:fontFamily="@font/oxygen"/>
+                android:paddingRight="@dimen/fab_margin" android:fontFamily="@font/oxygen"
+                android:textAlignment="center" android:gravity="center_vertical"/>
         <ImageButton
-                android:src="@android:drawable/stat_notify_more"
+                android:src="@drawable/follow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:id="@+id/buttonAdd"
-                android:background="@color/common_google_signin_btn_text_dark_focused"/>
+                android:background="@color/ColorSelected" android:padding="@dimen/nav_header_vertical_spacing"/>
     </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"

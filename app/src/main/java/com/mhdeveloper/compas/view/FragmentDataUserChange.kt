@@ -133,7 +133,7 @@ class FragmentDataUserChange : Fragment(), View.OnClickListener {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment FragmentDataUserChange.
+         * @returned A new instance of fragment FragmentDataUserChange.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
@@ -164,7 +164,8 @@ class FragmentDataUserChange : Fragment(), View.OnClickListener {
             }
             CloudController.savePhoto(uri,"${DatabaseStrings.COLLECTION_PHOTOS_USERS}${MngRooms.getUser().imageRoute}")
             var activity = activity as MainActivity
-            activity.chargePhotoUser()
+            activity.changePhotoUser(uri!!)
+
         }
 
     }

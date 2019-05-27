@@ -15,6 +15,7 @@ import com.mhdeveloper.compas.controller.dao.DatabaseStrings;
 import com.mhdeveloper.compas.controller.dao.FirestoreController;
 import com.mhdeveloper.compas.controller.managements.MngRooms;
 import com.mhdeveloper.compas.model.Ticket;
+import com.mhdeveloper.compas.view.ColorSelect;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -52,6 +53,8 @@ public class AdapterRecyclerTicketAll extends RecyclerView.Adapter<AdapterRecycl
                 FirestoreController.saveTicket(tickets.get(position));
             }
         });
+        ColorSelect.setColorImportance(holder.importance,tickets.get(position).getImportance());
+
     }
 
     @Override
